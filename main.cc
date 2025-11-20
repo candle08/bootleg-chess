@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     // ----- COMMAND LINE READER -----
     string prev_arg = "";
 
-    const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P'}; // add to this when instantiating special abilities
+    const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P'}; // add to this when adding new abilities
     const vector<string> DEFAULT_LINK_ORDERING = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
@@ -109,7 +109,6 @@ int main(int argc, char* argv[]) {
                 cerr << "Unrecognized argument " << prev_arg << endl;
                 return 1;
             }
-
             prev_arg = "";
         } else if (
             cur_arg == "-ability1" ||
@@ -121,7 +120,7 @@ int main(int argc, char* argv[]) {
         } else if (cur_arg == "-graphics") {
             graphics_enabled = true;
         } else {
-            cerr << "Parameter " << cur_arg << " not recognized" << endl;
+            cerr << "Argument " << cur_arg << " not recognized" << endl;
             return 1;
         }
     }
