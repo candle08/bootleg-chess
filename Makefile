@@ -2,15 +2,15 @@ CXX = g++-14 -std=c++20 -fmodules-ts
 CXXFLAGS = -Wall -Werror -g
 HEADERFLAGS = -c -x c++-system-header
 
-EXEC = a4q2
+EXEC = raiinet
 
-INTERFACE_OBJS = asciiart.o blank.o blinking-box.o decorator.o filled-box.o mask-box.o moving-box.o studio.o
+INTERFACE_OBJS = o/ability.o o/o/board.o o/o/data.o o/o/graphic.o o/o/gui.o o/o/iobserver.o o/isubject.o o/link.o o/player.o o/player-header.o o/terminal.o o/virus.o
 
-IMPL_OBJS = asciiart-impl.o blank-impl.o blinking-box-impl.o decorator-impl.o filled-box-impl.o mask-box-impl.o moving-box-impl.o studio-impl.o
+IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/player-header-impl.o o/virus-impl.o 
 
-HARNESS_OBJ = a4q2.o
+HARNESS_OBJ = o/main.o
 
-HEADERS = iostream string
+HEADERS = iostream vector algorithm string
 
 ALL_OBJS = $(INTERFACE_OBJS) $(IMPL_OBJS) $(HARNESS_OBJ)
 
@@ -24,57 +24,61 @@ headers:
 
 $(ALL_OBJS): headers
 
-asciiart.o: asciiart.cc
-	$(CXX) $(CXXFLAGS) -c asciiart.cc
+o/iobserver.o: interface/iobserver.cc
+	$(CXX) $(CXXFLAGS) -c interface/iobserver.cc
 
-studio.o: studio.cc asciiart.o
-	$(CXX) $(CXXFLAGS) -c studio.cc
+o/isubject.o: interface/isubject.cc
+	$(CXX) $(CXXFLAGS) -c interface/isubject.cc
 
-blank.o: blank.cc asciiart.o
-	$(CXX) $(CXXFLAGS) -c blank.cc
+o/ability.o: interface/ability.cc
+	$(CXX) $(CXXFLAGS) -c interface/ability.cc
 
-decorator.o: decorator.cc asciiart.o
-	$(CXX) $(CXXFLAGS) -c decorator.cc
+o/link-boost.o: interface/link-boost.cc o/ability.o
+	$(CXX) $(CXXFLAGS) -c interface/link-boost.cc
 
-blinking-box.o: blinking-box.cc decorator.o
-	$(CXX) $(CXXFLAGS) -c blinking-box.cc
+o/download.o: interface/download.cc o/ability.o
+	$(CXX) $(CXXFLAGS) -c interface/download.cc
 
-filled-box.o: filled-box.cc decorator.o
-	$(CXX) $(CXXFLAGS) -c filled-box.cc
+o/firewall.o: interface/firewall.cc o/ability.o
+	$(CXX) $(CXXFLAGS) -c interface/firewall.cc
 
-mask-box.o: mask-box.cc decorator.o
-	$(CXX) $(CXXFLAGS) -c mask-box.cc
+o/polarize.o: interface/polarize.cc o/ability.o
+	$(CXX) $(CXXFLAGS) -c interface/polarize.cc
 
-moving-box.o: moving-box.cc decorator.o
-	$(CXX) $(CXXFLAGS) -c moving-box.cc
+o/scan.o: interface/scan.cc o/ability.o
+	$(CXX) $(CXXFLAGS) -c interface/scan.cc
 
-asciiart-impl.o: asciiart-impl.cc asciiart.o
-	$(CXX) $(CXXFLAGS) -c asciiart-impl.cc
+o/link.o: interface/link.cc 
+	$(CXX) $(CXXFLAGS) -c interface/link.cc
 
-studio-impl.o: studio-impl.cc studio.o
-	$(CXX) $(CXXFLAGS) -c studio-impl.cc
+o/data.o: interface/data.cc o/link.o
+	$(CXX) $(CXXFLAGS) -c interface/data.cc
 
-blank-impl.o: blank-impl.cc blank.o
-	$(CXX) $(CXXFLAGS) -c blank-impl.cc
+o/virus.o: interface/virus.cc o/link.o
+	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
-decorator-impl.o: decorator-impl.cc decorator.o
-	$(CXX) $(CXXFLAGS) -c decorator-impl.cc
+o/player.o: interface/player.cc o/ability.o o/virus.o o/data.o
+	$(CXX) $(CXXFLAGS) -c interface/player.cc
 
-blinking-box-impl.o: blinking-box-impl.cc blinking-box.o
-	$(CXX) $(CXXFLAGS) -c blinking-box-impl.cc
+o/player-header.o: interface/player-header.cc o/player.o
+	$(CXX) $(CXXFLAGS) -c interface/player-header.cc
 
-filled-box-impl.o: filled-box-impl.cc filled-box.o
-	$(CXX) $(CXXFLAGS) -c filled-box-impl.cc
+o/board.o: interface/board.cc o/player-header.o o/link.o o/isubject.o o/iobserver.o
+	$(CXX) $(CXXFLAGS) -c interface/board.cc
 
-mask-box-impl.o: mask-box-impl.cc mask-box.o
-	$(CXX) $(CXXFLAGS) -c mask-box-impl.cc
+o/gui.o: interface/gui.cc o/observer.o o/board.o
+	$(CXX) $(CXXFLAGS) -c interface/gui.cc
+	
+o/terminal.o: interface/terminal.cc o/gui.o o/board.o
+	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
+	
+o/graphic.o: interface/graphic.cc o/gui.o o/board.o
+	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
 
-moving-box-impl.o: moving-box-impl.cc moving-box.o
-	$(CXX) $(CXXFLAGS) -c moving-box-impl.cc
 
-a4q2.o: a4q2.cc asciiart.o blank.o studio.o blinking-box.o filled-box.o mask-box.o moving-box.o 
+a4q2.o: a4q2.cc asciiart.o o/blank.o o/studio.o o/blinking-box.o o/filled-box.o o/mask-box.o o/moving-box.o o/
 	$(CXX) $(CXXFLAGS) -c a4q2.cc
 
 clean:
-	rm -f $(EXEC) *.o *.gcm
+	rm -f $(EXEC) *.o o/*.gcm
 	rm -rf gcm.cache

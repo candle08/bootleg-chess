@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
                 // this code should never run but it's here just in case
                 cerr << "Unrecognized argument " << prev_arg << endl;
                 return 1;
-            }
+            }/
             prev_arg = "";
         } else if (
             cur_arg == "-ability1" ||
