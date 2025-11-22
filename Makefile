@@ -2,7 +2,7 @@ CXX = g++-14 -std=c++20 -fmodules-ts
 CXXFLAGS = -Wall -Werror -g
 HEADERFLAGS = -c -x c++-system-header
 
-EXEC = raiinet
+EXEC = exec
 
 INTERFACE_OBJS = o/ability.o o/o/board.o o/o/data.o o/o/graphic.o o/o/gui.o o/o/iobserver.o o/isubject.o o/link.o o/player.o o/player-header.o o/terminal.o o/virus.o
 
@@ -76,8 +76,8 @@ o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
 
 
-a4q2.o: a4q2.cc asciiart.o o/blank.o o/studio.o o/blinking-box.o o/filled-box.o o/mask-box.o o/moving-box.o o/
-	$(CXX) $(CXXFLAGS) -c a4q2.cc
+main.o: main.cc asciiart.o o/blank.o o/studio.o o/blinking-box.o o/filled-box.o o/mask-box.o o/moving-box.o o/
+	$(CXX) $(CXXFLAGS) -c main.cc
 
 clean:
 	rm -f $(EXEC) *.o o/*.gcm
