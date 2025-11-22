@@ -13,6 +13,10 @@ import Player;
 
 using namespace std;
 
+bool isValidLink(string link) {
+    
+}
+
 int main(int argc, char* argv[]) {
     // ----- CONSTANTS -----
     const int NUM_OF_ABILITIES = 5;
@@ -133,6 +137,98 @@ int main(int argc, char* argv[]) {
     if (link1.size() == 0) link1 = DEFAULT_LINK_ORDERING;
     if (link2.size() == 0) link2 = DEFAULT_LINK_ORDERING;
 
-    // ----- COMMAND INTERPRETER -----
+    // Board board{};
+
+    // ----- INPUT READER -----
     string in;
+    while (cin >> in) {
+        if (in == "move") {
+            string link, dir;
+            cin >> link >> dir;
+
+            // check validity of arguments
+            if (link[1] < '1' || link[1] > '4') {
+                cerr << "Invalid input for move: strength of link is invalid" << endl;
+                continue;
+            }
+
+            if (dir != "up" && dir != "down" && dir != "left" && dir != "right") {
+                cerr << "Invalid input for move: direction is invalid" << endl;
+                continue;
+            }
+
+            int strength = link[1] - '0';
+            if (link[0] == 'd' || link[0] == 'D') {
+                // call move link with data
+            } else if (link[0] == 'v' || link[0] == 'V') {
+                // call move link with virus
+            } else {
+                cerr << "Invalid input for move: neither data nor virus was selected" << endl;
+                continue;
+            }
+        } else if (in == "abilities") {
+            // list out abilities
+        } else if (in == "ability") {
+            char id;
+            cin >> id;
+            if (id > ABILITY_LETTERS.size() || id < 1) {
+                cerr << "Invalid input for ability: ID not found" << endl;
+                continue;
+            }
+
+            if (id == '1' || id == 'l' || id == 'L') {
+                // link boost
+                string link;
+                cin >> link;
+
+                if (link[1] < '1' || link[1] > '4') {
+                    cerr << "Invalid input for ability: strength of link is invalid" << endl;
+                    continue;
+                }
+
+                if (link[0] == 'd' || link[0] == 'D') {
+                    // do something with data
+                } else if (link[0] == 'v' || link[0] == 'V') {
+                    // do something with virus
+                } else {
+                    cerr << "Invalid input for ability - link boost: neither data nor virus was selected" << endl;
+                    continue;
+                }
+            } else if (id == '2' || id == 'f' || id == 'F') {
+                // firewall
+                int r, c;
+                cin >> r >> c;
+                if (r < 0 || r > 7) {
+                    cerr << "Invalid input for ability - firewall: row is out of bounds" << endl;
+                    continue;
+                } else if (c < 0 || c > 7) {
+                    cerr << "Invalid input for ability - firewall: col is out of bounds" << endl;
+                    continue;
+                }
+                // call firewall
+            } else if (id == '3' || id == 'd' || id == 'D') {
+                // download
+
+            } else if (id == '4' || id == 'p' || id == 'P') {
+                // polarize
+
+            } else if (id == '5' || id == 's' || id == 'S') {
+                // scan
+
+            }
+
+        } else if (in == "board") {
+
+        } else if (in == "sequence") {
+
+        } else if (in == "quit") {
+            cout << "Quitting game..." << endl;
+            return 0;
+        } else {
+            cout << "Invalid input detected" << endl;
+            continue;
+        }
+
+        // increment board's turn counter
+    }
 }
