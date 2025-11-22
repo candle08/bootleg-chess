@@ -1,6 +1,8 @@
 export module Terminal;
 import Board;
 
+using namespace std;
+
 export class Terminal : public GUI {
     public:
     
