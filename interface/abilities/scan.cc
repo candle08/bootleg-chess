@@ -5,6 +5,8 @@ import Coords;
 import Ability;
 import Player;
 
+using namespace std;
+
 export class Scan : public Ability {
     string name;
     public:
