@@ -5,6 +5,8 @@ import Board;
 import Coords;
 import Player;
 
+using namespace std;
+
 export class LinkBoost : public Ability {
     string name;
     public:
