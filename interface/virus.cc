@@ -1,4 +1,5 @@
 export module Virus;
+import Link;
 import Coords;
 
 export class Virus : public Link {
