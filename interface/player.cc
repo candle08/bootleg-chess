@@ -1,15 +1,17 @@
 export module Player;
-
 import Virus;
 import Data;
 import Ability;
+import <vector>;
+
+using namespace std;
 
 export class Player {
-    <Virus *> all_virus;
-    <Data *> all_data;
-    <Ability *> abilities;
+    vector<Virus *> all_virus;
+    vector<Data *> all_data;
+    vector<Ability *> abilities;
 
     public:
-    Player(<Virus *> v, <Data *> d, <Ability *> a);
+    Player(vector<Virus *> v, vector<Data *> d, vector<Ability *> a);
     ~Player();
 };
