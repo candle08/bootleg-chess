@@ -4,7 +4,7 @@ HEADERFLAGS = -c -x c++-system-header
 
 EXEC = exec
 
-INTERFACE_OBJS = o/ability.o o/o/board.o o/o/data.o o/o/graphic.o o/o/gui.o o/o/iobserver.o o/isubject.o o/link.o o/player.o o/player-header.o o/terminal.o o/virus.o
+INTERFACE_OBJS = o/ability.o o/o/board.o o/o/data.o o/o/graphic.o o/o/gui.o o/o/iobserver.o o/isubject.o o/link.o o/player.o o/player-header.o o/terminal.o o/virus.o o/coords.o 
 
 IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/player-header-impl.o o/virus-impl.o 
 
@@ -30,31 +30,34 @@ o/iobserver.o: interface/iobserver.cc
 o/isubject.o: interface/isubject.cc
 	$(CXX) $(CXXFLAGS) -c interface/isubject.cc
 
-o/ability.o: interface/ability.cc
+o/coords.o: coords.cc
+	$(CXX) $(CXXFLAGS) -c coords.cc
+
+o/ability.o: interface/ability.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/ability.cc
 
 o/link-boost.o: interface/link-boost.cc o/ability.o
 	$(CXX) $(CXXFLAGS) -c interface/link-boost.cc
 
-o/download.o: interface/download.cc o/ability.o
+o/download.o: interface/download.cc o/ability.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/download.cc
 
-o/firewall.o: interface/firewall.cc o/ability.o
+o/firewall.o: interface/firewall.cc o/ability.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/firewall.cc
 
-o/polarize.o: interface/polarize.cc o/ability.o
+o/polarize.o: interface/polarize.cc o/ability.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/polarize.cc
 
-o/scan.o: interface/scan.cc o/ability.o
+o/scan.o: interface/scan.cc o/ability.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/scan.cc
 
-o/link.o: interface/link.cc 
+o/link.o: interface/link.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/link.cc
 
-o/data.o: interface/data.cc o/link.o
+o/data.o: interface/data.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/data.cc
 
-o/virus.o: interface/virus.cc o/link.o
+o/virus.o: interface/virus.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
 o/player.o: interface/player.cc o/ability.o o/virus.o o/data.o
@@ -74,9 +77,6 @@ o/terminal.o: interface/terminal.cc o/gui.o o/board.o
 	
 o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
-	
-o/coords.o: coords.cc
-	$(CXX) $(CXXFLAGS) -c coords.cc
 
 main.o: main.cc o/board.o o/ability.o o/data.o o/virus.o o/display.o o/graphic.o o/player.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c main.cc
