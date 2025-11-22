@@ -75,8 +75,10 @@ o/terminal.o: interface/terminal.cc o/gui.o o/board.o
 o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
 	
+o/coords.o: coords.cc
+	$(CXX) $(CXXFLAGS) -c coords.cc
 
-main.o: main.cc o/board.o o/ability.o o/data.o o/virus.o o/display.o o/graphic.o o/player.o
+main.o: main.cc o/board.o o/ability.o o/data.o o/virus.o o/display.o o/graphic.o o/player.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c main.cc
 
 clean:
