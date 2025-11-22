@@ -3,4 +3,7 @@ import IObserver;
 
 export ISubject {
     
-}
+    vector<Observer *> observer;
+    public:
+    ~ISubject();
+};
