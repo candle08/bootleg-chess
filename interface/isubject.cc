@@ -5,5 +5,5 @@ export class ISubject {
     vector<IObserver *> observer;
 
     public:
-    ~ISubject();
+    virtual ~ISubject() = 0;
 };
