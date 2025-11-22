@@ -10,7 +10,7 @@ IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/play
 
 HARNESS_OBJ = o/main.o
 
-HEADERS = iostream vector algorithm string
+HEADERS = iostream vector algorithm string sstring
 
 ALL_OBJS = $(INTERFACE_OBJS) $(IMPL_OBJS) $(HARNESS_OBJ)
 
@@ -74,9 +74,9 @@ o/terminal.o: interface/terminal.cc o/gui.o o/board.o
 	
 o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
+	
 
-
-main.o: main.cc asciiart.o o/blank.o o/studio.o o/blinking-box.o o/filled-box.o o/mask-box.o o/moving-box.o o/
+main.o: main.cc o/board.o o/ability.o o/data.o o/virus.o o/display.o o/graphic.o o/player.o
 	$(CXX) $(CXXFLAGS) -c main.cc
 
 clean:
