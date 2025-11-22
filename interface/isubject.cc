@@ -1,9 +1,9 @@
 export module ISubject;
 import IObserver;
 
-export ISubject {
+export class ISubject {
     
-    vector<Observer *> observer;
+    vector<IObserver *> observer;
     public:
     ~ISubject();
 };
