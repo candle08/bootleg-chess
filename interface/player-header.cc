@@ -1,8 +1,6 @@
 export module PlayerHeader;
-
-import <vector>;
-
 import Player;
+import <vector>;
 
 export class PlayerHeader {
     vector<Player*> players;
