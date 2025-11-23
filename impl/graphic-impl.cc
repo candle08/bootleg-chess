@@ -1,0 +1,3 @@
+module Graphic;
+
+import Board;

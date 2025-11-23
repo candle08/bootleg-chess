@@ -1,0 +1,61 @@
+module Player;
+
+import <vector>;
+
+import LinkBoost;
+import Firewall;
+import Polarize;
+import Scan;
+import SmallSwap;
+import TwoSum; 
+import DoubleDown; 
+import Download;
+import Virus;
+import Data;
+
+using namespace std;
+
+Player::Player(string links, string abilities_selected, vector<Coords> positions) {
+    // initialize links
+    for (int i = 0; i < links.length(); i += 2) {
+        int level = links[i + 1] - '0';
+        if (links[i] == 'D' || links[i] == 'd') {
+            all_data.push_back(new Data{level, positions[i / 2]});
+        } else {
+            all_virus.push_back(new Virus{level, positions[i / 2]});
+        }
+    }
+
+    // initialize abilities
+    for (int i = 0; i < abilities_selected.length(); i++) {
+        if (abilities_selected[i] == 'l' || abilities_selected[i] == 'L') {
+            abilities.push_back(new LinkBoost{});
+        } else if (abilities_selected[i] == 'd' || abilities_selected[i] == 'D') {
+            abilities.push_back(new Download{});
+        } else if (abilities_selected[i] == 'b' || abilities_selected[i] == 'B') {
+            abilities.push_back(new DoubleDown{});
+        } else if (abilities_selected[i] == 'f' || abilities_selected[i] == 'F') {
+            abilities.push_back(new Firewall{});
+        } else if (abilities_selected[i] == 'p' || abilities_selected[i] == 'P') {
+            abilities.push_back(new Polarize{});
+        } else if (abilities_selected[i] == 't' || abilities_selected[i] == 'T') {
+            abilities.push_back(new TwoSum{});
+        } else if (abilities_selected[i] == 's' || abilities_selected[i] == 'S') {
+            abilities.push_back(new Scan{});
+        } else {
+            abilities.push_back(new SmallSwap{});
+        }
+    }
+}
+
+Player::~Player() {
+    for (int i = 0; i < all_virus.size(); i++) {
+        delete all_virus[i];
+    }
+    for (int i = 0; i < all_data.size(); i++) {
+        delete all_data[i];
+    }
+    for (int i = 0; i < abilities.size(); i++) {
+        delete abilities[i];
+    }
+}

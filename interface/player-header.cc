@@ -7,5 +7,7 @@ export class PlayerHeader {
 
     int num_players;
     public:
+        void addPlayer(Player* p);
         ~PlayerHeader();
+        friend class Board;
 };

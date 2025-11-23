@@ -42,7 +42,16 @@ int main(int argc, char* argv[]) {
     // ----- COMMAND LINE READER -----
     string prev_arg = "";
 
-    const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P'}; // add to this when adding new abilities
+    /**
+     * L: LinkBoost
+     * F: Firewall
+     * D: Download
+     * S: Scan
+     * B: DoubleDown
+     * T: TwoSum
+     * W: SmallSwap
+     */
+    const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P', 'B', 'T', 'W'};
     const vector<string> DEFAULT_LINK_ORDERING = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
