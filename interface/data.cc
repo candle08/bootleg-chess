@@ -7,6 +7,6 @@ export class Data : public Link {
     Coords c;
 
     public:
-    Data(int level, Coords c);
-    ~Data() = default;
+        Data(int level, Coords c);
+        virtual ~Data() = 0;
 };

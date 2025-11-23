@@ -8,8 +8,8 @@ import Player;
 using namespace std;
 
 export class Polarize : public Ability {
-    string name;
     public:
-    usePower(Player & p1, Player &p2, Board & b, Coords c);
+        Polarize();
+        bool usePower(Player & p1, Player &p2, Board & b, Coords c) override;
 
 };

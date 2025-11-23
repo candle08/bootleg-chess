@@ -6,6 +6,5 @@ using namespace std;
 
 export class GUI : public IObserver {
     public:
-    virtual void notify(Board & b);
-    ~GUI() = default;
+        virtual ~GUI() = 0;
 };

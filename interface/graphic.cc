@@ -6,6 +6,6 @@ using namespace std;
 
 export class Graphic : public GUI {
     public:
-    virtual void ostream operator<<(*, Board &b, int player);
-    virtual ~Graphic() = default;
+        void ostream operator<<(*, Board &b, int player);
+        void notify(Board & b) override;
 };

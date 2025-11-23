@@ -12,6 +12,6 @@ export class Player {
     vector<Ability *> abilities;
 
     public:
-    Player(vector<Virus *> v, vector<Data *> d, vector<Ability *> a);
-    ~Player();
+        Player(vector<Virus *> v, vector<Data *> d, vector<Ability *> a);
+        ~Player();
 };

@@ -10,6 +10,7 @@ export class Ability {
     string name;
 
     public:
-    virtual void usePower(Player &p1, Player &p2, Board &b, Coords &c);
-    virtual ~Ability() = default;
+        virtual Ability(string name);
+        virtual boolean usePower(Player &p1, Player &p2, Board &b, Coords &c);
+        virtual ~Ability() = 0;
 };

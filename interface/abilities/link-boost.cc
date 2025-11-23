@@ -8,8 +8,8 @@ import Player;
 using namespace std;
 
 export class LinkBoost : public Ability {
-    string name;
     public:
-    usePower(Player & p1, Player &p2, Board & b, Coords c);
+        LinkBoost();
+        bool usePower(Player & p1, Player &p2, Board & b, Coords c) override;
 
 };

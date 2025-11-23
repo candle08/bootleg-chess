@@ -7,6 +7,5 @@ export class Virus : public Link {
     Coords c;
 
     public:
-    Virus(int level, Coords c);
-    ~Virus() = default;
+        Virus(int level, Coords c);
 };

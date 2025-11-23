@@ -6,5 +6,6 @@ export class PlayerHeader {
     vector<Player*> players;
 
     int num_players;
-    ~PlayerHeader();
+    public:
+        ~PlayerHeader();
 };
