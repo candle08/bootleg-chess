@@ -2,6 +2,7 @@ import <iostream>;
 import <vector>;
 import <algorithm>;
 import <string>;
+import <fstream>;
 
 import Ability;
 import Board;
@@ -13,8 +14,23 @@ import Player;
 
 using namespace std;
 
+/**
+ * Validate whether or not a string represents a valid link
+ * @param link The string to check
+ */
 bool isValidLink(string link) {
-    
+    return link.length() == 2 &&
+        (link[0] == 'd' || link[0] == 'D' || link[0] == 'v' || link[0] == 'V') &&
+        (link[1] >= '1' && link[1] <= '4');
+}
+
+/**
+ * Validate whether or not coords are within bounds
+ * @param r The row to check
+ * @param c The col to check
+ */
+bool isValidCoords(int r, int c) {
+    return r <= 7 && r >= 0 && c <= 7 && c >= 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -85,7 +101,7 @@ int main(int argc, char* argv[]) {
                     string link = cur_arg.substr(j, 2);
                     
                     // validate link formatting
-                    if ((link[0] != 'D' && link[0] != 'V') || (link[1] > '4' || link[1] < '1')) {
+                    if (!isValidLink(link)) {
                         cerr << "Parameter for " << prev_arg << " has an invalid character" << endl;
                         return 1;
                     }
@@ -140,15 +156,16 @@ int main(int argc, char* argv[]) {
     // Board board{};
 
     // ----- INPUT READER -----
+    ifstream file_stream;
+    istream* current_stream = &cin;
     string in;
-    while (cin >> in) {
+    while (*current_stream >> in) {
         if (in == "move") {
             string link, dir;
-            cin >> link >> dir;
+            *current_stream >> link >> dir;
 
-            // check validity of arguments
-            if (link[1] < '1' || link[1] > '4') {
-                cerr << "Invalid input for move: strength of link is invalid" << endl;
+            if (!isValidLink(link)) {
+                cerr << "Invalid input for move: invalid link" << endl;
                 continue;
             }
 
@@ -158,19 +175,14 @@ int main(int argc, char* argv[]) {
             }
 
             int strength = link[1] - '0';
-            if (link[0] == 'd' || link[0] == 'D') {
-                // call move link with data
-            } else if (link[0] == 'v' || link[0] == 'V') {
-                // call move link with virus
-            } else {
-                cerr << "Invalid input for move: neither data nor virus was selected" << endl;
-                continue;
-            }
+
+            // ------------------------ TODO: call move link ------------------------
+
         } else if (in == "abilities") {
             // list out abilities
         } else if (in == "ability") {
             char id;
-            cin >> id;
+            *current_stream >> id;
             if (id > ABILITY_LETTERS.size() || id < 1) {
                 cerr << "Invalid input for ability: ID not found" << endl;
                 continue;
@@ -179,48 +191,73 @@ int main(int argc, char* argv[]) {
             if (id == '1' || id == 'l' || id == 'L') {
                 // link boost
                 string link;
-                cin >> link;
+                *current_stream >> link;
 
-                if (link[1] < '1' || link[1] > '4') {
-                    cerr << "Invalid input for ability: strength of link is invalid" << endl;
+                if (!isValidLink(link)) {
+                    cerr << "Invalid input for ability - link boost: invalid link" << endl;
                     continue;
                 }
 
-                if (link[0] == 'd' || link[0] == 'D') {
-                    // do something with data
-                } else if (link[0] == 'v' || link[0] == 'V') {
-                    // do something with virus
-                } else {
-                    cerr << "Invalid input for ability - link boost: neither data nor virus was selected" << endl;
-                    continue;
-                }
+                // ------------------------ TODO: call link boost ------------------------
+                
             } else if (id == '2' || id == 'f' || id == 'F') {
                 // firewall
                 int r, c;
-                cin >> r >> c;
-                if (r < 0 || r > 7) {
-                    cerr << "Invalid input for ability - firewall: row is out of bounds" << endl;
-                    continue;
-                } else if (c < 0 || c > 7) {
-                    cerr << "Invalid input for ability - firewall: col is out of bounds" << endl;
+                *current_stream >> r >> c;
+                if (!isValidCoords(r, c)) {
+                    cerr << "Invalid input for ability - firewall: invalid coordinates" << endl;
                     continue;
                 }
-                // call firewall
+                // ------------------------ TODO: call firewall ------------------------
             } else if (id == '3' || id == 'd' || id == 'D') {
                 // download
+                int r, c;
+                *current_stream >> r >> c;
+
+                if (!isValidCoords(r, c)) {
+                    cerr << "Invalid input for ability - download: invalid coordinates" << endl;
+                    continue;
+                }
+
+                // ------------------------ TODO: call download ------------------------
 
             } else if (id == '4' || id == 'p' || id == 'P') {
                 // polarize
+                int r, c;
+                *current_stream >> r >> c;
+                if (!isValidCoords(r, c)) {
+                    cerr << "Invalid input for ability - polarize: invalid coordinates" << endl;
+                    continue;
+                }
+
+                // ------------------------ TODO: call polarize ------------------------
 
             } else if (id == '5' || id == 's' || id == 'S') {
                 // scan
+                int r, c;
+                *current_stream >> r >> c;
+                if (!isValidCoords(r, c)) {
+                    cerr << "Invalid input for ability - scan: invalid coordinates" << endl;
+                    continue;
+                }
 
+                // ------------------------ TODO: call scan ------------------------
             }
 
         } else if (in == "board") {
+            // ------------------------ TODO: call print board ------------------------
 
         } else if (in == "sequence") {
-
+            string file_name;
+            *current_stream >> file_name;
+            file_stream.close();
+            file_stream.open(file_name);
+            if (!file_stream) {
+                cerr << "Invalid input for sequence: could not open file" << endl;
+                continue;
+            }
+            cur = &file_stream;
+            continue;
         } else if (in == "quit") {
             cout << "Quitting game..." << endl;
             return 0;
@@ -230,5 +267,9 @@ int main(int argc, char* argv[]) {
         }
 
         // increment board's turn counter
+
+        if (current_stream == &file_stream && file_stream.eof()) {
+            current_stream = &cin;
+        }
     }
 }
