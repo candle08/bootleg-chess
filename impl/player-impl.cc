@@ -15,11 +15,11 @@ import Data;
 
 using namespace std;
 
-Player::Player(string links, string abilities_selected, vector<Coords> positions) {
-    // initialize links
-    for (int i = 0; i < links.length(); i += 2) {
-        int level = links[i + 1] - '0';
-        if (links[i] == 'D' || links[i] == 'd') {
+Player::Player(string link_ordering, string abilities_selected, vector<Coords> positions) {
+    // initialize link_ordering
+    for (int i = 0; i < link_ordering.length(); i += 2) {
+        int level = link_ordering[i + 1] - '0';
+        if (link_ordering[i] == 'D' || link_ordering[i] == 'd') {
             all_data.push_back(new Data{level, positions[i / 2]});
         } else {
             all_virus.push_back(new Virus{level, positions[i / 2]});

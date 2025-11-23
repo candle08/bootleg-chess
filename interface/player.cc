@@ -19,6 +19,6 @@ export class Player {
          * @param abilities_selected The abilities selected, represented as a length-5 string
          * @param positions A size-8 vector of the corodinates of the links
          */
-        Player(string links, string abilities_selected, vector<Coords> positions);
+        Player(string link_orderings, string abilities_selected, vector<Coords> positions)
         ~Player();
 };

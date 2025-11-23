@@ -1,70 +1,81 @@
 module Board;
-// hi tongtong
+
 import ISubject;
 import IObserver;
 import Link;
 import PlayerHeader;
+import Player;
 import <vector>;
 
 using namespace std;
-// shall i write a ctor?
-// nvm nvm i understand it now
-// wait do we need one yuh
-// do we need a ctor tho
-// gyatt
-// yuh hmm okok
-// wait
-// wdym row
-// no row is stored within link
-// hm
-//.
-// .
-// .
-// wdym?
-// acc ok
-// our field is pointers
-// i think we need a ctor after all
-// and then we set it based on input from playerheader
-// okok ya we do 
-// what would the input be? wdym from ph
-// ph is a wrapper ffor player, since we "technica" dont know how many players there are 
-// so we pass in playerheader which has players
-// and then the players will have arrays of data and virus
-// and based on the coords iwthin we can initialize links to point to diff stuff ykwim
 
-// like r we straight up passing in a m
+void Cell::clear() {
+    player = 0;
+    item = '\0';
+    level = 0;
+}
 
-// ctor
-// HELLO
-// dawg is this right i dont understand refs and ptrs ngl
-Board::Board(PlayerHeader &ph) {
-    for (auto * player : ph.players) {
-        for (auto * virus : player->all_virus) {
-            board[][] = ;
-        }
-
-        for (auto * data : player->all_data) {
-
-        }
+Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
+    turn_number = 0;
+    
+    ph = PlayerHeader{};
+    for (int i = 0; i < NUM_PLAYERS; i++) {
+        Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i]};
+        ph.players.push_back(p);
     }
 
+    // Build the board matrix
+    // Build empty matrix
+    for (int r = 0; r < NUM_ROWS; r++) {
+        vector<Cell> v(NUM_COLS);
+        board.push_back(v);
+    }
+
+    // Place player pieces
+    for (int i = 0; i < NUM_PLAYERS; i++) {
+        Player* p = ph.player[i];
+
+        // Find viruses of player
+        for (int j = 0; j < p->all_virus.size(); j++) {
+            Virus* virus = p->all_virus[j];
+            board[virus.coords.r][virus.coords.c] = {i, VIRUS, virus.level};
+        }
+
+        // Find data of player
+        for (int j = 0; j < p->all_data.size(); j++) {
+            Data* data = p->all_data[j];
+            board[data.coords.r][data.coords.c] = {i, DATA, data.level};
+        }
+
+        // Place server ports
+        for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
+            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {0, 'S', 0};
+        }
+    }
 }
 
-bool Board::valid_pos(const Coords c) {
-    
+bool Board::isValidPos(const Coords coords) const {
+    return coords.r >= 0 && coords.r <= NUM_ROWS && coords.c >= 0 && coords.c <= NUM_COLS;
 }
 
-void Board::playTurn(PlayerHeader &ph, int turn_number) {
+void Board::playTurn(Coords coords, string dir) {
+    Player* p = ph.players[turn_number % NUM_PLAYERS];
 
-    
+    // Reject move (return) if there isn't a piece on "from" coords
+
+    // Check if "to" is OOB
+
+    // If "to" is OOB, check if it's on the opposite side
+
+    // Otherwise, reject move
+
+    // Reject move if there's a friendly piece on "to"
+
+    // Check if there's a port on the "to" coords
+
+    // Check if there's an enemy piece on "to"
+
+    // Otherwise, just 
+
     turn_number++;
-}
-
-Board::~Board() { // I THINK double check if this is right
-    // vec should auto deallocate and im just deleting pointers
-    for (auto row : board) {
-        for (auto * link : row) {
-            delete link;
-        }
-    }
 }

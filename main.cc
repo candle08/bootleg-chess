@@ -34,10 +34,6 @@ bool isValidCoords(int r, int c) {
 }
 
 int main(int argc, char* argv[]) {
-    // ----- CONSTANTS -----
-    const int NUM_OF_ABILITIES = 5;
-    const int MAX_NUM_OF_EACH_ABILITY = 2;
-    const int NUM_OF_LINKS = 8;
 
     // ----- COMMAND LINE READER -----
     string prev_arg = "";
