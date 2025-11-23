@@ -20,5 +20,18 @@ export class Player {
          * @param positions A size-8 vector of the corodinates of the links
          */
         Player(string link_orderings, string abilities_selected, vector<Coords> positions)
+
+        /**
+         * Returns a pointer to the corresponding virus or data that the string represents
+         * It is assumed that the string is of valid format
+         */
+        Link* getLinkPointerFromString(string link);
+
+        /**
+         * Use and remove the ability represented by the char
+         * Returns the empty string on success, or an error message on failure
+         * It is assumed that ability is valid (a capitalized letter representing the ability)
+         */
+        string useAbility(char ability, Board& b, Coords& c, string link);
         ~Player();
 };

@@ -17,6 +17,7 @@ void Cell::clear() {
 
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     turn_number = 0;
+    ability_used = false;
     
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
@@ -58,24 +59,21 @@ bool Board::isValidPos(const Coords coords) const {
     return coords.r >= 0 && coords.r <= NUM_ROWS && coords.c >= 0 && coords.c <= NUM_COLS;
 }
 
-void Board::playTurn(Coords coords, string dir) {
-    Player* p = ph.players[turn_number % NUM_PLAYERS];
+string Board::move(string link, string dir) {
+    // Check if link is alive
 
-    // Reject move (return) if there isn't a piece on "from" coords
-
-    // Check if "to" is OOB
-
-    // If "to" is OOB, check if it's on the opposite side
-
-    // Otherwise, reject move
-
-    // Reject move if there's a friendly piece on "to"
-
-    // Check if there's a port on the "to" coords
-
-    // Check if there's an enemy piece on "to"
-
-    // Otherwise, just 
+    // Check if 
 
     turn_number++;
+    ability_used = false;
 }
+
+string Board::useAbility(char ability, Coords coords, string link) {
+    if (ability_used) {
+        return "Invalid input: ability has already been used this turn";
+    }
+    ability_used = true;
+
+    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link,);
+}
+

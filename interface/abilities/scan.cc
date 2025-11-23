@@ -10,6 +10,6 @@ using namespace std;
 export class Scan : public Ability {
     public:
         Scan();
-        bool usePower(Player & p1, Player &p2, Board & b, Coords c) override;
+        string usePower(Board &b, Coords &c, Link* link) override;
 
 };

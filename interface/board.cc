@@ -28,26 +28,27 @@ export class Board : public ISubject {
         {{0, 3}, {0, 4}}
     }
 
-    PlayerHeader ph;
+    
+    bool ability_used;
 
     bool validPos(const Coords c);
     void initializePlayer(Player* p);
 
     public:
-        /**
-         * A simple struct for holding the information of a cell
+    /**
+     * A simple struct for holding the information of a cell
          */
         struct Cell {
             int player; // Player number that the item in the cell belongs to: 0 if N/A
             char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty
             int level; // level of the link in the cell, or 0 if there isn't a link in the cell
-
+            
             /**
              * Remove items from cell, clearing fields
              */
             void clear();
         }
-
+        
         static inline const int NUM_ROWS = 8;
         static inline const int NUM_COLS = 8;
         static inline const int NUM_PLAYERS = 2;
@@ -67,6 +68,7 @@ export class Board : public ISubject {
          * "1V2": level 2 virus
          */
         vector<vector<Cell>> board;
+        PlayerHeader ph;
 
         /**
          * Variable to store the turn number
@@ -76,5 +78,8 @@ export class Board : public ISubject {
 
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;
-        void playTurn(int turn_number);
+        string move(string link, string dir);
+        string useAbility(char ability, Coords coords = {-1, -1}, string link = "") {
+
+
 };

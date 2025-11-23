@@ -8,6 +8,5 @@ import Player;
 export class Download : public Ability {
     public:
         Download();
-        bool usePower(Player & p1, Player &p2, Board & b, Coords c) override;
-
+        string usePower(Board &b, Coords &c, Link* link) override;
 };

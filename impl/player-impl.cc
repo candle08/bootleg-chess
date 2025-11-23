@@ -48,6 +48,29 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
     }
 }
 
+Link* Player::getLinkPointerFromString(string link) {
+    if (link == "") {
+        return nullptr;
+    }
+
+    if (link[0] == 'D') {
+        return all_data[link[1] - '1'];
+    }
+    return all_virus[link[1] - '1'];
+}
+
+string Player::useAbility(char ability, Board& b, Coords& c, string link) {
+    for (auto it = abilities.begin(); it != abilities.end(); it++) {
+        if (it->name == ability) {
+            Link* link_pointer = getLinkPointerFromString(link_pointer)
+            string ret_val = it->usePower(b, c, link_pointer);
+            abilities.erase(it);
+            return ret_val;
+        }
+    }   
+    return "Invalid input: player does not have that ability";
+}
+
 Player::~Player() {
     for (int i = 0; i < all_virus.size(); i++) {
         delete all_virus[i];

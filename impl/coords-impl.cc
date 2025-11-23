@@ -1,4 +1,4 @@
 module Coords
 bool Coords::operator==(const Coords other) {
-    return (other.x == this->x && other.y == this->y);
+    return (other.r == r && other.c == c);
 }
