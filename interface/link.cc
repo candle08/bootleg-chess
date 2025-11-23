@@ -1,11 +1,23 @@
 export module Link;
 import Coords;
 
-export class Link {
+export struct Link {
     int level;
-    Coords c;
+    Coords coords;
+    string type;
 
-    public:
-        Link(int level, Coords c);
-        Link(int level, int r, int c);
-};
+    Link(int level, Coords coords);
+
+    /**
+     * Update the coords of link
+     * @param row The new row of the link
+     * @param col The new col of the link
+     */
+    void move(int row, int col);
+
+    /**
+     * Update the coords of the link, but with a Coords parameter
+     * @param new_coords The new coords of the link
+     */
+    void move(Coords new_coords);
+}; 
