@@ -12,7 +12,7 @@ using namespace std;
 export class Board : public ISubject {
     /** 
      * A matrix of coordinates storing the starting coords of links
-     * The vector at index i is the positions for the ith player's links
+     * The vector at index i is the positions for the i+1th player's links
      */ 
     const vector<vector<Coords>> link_starting_coords = {
         {{7, 0}, {7, 1}, {7, 2}, {6, 3}, {6, 4}, {7, 5}, {7, 6}, {7, 7}},
@@ -21,7 +21,7 @@ export class Board : public ISubject {
 
     /**
      * A matrix of coordinates storing the locations for server ports
-     * The vector at index i is the positions for the ith player's server ports
+     * The vector at index i is the positions for the i+1th player's server ports
      */
     const vector<vector<Coords>> server_port_coords = {
         {{7, 3}, {7, 4}},
