@@ -90,6 +90,12 @@ o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 o/coords.o: interface/coords.cc
 	$(CXX) $(CXXFLAGS) -c interface/coords.cc
 
+o/display.o: interface/display.cc o/board.o o/gui.o
+	$(CXX) $(CXXFLAGS) -c interface/display.cc
+
+o/terminal.o: interface/terminal.cc o/board.o o/gui.o
+	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
+
 o/coords-impl.o: interface/coords-impl.cc
 	$(CXX) $(CXXFLAGS) -c interface/coords-impl.cc
 
@@ -114,6 +120,12 @@ o/player-impl.o: impl/player-impl.cc o/link-boost.o o/firewall.o o/polarize.o o/
 o/virus-impl.o: impl/virus-impl.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c impl/virus-impl.cc
 
+o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gui.o
+	$(CXX) $(CXXFLAGS) -c impl/terminal-impl.cc
+
+o/display-impl.o: impl/display-impl.cc o/board.o o/gui.o
+	$(CXX) $(CXXFLAGS) -c impl/display-impl.cc
+
 o/download-impl.o: impl/abilities/download-impl.cc o/coords.o o/player.o p/board.o
 	$(CXX) $(CXXFLAGS) -c impl/download-impl.cc
 
@@ -122,6 +134,7 @@ o/firewall-impl.o: impl/abilities/firewall-impl.cc o/coords.o o/player.o p/board
 
 o/link-boost-impl.o: impl/abilities/link-boost-impl.cc o/coords.o o/player.o p/board.o
 	$(CXX) $(CXXFLAGS) -c impl/link-boost-impl.cc
+
 o/polarize-impl.o: impl/abilities/polarize-impl.cc o/coords.o o/player.o p/board.o
 	$(CXX) $(CXXFLAGS) -c impl/polarize-impl.cc
 
