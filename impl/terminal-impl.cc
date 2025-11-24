@@ -9,7 +9,10 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player) {
     o << "Downloaded: " << ph[player - 1].num_data_downloaded << "D, " << ph[player - 1].num_virus_downloaded "V" << endl;
     o << "Abilities: " << ph[player-1].abilities.size() << endl;
     for (int i = 0; i < NUM_COLS; i ++) {
-        o << char(61 + i) << ": " << endl;
+        o << char(61 + i) << ": " << ;
+        if (i == NUM_COLS/2) {
+            o << endl;
+        }
     }
 }
 
@@ -45,5 +48,12 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player) {
     }
 
     o << endl;
+
+    // currently this blindly prints out the player info; will have to update so it only prints the obscured version
+    for (int i = 0; i < NUM_PLAYERS; i++) {
+        if (i != player - 1) {
+            print_player_info(o, b, ph, i);
+        }
+    }
     return o;
 }

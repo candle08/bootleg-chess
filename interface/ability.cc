@@ -22,4 +22,3 @@ export class Ability {
         virtual string usePower(Board &b, Coords &c, Link* link);
         virtual ~Ability() = 0;
 };
-// hi
