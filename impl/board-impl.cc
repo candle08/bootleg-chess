@@ -18,7 +18,8 @@ void Cell::clear() {
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     turn_number = 0;
     ability_used = false;
-    
+
+    // Create the players
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
         Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i]};
@@ -50,7 +51,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
-            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {0, 'S', 0};
+            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0};
         }
     }
 }
@@ -76,4 +77,5 @@ string Board::useAbility(char ability, Coords coords, string link) {
 
     return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link,);
 }
+
 
