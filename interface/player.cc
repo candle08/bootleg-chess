@@ -25,6 +25,8 @@ export class Player {
          * An array of links that the player has downloaded
         */
         vector<Link *> downloaded;
+        int num_virus_downloaded;
+        int num_data_downloaded;
 
         /**
          * Returns a pointer to the corresponding virus or data that the string represents
