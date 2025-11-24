@@ -6,6 +6,6 @@ using namespace std;
 
 export class Terminal : public GUI {
     public:
-        &ostream operator<<(&, Board &b, int player);
+        &ostream operator<<(&, Board &b, PlayerHeader & ph, int player);
         void notify(const Board & b) override;
 };

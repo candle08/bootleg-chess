@@ -20,6 +20,11 @@ export class Player {
          * @param positions A size-8 vector of the corodinates of the links
          */
         Player(string link_orderings, string abilities_selected, vector<Coords> positions)
+        
+        /**
+         * An array of links that the player has downloaded
+        */
+        vector<Link *> downloaded;
 
         /**
          * Returns a pointer to the corresponding virus or data that the string represents

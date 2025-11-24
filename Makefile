@@ -81,7 +81,7 @@ o/board.o: interface/board.cc o/player-header.o o/link.o o/isubject.o o/iobserve
 o/gui.o: interface/gui.cc o/observer.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/gui.cc
 	
-o/terminal.o: interface/terminal.cc o/gui.o o/board.o
+o/terminal.o: interface/terminal.cc o/gui.o o/board.o o/player-header.o
 	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
 	
 o/graphic.o: interface/graphic.cc o/gui.o o/board.o
@@ -92,9 +92,6 @@ o/coords.o: interface/coords.cc
 
 o/display.o: interface/display.cc o/board.o o/gui.o
 	$(CXX) $(CXXFLAGS) -c interface/display.cc
-
-o/terminal.o: interface/terminal.cc o/board.o o/gui.o
-	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
 
 o/coords-impl.o: interface/coords-impl.cc
 	$(CXX) $(CXXFLAGS) -c interface/coords-impl.cc
@@ -120,7 +117,7 @@ o/player-impl.o: impl/player-impl.cc o/link-boost.o o/firewall.o o/polarize.o o/
 o/virus-impl.o: impl/virus-impl.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c impl/virus-impl.cc
 
-o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gui.o
+o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gui.o o/player-header.o
 	$(CXX) $(CXXFLAGS) -c impl/terminal-impl.cc
 
 o/display-impl.o: impl/display-impl.cc o/board.o o/gui.o
