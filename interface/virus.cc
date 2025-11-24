@@ -1,11 +1,7 @@
 export module Virus;
+import Link;
 import Coords;
 
-export class Virus : public Link {
-    int level;
-    Coords c;
-
-    public:
-    Virus(int level, Coords c);
-    ~Virus() = default;
+export struct Virus : public Link {
+    Virus(int level, Coords coords);
 };

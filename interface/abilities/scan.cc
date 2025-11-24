@@ -5,9 +5,11 @@ import Coords;
 import Ability;
 import Player;
 
+using namespace std;
+
 export class Scan : public Ability {
-    string name;
     public:
-    use_power(Player & p1, Player &p2, Board & b, Coords c);
+        Scan();
+        string usePower(Board &b, Coords &c, Link* link) override;
 
 };
