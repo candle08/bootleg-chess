@@ -11,6 +11,12 @@ export class Player {
     vector<Virus *> all_virus;
     vector<Data *> all_data;
     vector<Ability *> abilities;
+    /**
+     * An array of links that the player has downloaded
+    */
+    vector<Link *> downloaded;
+    int num_virus_downloaded;
+    int num_data_downloaded;
 
     public:
         /**
@@ -21,12 +27,7 @@ export class Player {
          */
         Player(string link_orderings, string abilities_selected, vector<Coords> positions)
         
-        /**
-         * An array of links that the player has downloaded
-        */
-        vector<Link *> downloaded;
-        int num_virus_downloaded;
-        int num_data_downloaded;
+        
 
         /**
          * Returns a pointer to the corresponding virus or data that the string represents
