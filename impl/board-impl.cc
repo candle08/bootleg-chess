@@ -10,9 +10,9 @@ import <vector>;
 using namespace std;
 
 void Cell::clear() {
-    player = 0;
+    player = -1;
     item = '\0';
-    level = 0;
+    level = -1;
 }
 
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
@@ -77,5 +77,6 @@ string Board::useAbility(char ability, Coords coords, string link) {
 
     return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link,);
 }
+
 
 
