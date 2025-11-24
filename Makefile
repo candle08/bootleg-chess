@@ -10,7 +10,7 @@ IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/play
 
 HARNESS_OBJ = o/main.o
 
-HEADERS = iostream vector algorithm string fstream
+HEADERS = iostream vector algorithm string fstream map
 
 ALL_OBJS = $(INTERFACE_OBJS) $(IMPL_OBJS) $(HARNESS_OBJ)
 
