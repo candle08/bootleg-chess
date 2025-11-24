@@ -9,3 +9,5 @@ export class Terminal : public GUI {
         &ostream operator<<(&, Board &b, PlayerHeader & ph, int player);
         void notify(const Board & b) override;
 };
+
+void print_player_info(&ostream o, Board &b, PlayerHeader & ph, int player);
