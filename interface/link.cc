@@ -5,6 +5,7 @@ export struct Link {
     int level;
     Coords coords;
     string type;
+    bool download_status = false;
 
     Link(int level, Coords coords);
 
@@ -13,4 +14,5 @@ export struct Link {
      * @param new_coords The new coords of the link
      */
     void move(Coords new_coords);
+
 }; 
