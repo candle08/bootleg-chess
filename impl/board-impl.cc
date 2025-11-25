@@ -118,6 +118,7 @@ string Board::move(char link, string dir) {
     turn_number++;
     ability_used = false;
     
+    return "";
     // Notify the observers
 }
 
