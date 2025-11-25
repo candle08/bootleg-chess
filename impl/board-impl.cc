@@ -112,9 +112,12 @@ string Board::move(char link, string dir) {
         if (link_ptr->level >= new_place.level) {
             ph.players[player_id]->download(ph.player[new_place.player]->getLinkPointerFromChar(new_place.item));
             link_ptr->coords = {new_posn.r, new_posn.c};
+            board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level};
         } else {
             ph.players[new_place.player]->download(link_ptr);
         }
+    } else {
+        board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level};
     }
 
     // Using firewall ability after move has been made
