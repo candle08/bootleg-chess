@@ -19,6 +19,6 @@ export class Ability {
          * @param coords A reference to the coordinates of the ability, or {-1, -1} if not applicable
          * @param link A pointer to the link targeted in the ability, or nullptr if not applicable
          */
-        virtual string usePower(Board &b, Coords &c, Link* link);
+        virtual string usePower(Board &b, Coords &c, Link* link, Player * p);
         virtual ~Ability() = 0;
 };

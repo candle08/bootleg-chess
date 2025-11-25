@@ -9,5 +9,5 @@ using namespace std;
 export class DoubleDown : public Ability {
     public:
         DoubleDown();
-        string usePower(Board &b, Coords &c, Link* link) override;
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
 };

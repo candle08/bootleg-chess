@@ -9,5 +9,5 @@ using namespace std;
 export class SmallSwap : public Ability {
     public:
         SmallSwap();
-        string usePower(Board &b, Coords &c, Link* link) override;
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
 };

@@ -10,6 +10,6 @@ using namespace std;
 export class LinkBoost : public Ability {
     public:
         LinkBoost();
-        string usePower(Board &b, Coords &c, Link* link) override;
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
 
 };

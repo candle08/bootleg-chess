@@ -9,7 +9,5 @@ using namespace std;
 
 export class Scan : public Ability {
     public:
-        Scan();
-        string usePower(Board &b, Coords &c, Link* link) override;
-
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
 };

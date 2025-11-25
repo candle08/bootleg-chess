@@ -9,5 +9,5 @@ using namespace std;
 export class TwoSum : public Ability {
     public:
         TwoSum();
-        string usePower(Board &b, Coords &c, Link* link) override;
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
 };

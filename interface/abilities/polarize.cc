@@ -9,7 +9,7 @@ using namespace std;
 
 export class Polarize : public Ability {
     public:
-        Polarize();
-        string usePower(Board &b, Coords &c, Link* link) override;
+        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
+
 
 };
