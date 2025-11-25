@@ -28,6 +28,7 @@ export class Board : public ISubject {
         {{0, 3}, {0, 4}}
     }
 
+   
     
     bool ability_used;
 

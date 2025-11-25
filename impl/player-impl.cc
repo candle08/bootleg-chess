@@ -59,6 +59,14 @@ Link* Player::getLinkPointerFromString(string link) {
     return all_virus[link[1] - '1'];
 }
 
+Link* Player::getLinkPointerFromChar(char link) {
+    if (link == '') {
+        return nullptr;
+    }
+
+    
+}
+
 string Player::useAbility(char ability, Board& b, Coords& c, string link) {
     for (auto it = abilities.begin(); it != abilities.end(); it++) {
         if (it->name == ability) {

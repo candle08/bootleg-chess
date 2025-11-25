@@ -88,7 +88,7 @@ string Board::move(char link, string dir) {
                 ph.players[player_id]->downloaded.emplace_back(link_ptr);
             }
         } else {
-            if (link_ptr->coords.r + 1 > 7) {
+            if ((new_posn.r + 1 > 7)) {
                 link_ptr->download_status = true;
                 if (link_ptr->type == "virus") ++ph.players[player_id]->num_virus_downloaded;
                 if (link_ptr->type == "data") ++ph.players[player_id]->num_data_downloaded;
