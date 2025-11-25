@@ -70,45 +70,37 @@ string Board::move(char link, string dir) {
     if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
     }
-    // for player 1, start on rows 6 and 7. moving up means row decreases
-    // for player 2, start on rows 0 and 1. moving up means row increases
-    // p1, down means row increases
-    // p2, down means row decreases
-    // left and right same for p1, p2
+    
+    // up -> inc row
+    // down -> dec row
+    // 
     Coord new_posn = link_ptr->coords;
     // Check if the link will stay on the board
+    // check if moving onto board, server port, out of bounds, opponent's edge
     if (dir == "up") {
-        if (player_id == 0) {
-            new_posn.r - 1;
-            // if moved off opp's edge, or onto server port, remove piece from board
-            if ((new_posn.r < 0) || ((new_posn.r == 0) && (new_posn.c == 3 || new_posn.c == 4))) {
-                link_ptr->download_status = true;
-                if (link_ptr->type == "virus") ++ph.players[player_id]->num_virus_downloaded;
-                if (link_ptr->type == "data") ++ph.players[player_id]->num_data_downloaded;
-                ph.players[player_id]->downloaded.emplace_back(link_ptr);
-            }
-        } else {
-            if ((new_posn.r + 1 > 7)) {
-                link_ptr->download_status = true;
-                if (link_ptr->type == "virus") ++ph.players[player_id]->num_virus_downloaded;
-                if (link_ptr->type == "data") ++ph.players[player_id]->num_data_downloaded;
-                ph.players[player_id]->downloaded.emplace_back(link_ptr);
-            }
-
+        new_posn.r++;
+        if (new_posn.r >= NUM_ROWS ||
+            board[new_posn.r][new_posn.c].item == 'S' ||
+            ) {
+            // download
         }
+        // check if your link is in that spot
+        if ((board[new_posn.r][new_posn.c] == DATA) || board[new_posn.r][new_posn.c] == VIRUS) {
+            return "Invalid input: A Link already "
+        }
+
+        
     } else if (dir == "down") {
         // make sure you're not moving onto your own server ports
-        if (player_id == 0) {
-
-        } else {
-
-        }
+        new_posn.r--;
+        
     } else if (dir == "left") {
         // make sure you're not moving onto your own server ports
-
+        new_posn.c--;
 
     } else if (dir == "right") {
         // make sure you're not moving onto your own server ports
+        new_posn.c++;
 
 
     }
