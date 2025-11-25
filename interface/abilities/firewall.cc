@@ -10,6 +10,6 @@ using namespace std;
 export class Firewall : public Ability {
     public:
         Firewall();
-        string usePower(Board &b, Coords &c, Link* link, Player * p) override;
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
 
 };
