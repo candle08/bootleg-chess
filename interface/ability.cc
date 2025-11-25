@@ -1,14 +1,18 @@
 export module Ability;
 
+import <string>;
 import Coords;
+import Link;
 
 using namespace std;
+
+export class Player;
+export class Board;
 
 export class Ability {
     string name;
 
     public:
-        virtual Ability(string name);
 
         /**
          * Use the corresponding ability's power

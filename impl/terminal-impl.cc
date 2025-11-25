@@ -5,7 +5,7 @@ import <iostream>;
 
 using namespace std;
 
-void notify(const Board & b) {
+void notify(const IObserver & b) {
     printOutput(cout, b);
 }
 

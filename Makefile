@@ -27,13 +27,16 @@ $(ALL_OBJS): headers
 o/iobserver.o: interface/iobserver.cc
 	$(CXX) $(CXXFLAGS) -c interface/iobserver.cc
 
-o/isubject.o: interface/isubject.cc
+o/isubject.o: interface/isubject.cc o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c interface/isubject.cc
 
 o/coords.o: interface/coords.cc
 	$(CXX) $(CXXFLAGS) -c interface/coords.cc
 
-o/ability.o: interface/ability.cc o/coords.o
+o/link.o: interface/link.cc o/coords.o
+	$(CXX) $(CXXFLAGS) -c interface/link.cc
+
+o/ability.o: interface/ability.cc o/coords.o  o/link.o
 	$(CXX) $(CXXFLAGS) -c interface/ability.cc
 
 o/link-boost.o: interface/abilities/link-boost.cc o/ability.o
@@ -60,46 +63,40 @@ o/double-down.o: interface/abilities/double-down.cc o/ability.o o/coords.o
 o/small-swap.o: interface/abilities/small-swap.cc o/ability.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/abilities/small-swap.cc
 
-o/link.o: interface/abilities/link.cc o/coords.o
-	$(CXX) $(CXXFLAGS) -c interface/abilities/link.cc
-
 o/data.o: interface/data.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/data.cc
 
 o/virus.o: interface/virus.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
-o/player.o: interface/player.cc o/ability.o o/virus.o o/data.o
+o/player.o: interface/player.cc o/ability.o o/virus.o o/data.o o/link.o
 	$(CXX) $(CXXFLAGS) -c interface/player.cc
 
 o/player-header.o: interface/player-header.cc o/player.o
 	$(CXX) $(CXXFLAGS) -c interface/player-header.cc
 
-o/board.o: interface/board.cc o/player-header.o o/link.o o/isubject.o o/iobserver.o o/coords.o
+o/board.o: interface/board.cc o/player-header.o o/link.o o/isubject.o o/iobserver.o o/coords.o o/player.o 
 	$(CXX) $(CXXFLAGS) -c interface/board.cc
 
-o/gui.o: interface/gui.cc o/observer.o o/board.o
+o/gui.o: interface/gui.cc o/iobserver.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/gui.cc
 	
-o/terminal.o: interface/terminal.cc o/gui.o o/board.o o/player-header.o
+o/terminal.o: interface/terminal.cc o/gui.o o/board.o o/player-header.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
 	
-o/graphic.o: interface/graphic.cc o/gui.o o/board.o
+o/graphic.o: interface/graphic.cc o/gui.o o/board.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
-
-o/display.o: interface/display.cc o/board.o o/gui.o
-	$(CXX) $(CXXFLAGS) -c interface/display.cc
 
 o/coords-impl.o: interface/coords-impl.cc
 	$(CXX) $(CXXFLAGS) -c interface/coords-impl.cc
 
-o/board-impl.o: impl/board-impl.cc o/isubject.o o/iobserver.o o/link.o o/player-header.o o/coords.o
+o/board-impl.o: impl/board-impl.cc o/isubject.o o/iobserver.o o/link.o o/player-header.o o/coords.o o/virus.o o/data.o
 	$(CXX) $(CXXFLAGS) -c impl/board-impl.cc
 
 o/data-impl.o: impl/data-impl.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c impl/data-impl.cc
 
-o/graphic-impl.o: impl/graphic-impl.cc o/board.o
+o/graphic-impl.o: impl/graphic-impl.cc o/board.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c impl/graphic-impl.cc
 
 o/link-impl.o: impl/link-impl.cc o/coords.o
@@ -114,11 +111,8 @@ o/player-impl.o: impl/player-impl.cc o/link-boost.o o/firewall.o o/polarize.o o/
 o/virus-impl.o: impl/virus-impl.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c impl/virus-impl.cc
 
-o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gui.o o/player-header.o
+o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gui.o o/player-header.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c impl/terminal-impl.cc
-
-o/display-impl.o: impl/display-impl.cc o/board.o o/gui.o
-	$(CXX) $(CXXFLAGS) -c impl/display-impl.cc
 
 o/download-impl.o: impl/abilities/download-impl.cc o/coords.o o/player.o p/board.o
 	$(CXX) $(CXXFLAGS) -c impl/download-impl.cc

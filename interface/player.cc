@@ -1,14 +1,15 @@
 export module Player;
 import Virus;
 import Data;
-import Ability;
 import Coords;
+import Link;
 import <vector>;
+import <string>;
 
 using namespace std;
 
 export class Board;
-export class Ability
+export class Ability;
 
 export class Player {
     vector<Virus *> all_virus;
@@ -32,7 +33,7 @@ export class Player {
          * @param positions A size-8 vector of the corodinates of the links
          * @param id Player number, id is i for the i+1th player
          */
-        Player(string link_orderings, string abilities_selected, vector<Coords> positions, int id)
+        Player(string link_orderings, string abilities_selected, vector<Coords> positions, int id);
         
         
 

@@ -1,6 +1,8 @@
 export module Link;
 import Coords;
+import <string>;
 
+using namespace std; 
 export struct Link {
     int level; // level on a scale of 1 to 4
     Coords coords;

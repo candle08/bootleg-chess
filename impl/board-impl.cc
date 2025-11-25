@@ -4,18 +4,17 @@ import ISubject;
 import IObserver;
 import Link;
 import PlayerHeader;
-import Player;
+import Coords;
+import Virus;
+import Data;
+
 import <vector>;
-import <algorithm>
+import <algorithm>;
+import <string>;
 
 using namespace std;
 
-Cell::Cell() {
-    player = -1;
-    item = '\0';
-    level = -1;
-    firewall = false;
-}
+Cell::Cell() : player{-1}, item{'\0'}, level{-1}, firewall{false} {}
 
 void Cell::clear() {
     player = -1;
@@ -45,7 +44,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
 
     // Place player pieces
     for (int i = 0; i < NUM_PLAYERS; i++) {
-        Player* p = ph.player[i];
+        Player* p = ph.players[i];
 
         // Find viruses of player
         for (int j = 0; j < p->all_virus.size(); j++) {
@@ -81,11 +80,11 @@ string Board::move(char link, string dir) {
         return "Invalid input: Link is no longer alive";
     }
 
-    Coord new_posn = link_ptr->coords;
+    Coords new_posn = link_ptr->coords;
 
     // checking if user is not frozen from twosum
     if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
-        return "Invalid input: link is frozen for " + ((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2) + "more moves";
+        return "Invalid input: link is frozen for " + string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2)) + "more moves";
     }
     
     // Check if the link will stay on the board
@@ -118,7 +117,7 @@ string Board::move(char link, string dir) {
     
     if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
         // Opponent's edge
-        ph.players[player_id]->download(link_ptr);
+        ph.players[player_id]->download(link_ptr, *this);
 
     } else if (!isValidPos(new_posn)) {
         // Out of bounds
@@ -131,13 +130,13 @@ string Board::move(char link, string dir) {
 
     } else if (new_place.item == SERVER && new_place.player != player_id) {
         // Opponent's server port
-        ph.players[new_place.player]->download(link_ptr);
+        ph.players[new_place.player]->download(link_ptr, *this);
 
     } else if ((new_place.item == DATA || new_place.item == VIRUS) 
         && new_place.player != player_id) {
         // Moving onto opponent's link --> initiates a battle
         if (link_ptr->level >= new_place.level) {
-            ph.players[player_id]->download(ph.player[new_place.player]->getLinkPointerFromChar(new_place.item));
+            ph.players[player_id]->download(ph.players[new_place.player]->getLinkPointerFromChar(new_place.item), );
             link_ptr->coords = {new_posn.r, new_posn.c};
             board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level};
         } else {
@@ -201,11 +200,11 @@ int Board::getCurrentPlayerID() {
     return turn_number % NUM_PLAYERS;
 }
 
-void win(int index) {
+void Board::win(int index) {
     winner = index;
 }
 
-void checkWinCondition() {
+void Board::checkWinCondition() {
     int winner = -1;
     for (int i = 0; i < ph.players.size(); i++) {
         if (ph.players[i].alive) {
@@ -222,15 +221,15 @@ void checkWinCondition() {
     }
 }
 
-Board::subscribe(IObserver* o) {
+void Board::subscribe(IObserver* o) {
     observers.push_back(o);
 }
 
-Board::unsubscriber(IObserver* o) {
+void Board::unsubscribe(IObserver* o) {
     observers.erase(find(observers.begin(), observers.end(), o));
 }
 
-Board::notifyObservers() {
+void Board::notifyObservers() {
     for (auto o : observers) {
         o->notify(*this);
     }

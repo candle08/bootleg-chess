@@ -1,7 +1,6 @@
 module PlayerHeader;
 
-import vector;
-
+import <vector>;
 import Player;
 
 void Player::addPlayer(Player *p) {

@@ -7,7 +7,29 @@ import Coords;
 import <vector>;
 import <string>;
 
+export class Player;
+
 using namespace std;
+
+/**
+         * A simple struct for holding the information of a cell
+         */
+export struct Cell {
+    int player; // Player number that the item in the cell belongs to: 0 if N/A
+    char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty
+    int level; // level of the link in the cell, or 0 if there isn't a link in the cell
+    bool firewall; // whether or not a player has set a firewall at that square
+    
+    /**
+     * Overriding default constructor of cell to write specific values
+     */
+    Cell();
+
+    /**
+     * Remove items from cell, clearing fields
+     */
+    void clear();
+};
 
 export class Board : public ISubject {
     vector<IObserver*> observers;
@@ -26,9 +48,9 @@ export class Board : public ISubject {
      * The vector at index i is the positions for the i+1th player's server ports
      */
     const vector<vector<Coords>> server_port_coords = {
-        {{0, 3}, {0, 4}}
-        {{7, 3}, {7, 4}},
-    }
+        {{0, 3}, {0, 4}},
+        {{7, 3}, {7, 4}}
+    };
 
     /**
      * A matrix of characters storing the symbol for each
@@ -38,7 +60,7 @@ export class Board : public ISubject {
     const vector<vector<char>> symbols = {
         {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
         {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
-    }
+    };
     
     /**
      * Variable that indicates whether or not an ability
@@ -47,26 +69,6 @@ export class Board : public ISubject {
     bool ability_used;
 
     public:
-    /**
-     * A simple struct for holding the information of a cell
-         */
-        struct Cell {
-            int player; // Player number that the item in the cell belongs to: 0 if N/A
-            char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty
-            int level; // level of the link in the cell, or 0 if there isn't a link in the cell
-            bool firewall; // whether or not a player has set a firewall at that square
-            
-            /**
-             * Overriding default constructor of cell to write specific values
-             */
-            Cell();
-
-            /**
-             * Remove items from cell, clearing fields
-             */
-            void clear();
-        }
-        
         // Constants related to board size, players, and board setup
         static inline const int NUM_ROWS = 8;
         static inline const int NUM_COLS = 8;
@@ -150,7 +152,7 @@ export class Board : public ISubject {
         /**
          * @param p
          */
-        void win(Player* p);
+        void win(int p);
 
         /**
          * 
