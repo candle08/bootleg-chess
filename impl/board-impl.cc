@@ -123,6 +123,7 @@ string Board::move(char link, string dir) {
         ability_used = false;
     }
     // Notify the observers
+    return "";
 }
 
 string Board::useAbility(char ability, Coords coords, char link1, char link2) {
