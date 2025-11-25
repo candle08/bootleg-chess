@@ -37,7 +37,7 @@ export class Player {
          * Returns a pointer to the corresponding virus or data that the string represents
          * It is assumed that the string is of valid format
          */
-        Link* getLinkPointerFromSymbol(char link);
+        Link* getLinkPointerFromChar(char link);
 
         /**
          * Use and remove the ability represented by the char
