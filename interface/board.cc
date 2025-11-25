@@ -128,14 +128,18 @@ export class Board : public ISubject {
         bool isValidPos(const Coords coords) const;
 
         /**
+         * Moves link in the direction dir
          * 
-         * @param link A character representing a link
+         * @param link A character representing a link, from the character matrix
+         * "symbol" above
          * @param dir A string representing a direction out of the four:
          * "up", "down", "left", "right"
          */
         string move(char link, string dir);
 
         /**
+         * Use and remove the ability of the current player represented by the char
+         * See the "Player" module for more information
          * @param ability
          * @param coords
          * @param link1
