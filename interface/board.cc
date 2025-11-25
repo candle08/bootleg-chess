@@ -28,7 +28,11 @@ export class Board : public ISubject {
         {{7, 3}, {7, 4}},
     }
 
-
+    /**
+     * A matrix of characters storing the symbol for each
+     * player's links. The vector at index i is the symbols of the i+1th
+     * player's links
+     */
     const vector<vector<char>> symbols = {
         {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
         {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}

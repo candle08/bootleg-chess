@@ -85,9 +85,9 @@ string Board::move(char link, string dir) {
     // Using LinkBoost ability
     if (link_ptr->linkboost) {
         if (dir == "up") {
-            new_posn.r+= 2;
-        } else if (dir == "down") {
             new_posn.r-= 2;
+        } else if (dir == "down") {
+            new_posn.r+= 2;
         } else if (dir == "left") {
             new_posn.c-= 2;
         } else if (dir == "right") {
@@ -95,9 +95,9 @@ string Board::move(char link, string dir) {
         }
     } else {
         if (dir == "up") {
-            new_posn.r++;
-        } else if (dir == "down") {
             new_posn.r--;
+        } else if (dir == "down") {
+            new_posn.r++;
         } else if (dir == "left") {
             new_posn.c--;
         } else if (dir == "right") {
