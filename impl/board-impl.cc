@@ -66,40 +66,55 @@ string Board::move(char link, string dir) {
 
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromSymbol(link);
 
-
     if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
     }
-    
-    // up -> inc row
-    // down -> dec row
-    // 
+
     Coord new_posn = link_ptr->coords;
+    Cell new_place = board[new_posn.r][new_posn.c];
+
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
     if (dir == "up") {
         new_posn.r++;
-        if (new_posn.r >= NUM_ROWS ||
-            board[new_posn.r][new_posn.c].item == 'S' ||
-            ) {
+        if (new_posn.r >= NUM_ROWS || new_place.item == 'S' ||
+            ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id)) {
             // download
         }
-        // check if your link is in that spot
-        if ((board[new_posn.r][new_posn.c] == DATA) || board[new_posn.r][new_posn.c] == VIRUS) {
-            return "Invalid input: A Link already "
+        // Check if your link is in that spot
+        if ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id) {
+            return "Invalid input: One of your Links already occupies this cell";
         }
 
         
     } else if (dir == "down") {
+        new_posn.r--;
+        
+        // if opponent's link, download
+        if ((new_place.item == DATA || new_place.item == VIRUS) && (new_place.player != player_id)) {
+            // download
+        }
+
+        
         // make sure you're not moving onto your own server ports
+        // check if your link is in that spot
+        // check out of bounds
         new_posn.r--;
         
     } else if (dir == "left") {
+        // if opponent's link, download
+        // if opponent's server port, it's downloaded by the opponent
         // make sure you're not moving onto your own server ports
+        // check if your link is in that spot
+        // check out of bounds
         new_posn.c--;
 
     } else if (dir == "right") {
+        // if opponent's link, download
+        // if opponent's server port, it's downloaded by the opponent
         // make sure you're not moving onto your own server ports
+        // check if your link is in that spot
+        // check out of bounds
         new_posn.c++;
 
 
