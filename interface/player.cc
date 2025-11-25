@@ -43,6 +43,10 @@ export class Player {
          * Use and remove the ability represented by the char
          * Returns the empty string on success, or an error message on failure
          * It is assumed that ability is valid (a capitalized letter representing the ability)
+         * @param ability
+         * @param b
+         * @param link1
+         * @param link2
          */
         string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
 

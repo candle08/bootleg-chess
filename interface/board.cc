@@ -42,7 +42,7 @@ export class Board : public ISubject {
     
     /**
      * Variable that indicates whether or not an ability
-     * has been used
+     * has been used.
      */
     bool ability_used;
 
@@ -107,7 +107,7 @@ export class Board : public ISubject {
 
         /**
          * Variable that indicates whether the double down ability is
-         * in effect for the current turn
+         * in effect for the current turn.
          */
         bool double_down;
 
@@ -128,8 +128,8 @@ export class Board : public ISubject {
         bool isValidPos(const Coords coords) const;
 
         /**
-         * Moves link in the direction dir
-         * 
+         * Moves link in the direction dir.
+         * Returns the empty string on success, or an error message on failure
          * @param link A character representing a link, from the character matrix
          * "symbol" above
          * @param dir A string representing a direction out of the four:
@@ -140,7 +140,7 @@ export class Board : public ISubject {
         /**
          * Use and remove the ability of the current player represented by the char
          * See the "Player" module for more information
-         * @param ability
+         * @param ability 
          * @param coords
          * @param link1
          * @param link2
