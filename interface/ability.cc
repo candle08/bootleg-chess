@@ -1,7 +1,5 @@
 export module Ability;
 
-import Player;
-import Board;
 import Coords;
 
 using namespace std;

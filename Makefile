@@ -10,7 +10,7 @@ IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/play
 
 HARNESS_OBJ = o/main.o
 
-HEADERS = iostream vector algorithm string fstream map
+HEADERS = iostream vector algorithm fstream map string
 
 ALL_OBJS = $(INTERFACE_OBJS) $(IMPL_OBJS) $(HARNESS_OBJ)
 
@@ -30,8 +30,8 @@ o/iobserver.o: interface/iobserver.cc
 o/isubject.o: interface/isubject.cc
 	$(CXX) $(CXXFLAGS) -c interface/isubject.cc
 
-o/coords.o: coords.cc
-	$(CXX) $(CXXFLAGS) -c coords.cc
+o/coords.o: interface/coords.cc
+	$(CXX) $(CXXFLAGS) -c interface/coords.cc
 
 o/ability.o: interface/ability.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/ability.cc
@@ -86,9 +86,6 @@ o/terminal.o: interface/terminal.cc o/gui.o o/board.o o/player-header.o
 	
 o/graphic.o: interface/graphic.cc o/gui.o o/board.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
-	
-o/coords.o: interface/coords.cc
-	$(CXX) $(CXXFLAGS) -c interface/coords.cc
 
 o/display.o: interface/display.cc o/board.o o/gui.o
 	$(CXX) $(CXXFLAGS) -c interface/display.cc

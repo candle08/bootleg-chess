@@ -7,6 +7,9 @@ import <vector>;
 
 using namespace std;
 
+export class Board;
+export class Ability
+
 export class Player {
     vector<Virus *> all_virus;
     vector<Data *> all_data;
