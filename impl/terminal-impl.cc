@@ -38,7 +38,7 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
 
 // currently the output is designed for a two-player setup
 // modifications come
-&ostream Terminal::operator<<(ostream & o, Board & b, PlayerHeader & ph, int player) {
+ostream& Terminal::operator<<(ostream & o, Board & b, PlayerHeader & ph, int player) {
 
     print_player_info(o, b, ph, player, true);
     // Symbol of border printed
