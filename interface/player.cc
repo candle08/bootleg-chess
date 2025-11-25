@@ -49,7 +49,7 @@ export class Player {
          * Downloads the link from the given Link*
          * Also updates the relevant fields of the link
          */
-        void download(Link* link);
+        void download(Link* link, Board& b);
 
         ~Player();
 };
