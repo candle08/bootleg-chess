@@ -38,6 +38,7 @@ export class Player {
          * It is assumed that the string is of valid format
          */
         Link* getLinkPointerFromString(string link);
+        Link* getLinkPointerFromSymbol(char link);
 
         /**
          * Use and remove the ability represented by the char
