@@ -6,11 +6,14 @@ string Polarize::usePower(Board &b, Coords &c, Link * link, Player * p) override
     if (link->type == "data") {
         link->type = "virus";
         p->all_data.erase(find(p->all_data.begin(), p->all_data.end(), this));
+        p->all_virus.push_back(link);
     } else {
         link->type = "data";
         p->all_virus.erase(find(p->all_virus.begin(), p->all_virus.end(), this));
+        p->all_data.push_back(link);
+
     }
-    
+
     // iterates through abilities and deletes that ability
     p->abilities.erase(find(p->abilities.begin(), p->abilities.end(), this));
 }

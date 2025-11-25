@@ -46,6 +46,7 @@ export class Board : public ISubject {
             int player; // Player number that the item in the cell belongs to: 0 if N/A
             char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty
             int level; // level of the link in the cell, or 0 if there isn't a link in the cell
+            bool firewall; // whether or not a player has set a firewall at that square
             
             /**
              * Remove items from cell, clearing fields
