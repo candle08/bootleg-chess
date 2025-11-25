@@ -153,3 +153,4 @@ main.o: main.cc o/board.o o/ability.o o/data.o o/virus.o o/display.o o/graphic.o
 clean:
 	rm -f $(EXEC) *.o o/*.gcm
 	rm -rf gcm.cache
+	
