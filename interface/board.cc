@@ -113,18 +113,24 @@ export class Board : public ISubject {
 
         /**
          * Initializes a Board class with the passed parameters
-         * @param link_orderings 
-         * @param ability_selections
+         * @param link_orderings A vector of each player's link orderings, where
+         * the vector at index i represents the i+1th player's link orderings.
+         * @param ability_selections A vector of each player's 5 selected abilities,
+         * where the vector at index i represents the i+1th player's abilities selected.
+         * See the "Player" module for more information
          */
         Board(vector<string> link_orderings, vector<string> ability_selections);
 
         /**
-         * 
+         * Determines whether coords is a valid position on the board
+         * @param coords A coordinate (r, c)
          */
         bool isValidPos(const Coords coords) const;
 
         /**
          * 
+         * @param link
+         * @param dir
          */
         string move(string link, string dir);
 
