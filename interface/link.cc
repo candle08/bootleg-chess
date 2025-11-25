@@ -9,7 +9,7 @@ export struct Link {
     char symbol; // its symbol on the board
     bool revealed; // whether or not a link has been revealed
     bool linkboost; // whether or not a link has been boosted
-    int freeze; // number of frozen turns from double-down ability; when double-down is called, we set freeze = level, and after every turn we decrement freeze by 1
+    int frozen_on_turn; // number of frozen turns from double-down ability; when double-down is called, we set freeze = level, and after every turn we decrement freeze by 1
 
     Link(int level, Coords coords, string type, char symbol, bool revealed, bool linkboost);
 

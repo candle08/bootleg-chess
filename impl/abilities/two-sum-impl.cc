@@ -9,7 +9,7 @@ using namespace std;
 
 string SmallSum::usePower(Board & b, Coords & b, Link * link1, Link * link2, Player * p) override {
     if (link1) {
-        link1->freeze += link1->level; // since we don't know if this is their first or second time using two-sum
+        link1->frozen_on_turn = turn_number;
         return "";
     } else {
         return "link1 nullptr gg";

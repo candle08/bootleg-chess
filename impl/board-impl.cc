@@ -75,9 +75,10 @@ string Board::move(char link, string dir) {
 
     Coord new_posn = link_ptr->coords;
 
-    if (link->freeze != 0) {f
-        return "Invalid input: link is frozen for " + link->freeze + "more moves";
+    if (link->frozen_on_turn != -1 && turn_number - strength <= link->frozen_on_turn) {
+        return "Invalid input: link is frozen for " + strength - (turn_number - link->frozen_on_turn) + "more moves";
     }
+    
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
     // Using LinkBoost ability
