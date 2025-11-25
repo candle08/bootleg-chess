@@ -12,9 +12,6 @@ export class Player {
     vector<Data *> all_data;
     vector<Ability *> abilities;
 
-    map<char, Link *> positions; // A hashmap of the position association of each Link for a player
-
-
     /**
      * An array of links that the player has downloaded
     */
