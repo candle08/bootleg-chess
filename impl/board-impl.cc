@@ -77,15 +77,29 @@ string Board::move(char link, string dir) {
     Coord new_posn = link_ptr->coords;
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
-    if (dir == "up") {
-        new_posn.r++;
-    } else if (dir == "down") {
-        new_posn.r--;
-    } else if (dir == "left") {
-        new_posn.c--;
-    } else if (dir == "right") {
-        new_posn.c++;
+    // Using LinkBoost ability
+    if (getLinkPointerFromChar(link)->linkboost = true) {
+        if (dir == "up") {
+            new_posn.r+= 2;
+        } else if (dir == "down") {
+            new_posn.r-= 2;
+        } else if (dir == "left") {
+            new_posn.c-= 2;
+        } else if (dir == "right") {
+            new_posn.c+= 2;
+        }
+    } else {
+        if (dir == "up") {
+            new_posn.r++;
+        } else if (dir == "down") {
+            new_posn.r--;
+        } else if (dir == "left") {
+            new_posn.c--;
+        } else if (dir == "right") {
+            new_posn.c++;
+        }
     }
+    
 
     Cell new_place = board[new_posn.r][new_posn.c];
     // Valid: opponent's edge
@@ -113,15 +127,12 @@ string Board::move(char link, string dir) {
         return "Invalid Input: You cannot move to this cell";
     }
 
-    // Using firewall ability after move has been made
-    if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
-        getLinkPointerFromChar(link)->revealed = true;
-        download(getLinkPointerFromChar(link), *this);
-    }
+    
 
     // Make sure previous spot is now empty cell
     board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1};
 
+    // Checking ability usage
     if (double_down) {
         double_down = false;
         ability_used = true;
@@ -129,6 +140,17 @@ string Board::move(char link, string dir) {
         turn_number++;
         ability_used = false;
     }
+
+    // Using firewall ability after move has been made
+    if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
+        getLinkPointerFromChar(link)->revealed = true;
+        if (getLinkPointerFromChar(link)->type = "virus") {
+            download(getLinkPointerFromChar(link), *this);
+        }
+    }
+
+    
+
     // Notify the observers
     return "";
 }
