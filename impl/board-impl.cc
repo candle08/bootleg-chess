@@ -86,21 +86,32 @@ string Board::move(char link, string dir) {
     }
 
     Cell new_place = board[new_posn.r][new_posn.c];
-    // valid: opponent's edge, server port, or link
-    if ((player_id == 0 && new_posn.r < 0) || 
-    (player_id == 1 && new_posn.r > NUM_ROWS) ||
-    ((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id)) {
-        //download
+    // Valid: opponent's edge
+    if ((player_id == 0 && new_posn.r < 0) || (player_id == 1 && new_posn.r > NUM_ROWS)) {
+        ph.players[player_id]->download(link_ptr);
+    }
+    // Valid: server port, or link
+    if ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id) {
+        ph.players[player_id]->download(ph.player[new_place.player]->getLinkPointerFromChar(new_place.item));
     }
 
-    // invalid: out of bounds, own server port, or own link
-    if ((!isValidPos(new_posn) && )|| 
+    if (new_place.item == 'S' && new_place.player != player_id) {
+        ph.players[new_place.player]->download(link_ptr);
+    }
+
+    // Invalid: out of bounds, own server port, or own link
+    if (!isValidPos(new_posn)|| 
     ((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id)) {
         return "Invalid Input: You cannot move to this cell";
     }
 
+    // Make sure previous spot is now empty cell
+    board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1};
+
     turn_number++;
     ability_used = false;
+    
+    // Notify the observers
 }
 
 string Board::useAbility(char ability, char link1, Coords coords, char link2) {
