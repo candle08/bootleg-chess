@@ -67,7 +67,7 @@ export class Board : public ISubject {
             void clear();
         }
         
-        
+        // Constants related to board size, players, and board setup
         static inline const int NUM_ROWS = 8;
         static inline const int NUM_COLS = 8;
         static inline const int NUM_PLAYERS = 2;
@@ -86,6 +86,11 @@ export class Board : public ISubject {
          * See "Cell" struct for more information
          */
         vector<vector<Cell>> board;
+
+        /**
+         * A PlayerHeader containing all players.
+         * See "PlayerHeader" module for more information
+         */
         PlayerHeader ph;
 
         /**
@@ -94,9 +99,21 @@ export class Board : public ISubject {
          */
         int turn_number;
 
+        /**
+         * Variable to store the winner of the game, where the winner is
+         * the winner-th player. When winner == -1, there is no winner.
+         */
         int winner;
 
+        /**
+         * Variable that indicates whether the double down ability is in effect
+         * for the current turn or not
+         */
         bool double_down;
+
+        /**
+         * Variable
+         */
         bool link_boost;
 
         /**
