@@ -82,11 +82,11 @@ string Board::move(char link, string dir) {
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
     // Using LinkBoost ability
-    if (getLinkPointerFromChar(link)->linkboost = true) {
+    if (getLinkPointerFromChar(link)->linkboost == true) {
         if (dir == "up") {
-            new_posn.r+= 2;
+            new_posn.r -= 2;
         } else if (dir == "down") {
-            new_posn.r-= 2;
+            new_posn.r += 2;
         } else if (dir == "left") {
             new_posn.c-= 2;
         } else if (dir == "right") {
@@ -94,9 +94,9 @@ string Board::move(char link, string dir) {
         }
     } else {
         if (dir == "up") {
-            new_posn.r++;
-        } else if (dir == "down") {
             new_posn.r--;
+        } else if (dir == "down") {
+            new_posn.r++;
         } else if (dir == "left") {
             new_posn.c--;
         } else if (dir == "right") {
