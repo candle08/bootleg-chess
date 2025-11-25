@@ -84,6 +84,7 @@ export class Board : public ISubject {
         int winner;
 
         bool double_down;
+        bool link_boost;
 
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;

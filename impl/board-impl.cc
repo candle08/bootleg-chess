@@ -66,6 +66,7 @@ bool Board::isValidPos(const Coords coords) const {
 string Board::move(char link, string dir) {
     // Check if link is alive
     int player_id = getCurrentPlayerID();
+    
 
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
@@ -116,14 +117,24 @@ string Board::move(char link, string dir) {
         }
     }
 
+    // Using firewall ability after move has been made
+    if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
+        getLinkPointerFromChar(link)->revealed = true;
+        download(getLinkPointerFromChar(link), *this);
+    }
+
     // Make sure previous spot is now empty cell
     board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1};
 
-    turn_number++;
-    ability_used = false;
-    
-    return "";
+    if (double_down) {
+        double_down = false;
+        ability_used = true;
+    } else {
+        turn_number++;
+        ability_used = false;
+    }
     // Notify the observers
+    return "";
 }
 
 string Board::useAbility(char ability, Coords coords, char link1, char link2) {
