@@ -101,23 +101,20 @@ export class Board : public ISubject {
 
         /**
          * Variable to store the winner of the game, where the winner is
-         * the winner-th player. When winner == -1, there is no winner.
+         * the winner-th player. When winner == -1, there is no winner
          */
         int winner;
 
         /**
-         * Variable that indicates whether the double down ability is in effect
-         * for the current turn or not
+         * Variable that indicates whether the double down ability is
+         * in effect for the current turn
          */
         bool double_down;
 
         /**
-         * Variable
-         */
-        bool link_boost;
-
-        /**
-         * 
+         * Initializes a Board class with the passed parameters
+         * @param link_orderings 
+         * @param ability_selections
          */
         Board(vector<string> link_orderings, vector<string> ability_selections);
 
