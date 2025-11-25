@@ -129,18 +129,22 @@ export class Board : public ISubject {
 
         /**
          * 
-         * @param link
-         * @param dir
+         * @param link A character representing a link
+         * @param dir A string representing a direction out of the four:
+         * "up", "down", "left", "right"
          */
-        string move(string link, string dir);
+        string move(char link, string dir);
 
         /**
-         * 
+         * @param ability
+         * @param coords
+         * @param link1
+         * @param link2
          */
         string useAbility(char ability, Coords coords = {-1, -1}, char link1 = '\0', char link2 = '\0');
        
         /**
-         * 
+         * @param p
          */
         void win(Player* p);
 
@@ -160,12 +164,12 @@ export class Board : public ISubject {
         Player* getCurrentPlayer();
 
         /**
-         * Adds an observer
+         * Adds an observer o
          */
         void subscribe(IObserver* o);
 
         /**
-         * Removes an observer
+         * Removes an observer o
          */
         void unsubscribe(IObserver* o);
 
