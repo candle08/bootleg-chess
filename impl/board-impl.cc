@@ -87,29 +87,33 @@ string Board::move(char link, string dir) {
     }
 
     Cell new_place = board[new_posn.r][new_posn.c];
-    // Valid: opponent's edge
+    
     if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
+        // Opponent's edge
         ph.players[player_id]->download(link_ptr);
-    }
-    
-    // Moving onto opponent's server port
-    if (new_place.item == SERVER && new_place.player != player_id) {
+
+    } else if (!isValidPos(new_posn)) {
+        // Out of bounds
+        return "Invalid Input: You cannot move to this cell";
+
+    } else if ((new_place.item == SERVER || new_place.item == DATA || new_place.item == VIRUS) 
+        && new_place.player == player_id) {
+        // Player's own links/servers
+        return "Invalid Input: You cannot move to this cell";
+
+    } else if (new_place.item == SERVER && new_place.player != player_id) {
+        // Opponent's server port
         ph.players[new_place.player]->download(link_ptr);
-    }
-    
-    // Moving onto opponent's link --> initiates a battle
-    if ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id) {
+
+    } else if ((new_place.item == DATA || new_place.item == VIRUS) 
+        && new_place.player != player_id) {
+        // Moving onto opponent's link --> initiates a battle
         if (link_ptr->level >= new_place.level) {
             ph.players[player_id]->download(ph.player[new_place.player]->getLinkPointerFromChar(new_place.item));
+            link_ptr->coords = {new_posn.r, new_posn.c};
         } else {
             ph.players[new_place.player]->download(link_ptr);
         }
-    }
-    
-    // Invalid: out of bounds, own server port, or own link
-    if (!isValidPos(new_posn)|| 
-    ((new_place.item == SERVER || new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id)) {
-        return "Invalid Input: You cannot move to this cell";
     }
 
     // Make sure previous spot is now empty cell
