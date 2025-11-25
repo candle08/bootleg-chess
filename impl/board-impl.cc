@@ -19,6 +19,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     turn_number = 0;
     ability_used = false;
     winner = -1;
+    double_down = false;
 
     // Create the players
     ph = PlayerHeader{};
@@ -124,9 +125,12 @@ string Board::useAbility(char ability, Coords coords, char link1, char link2) {
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
-    ability_used = true;
-
-    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
+    
+    string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
+    if (retval == "") {
+        ability_used = true;
+    }
+    return retval;
 }
 
 Player* Board::getCurrentPlayer() {
