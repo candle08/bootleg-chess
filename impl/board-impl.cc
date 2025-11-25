@@ -66,6 +66,7 @@ bool Board::isValidPos(const Coords coords) const {
 string Board::move(char link, string dir) {
     // Check if link is alive
     int player_id = getCurrentPlayerID();
+    
 
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
@@ -110,6 +111,11 @@ string Board::move(char link, string dir) {
     if (!isValidPos(new_posn)|| 
     ((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id)) {
         return "Invalid Input: You cannot move to this cell";
+    }
+
+    if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
+        getLinkPointerFromChar(link)->revealed = true;
+        download(getLinkPointerFromChar(link), *this);
     }
 
     // Make sure previous spot is now empty cell
