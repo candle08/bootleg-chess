@@ -22,7 +22,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // Create the players
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
-        Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i]};
+        Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i]};
         ph.players.push_back(p);
     }
 
@@ -62,7 +62,7 @@ bool Board::isValidPos(const Coords coords) const {
 
 string Board::move(char link, string dir) {
     // Check if link is alive
-    int player_id = (*this).getCurrPlayer();
+    int player_id = getCurrentPlayerID();
 
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromSymbol(link);
 
@@ -118,16 +118,20 @@ string Board::move(char link, string dir) {
     ability_used = false;
 }
 
-string Board::useAbility(char ability, Coords coords, string link) {
+string Board::useAbility(char ability, char link1, Coords coords, char link2) {
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
     ability_used = true;
 
-    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link,);
+    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, link1, coords, link2);
 }
 
-int Board::getCurrPlayer() {
+Player* Board::getCurrentPlayer() {
+    return ph.players[getCurrentPlayerID()];
+}
+
+int Board::getCurrentPlayerID() {
     return turn_number % NUM_PLAYERS;
 }
 

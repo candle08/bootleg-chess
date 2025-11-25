@@ -15,8 +15,8 @@ export class Board : public ISubject {
      * The vector at index i is the positions for the i+1th player's links
      */ 
     const vector<vector<Coords>> link_starting_coords = {
-        {{7, 0}, {7, 1}, {7, 2}, {6, 3}, {6, 4}, {7, 5}, {7, 6}, {7, 7}},
-        {{0, 0}, {0, 1}, {0, 2}, {1, 3}, {1, 4}, {0, 5}, {0, 6}, {0, 7}}
+        {{0, 0}, {0, 1}, {0, 2}, {1, 3}, {1, 4}, {0, 5}, {0, 6}, {0, 7}},
+        {{7, 0}, {7, 1}, {7, 2}, {6, 3}, {6, 4}, {7, 5}, {7, 6}, {7, 7}}
     };
 
     /**
@@ -24,11 +24,14 @@ export class Board : public ISubject {
      * The vector at index i is the positions for the i+1th player's server ports
      */
     const vector<vector<Coords>> server_port_coords = {
-        {{7, 3}, {7, 4}},
         {{0, 3}, {0, 4}}
+        {{7, 3}, {7, 4}},
     }
 
-   
+    const vector<vector<char>> symbols = {
+        {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
+        {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
+    }
     
     bool ability_used;
 
@@ -62,17 +65,14 @@ export class Board : public ISubject {
         static inline const char SERVER = 'S';
 
         /**
-         * A 2D matrix of strings representing the board; updated every turn
-         * The strings are to be interpreted as follows:
-         * "": Empty square
-         * "1S": server port for Player 1 (similar for Player 2)
-         * "1V2": level 2 virus
+         * A 2D matrix of Cells representing the board; updated every turn
+         * See "Cell" struct for more information
          */
         vector<vector<Cell>> board;
         PlayerHeader ph;
 
         /**
-         * Variable to store the turn number
+         * Variable to store the turn number; STARTS AT 0
          * if turn_number % NUM_PLAYERS == 0, it's player 1's turn, etc
          */
         int turn_number;
@@ -80,8 +80,7 @@ export class Board : public ISubject {
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;
         string move(string link, string dir);
-        string useAbility(char ability, Coords coords = {-1, -1}, string link = "");
-        int getCurrPlayer();
-
-
+        string useAbility(char ability, char link1 = '\0', Coords coords = {-1, -1}, char link2 = '\0');
+        int getCurrentPlayerID();
+        Player* getCurrentPlayer();
 };

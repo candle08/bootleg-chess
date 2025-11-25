@@ -3,6 +3,7 @@ import <vector>;
 import <algorithm>;
 import <string>;
 import <fstream>;
+import <map>;
 
 import Ability;
 import Board;
@@ -13,25 +14,6 @@ import Graphic;
 import Player;
 
 using namespace std;
-
-/**
- * Validate whether or not a string represents a valid link
- * @param link The string to check
- */
-bool isValidLink(string link) {
-    return link.length() == 2 &&
-        (link[0] == 'd' || link[0] == 'D' || link[0] == 'v' || link[0] == 'V') &&
-        (link[1] >= '1' && link[1] <= '4');
-}
-
-/**
- * Validate whether or not coords are within bounds
- * @param r The row to check
- * @param c The col to check
- */
-bool isValidCoords(int r, int c) {
-    return r <= 7 && r >= 0 && c <= 7 && c >= 0;
-}
 
 int main(int argc, char* argv[]) {
 
@@ -48,10 +30,9 @@ int main(int argc, char* argv[]) {
      * W: SmallSwap
      */
     const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P', 'B', 'T', 'W'};
-    const vector<string> DEFAULT_LINK_ORDERING = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
-    vector<string> link1, link2;
+    string link1 = "V1V2V3V4D1D2D3D4", link2 = "V1V2V3V4D1D2D3D4";
     bool graphics_enabled = false;
 
     for (int i = 1; i < argc; i++) {
@@ -65,7 +46,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 // validate that the argument only has characters valid letters, and that each letter appears no more than twice
-                vector<int> ability_counts(ABILITY_LETTERS.size());
+                map<char, int> ability_counts;
                 for (int j = 0; j < NUM_OF_ABILITIES; j++) {
                     // check that all letters are valid
                     int index_of_letter = -1;
@@ -82,8 +63,11 @@ int main(int argc, char* argv[]) {
                     }
 
                     // check that there are no more than two copies of each letter
-                    ability_counts[index_of_letter]++;
-                    if (ability_counts[index_of_letter] > MAX_NUM_OF_EACH_ABILITY) {
+                    if (!ability_counts.count(cur_arg[j])) {
+                        ability_counts.insert({cur_arg[j], 0});
+                    }
+                    ability_counts[cur_arg[j]]++;
+                    if (ability_counts[cur_arg[j]] > MAX_NUM_OF_EACH_ABILITY) {
                         cerr << "Parameter for " << prev_arg << " had more than two copies of an ability" << endl;
                         return 1;
                     }
@@ -101,32 +85,30 @@ int main(int argc, char* argv[]) {
                     return 1;
                 }
                 
-                vector<bool> link_counts(NUM_OF_LINKS); // ordering will be relative to DEFAULT_LINK_ORDER
+                map<string, bool> link_counts; 
                 for (int j = 0; j < NUM_OF_LINKS * 2; j += 2) {
                     string link = cur_arg.substr(j, 2);
                     
                     // validate link formatting
-                    if (!isValidLink(link)) {
-                        cerr << "Parameter for " << prev_arg << " has an invalid character" << endl;
+                    if (link.length() != 2 ||
+                            !(link[0] == 'd' || link[0] == 'D' || link[0] == 'v' || link[0] == 'V') ||
+                            !(link[1] >= '1' && link[1] <= '4')) {
+                        cerr << "Parameter for " << prev_arg << " is invalid" << endl;
                         return 1;
                     }
-
+                    
                     // validate uniqueness of links
-                    for (int k = 0; k < NUM_OF_LINKS; k++) {
-                        if (link == DEFAULT_LINK_ORDERING[k]) {
-                            if (link_counts[k]) {
-                                cerr << "Parameter for " << prev_arg << " has two or more copies of link " << link << endl;
-                                return 1;
-                            }
-                            link_counts[k] = true;
-                        }
+                    if (link_counts.count(link)) {
+                        cerr << "Parameter for " << prev_arg << " has two or more copies of link " << link << endl;
+                        return 1;
                     }
+                    link_counts.insert({link, true});
 
                     // populate array
                     if (prev_arg == "-link1") {
-                        link1.push_back(link);
+                        link1 += link;
                     } else {
-                        link2.push_back(link);
+                        link2 += link;
                     }
                 }
             } else {
@@ -155,100 +137,74 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    if (link1.size() == 0) link1 = DEFAULT_LINK_ORDERING;
-    if (link2.size() == 0) link2 = DEFAULT_LINK_ORDERING;
-
-    // Board board{};
+    Board board{{link1, link2}, {ability1, ability2}};
 
     // ----- INPUT READER -----
     ifstream file_stream;
     istream* current_stream = &cin;
     string in;
     while (*current_stream >> in) {
+        // this string will store the resulting error message, if applicable
+        string retval = "";
         if (in == "move") {
-            string link, dir;
+            char link, dir;
             *current_stream >> link >> dir;
-
-            if (!isValidLink(link)) {
-                cerr << "Invalid input for move: invalid link" << endl;
-                continue;
-            }
 
             if (dir != "up" && dir != "down" && dir != "left" && dir != "right") {
                 cerr << "Invalid input for move: direction is invalid" << endl;
-                continue;
+            } else {
+                retval = board.move(link, dir);
             }
-
-            int strength = link[1] - '0';
-
-            // ------------------------ TODO: call move link ------------------------
-
         } else if (in == "abilities") {
             // list out abilities
         } else if (in == "ability") {
             char id;
             *current_stream >> id;
-            if (id > ABILITY_LETTERS.size() || id < 1) {
-                cerr << "Invalid input for ability: ID not found" << endl;
-                continue;
-            }
 
             if (id == '1' || id == 'l' || id == 'L') {
                 // link boost
-                string link;
+                char link;
                 *current_stream >> link;
 
-                if (!isValidLink(link)) {
-                    cerr << "Invalid input for ability - link boost: invalid link" << endl;
-                    continue;
-                }
-
-                
-
-                // ------------------------ TODO: call link boost ------------------------
-                
+                retval = board.useAbility('L', link);
             } else if (id == '2' || id == 'f' || id == 'F') {
                 // firewall
                 int r, c;
                 *current_stream >> r >> c;
-                if (!isValidCoords(r, c)) {
-                    cerr << "Invalid input for ability - firewall: invalid coordinates" << endl;
-                    continue;
-                }
-                // ------------------------ TODO: call firewall ------------------------
+
+                retval = board.useAbility('F', '\0', {r, c});
             } else if (id == '3' || id == 'd' || id == 'D') {
                 // download
-                int r, c;
-                *current_stream >> r >> c;
+                char link;
+                *current_stream >> link;
 
-                if (!isValidCoords(r, c)) {
-                    cerr << "Invalid input for ability - download: invalid coordinates" << endl;
-                    continue;
-                }
-
-                // ------------------------ TODO: call download ------------------------
-
+                retval = board.useAbility('L', link);
             } else if (id == '4' || id == 'p' || id == 'P') {
                 // polarize
-                int r, c;
-                *current_stream >> r >> c;
-                if (!isValidCoords(r, c)) {
-                    cerr << "Invalid input for ability - polarize: invalid coordinates" << endl;
-                    continue;
-                }
+                char link;
+                *current_stream >> link;
 
-                // ------------------------ TODO: call polarize ------------------------
-
+                retval = board.useAbility('P', link);
             } else if (id == '5' || id == 's' || id == 'S') {
                 // scan
-                int r, c;
-                *current_stream >> r >> c;
-                if (!isValidCoords(r, c)) {
-                    cerr << "Invalid input for ability - scan: invalid coordinates" << endl;
-                    continue;
-                }
-
-                // ------------------------ TODO: call scan ------------------------
+                char link;
+                *current_stream >> link;
+                retval = board.useAbility('S', link);
+            } else if (id == '6' || id == 'b' || id == 'B') {
+                // doubledown
+                retval = board.useAbility('B');
+            } else if (id == '7' || id == 't' || id == 'T') {
+                // twosum
+                char link;
+                *current_stream >> link;
+                retval = board.useAbility('T', link);
+            } else if (id == '8' || id == 'w' || id == 'W') {
+                // smallswap
+                char link1, link2;
+                *current_stream >> link1 >> link2;
+                retval = board.useAbility('W', link2, {-1, -1}, link2);
+            } else {
+                cerr << "Invalid input for ability" << endl;
             }
 
         } else if (in == "board") {
@@ -261,19 +217,20 @@ int main(int argc, char* argv[]) {
             file_stream.open(file_name);
             if (!file_stream) {
                 cerr << "Invalid input for sequence: could not open file" << endl;
-                continue;
+            } else {
+                cur = &file_stream;
             }
-            cur = &file_stream;
-            continue;
+            
         } else if (in == "quit") {
             cout << "Quitting game..." << endl;
             return 0;
         } else {
             cout << "Invalid input detected" << endl;
-            continue;
         }
 
-        // increment board's turn counter
+        if (retval) {
+            cerr << retval << endl;
+        }
 
         if (current_stream == &file_stream && file_stream.eof()) {
             current_stream = &cin;
