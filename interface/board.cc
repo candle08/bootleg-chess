@@ -28,6 +28,7 @@ export class Board : public ISubject {
         {{7, 3}, {7, 4}},
     }
 
+
     const vector<vector<char>> symbols = {
         {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
         {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
