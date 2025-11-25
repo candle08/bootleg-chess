@@ -58,6 +58,8 @@ export class Board : public ISubject {
         static inline const int NUM_COLS = 8;
         static inline const int NUM_PLAYERS = 2;
         static inline const int NUM_SERVER_PORTS_PER_PLAYER = 2;
+        static inline const int NUM_DATA_DOWNLOADED_TO_WIN = 4;
+        static inline const int NUM_VIRUS_DOWNLOADED_TO_LOSE = 4;
 
         // Symbols for the Cell.item field; compare value with constant directly
         static inline const char DATA = 'D';
@@ -78,10 +80,14 @@ export class Board : public ISubject {
          */
         int turn_number;
 
+        int winner;
+
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;
         string move(string link, string dir);
         string useAbility(char ability, char link1 = '\0', Coords coords = {-1, -1}, char link2 = '\0');
+        void win(Player* p);
+        void checkWinCondition();
         int getCurrentPlayerID();
         Player* getCurrentPlayer();
 };

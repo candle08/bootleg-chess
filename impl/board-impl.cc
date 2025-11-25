@@ -18,11 +18,12 @@ void Cell::clear() {
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     turn_number = 0;
     ability_used = false;
+    winner = -1;
 
     // Create the players
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
-        Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i]};
+        Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i], i};
         ph.players.push_back(p);
     }
 
@@ -119,5 +120,23 @@ int Board::getCurrentPlayerID() {
     return turn_number % NUM_PLAYERS;
 }
 
+void win(int index) {
+    winner = index;
+}
 
-
+void checkWinCondition() {
+    int winner = -1;
+    for (int i = 0; i < ph.players.size(); i++) {
+        if (ph.players[i].alive) {
+            if (winner != -1) {
+                // at least two alive: no one has won
+                return;
+            } else {
+                winner = i;
+            }
+        }
+    }
+    if (winner != -1) {
+        win(winner);
+    }
+}
