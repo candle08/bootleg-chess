@@ -67,7 +67,6 @@ string Board::move(char link, string dir) {
     // Check if link is alive
     int player_id = getCurrentPlayerID();
     
-
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
     if (link_ptr->download_status) {
@@ -75,8 +74,7 @@ string Board::move(char link, string dir) {
     }
 
     Coord new_posn = link_ptr->coords;
-    // Check if the link will stay on the board
-    // check if moving onto board, server port, out of bounds, opponent's edge
+
     if (dir == "up") {
         new_posn.r++;
     } else if (dir == "down") {
