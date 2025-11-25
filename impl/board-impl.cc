@@ -113,6 +113,7 @@ string Board::move(char link, string dir) {
         return "Invalid Input: You cannot move to this cell";
     }
 
+    // Using firewall ability after move has been made
     if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
         getLinkPointerFromChar(link)->revealed = true;
         download(getLinkPointerFromChar(link), *this);
