@@ -45,6 +45,7 @@ export class Player {
          * It is assumed that ability is valid (a capitalized letter representing the ability)
          * @param ability
          * @param b
+         * @param c
          * @param link1
          * @param link2
          */
