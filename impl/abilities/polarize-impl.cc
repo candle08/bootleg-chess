@@ -11,9 +11,7 @@ string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Playe
         link1->type = "data";
         p->all_virus.erase(find(p->all_virus.begin(), p->all_virus.end(), this));
         p->all_data.push_back(link);
-
     }
 
-    // iterates through abilities and deletes that ability
-    p->abilities.erase(find(p->abilities.begin(), p->abilities.end(), this));
+    return "";
 }
