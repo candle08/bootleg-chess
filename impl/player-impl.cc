@@ -15,7 +15,9 @@ import Data;
 
 using namespace std;
 
-Player::Player(string link_ordering, string abilities_selected, vector<Coords> positions, vector<char> symbols) {
+Player::Player(string link_ordering, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id): id{id} {
+    alive = true;
+    
     // initialize link_ordering
     for (int i = 0; i < link_ordering.length(); i += 2) {
         int level = link_ordering[i + 1] - '0';
@@ -85,5 +87,22 @@ Player::~Player() {
     }
     for (int i = 0; i < abilities.size(); i++) {
         delete abilities[i];
+    }
+}
+
+void Player::download(Link* link, Board& b) {
+    link->download_status = true;
+    link->coords = {-1, -1};
+    if (link->type == "data") {
+        num_data_downloaded++;
+        if (num_data_downloaded >= b.NUM_DATA_DOWNLOADED_TO_WIN) {
+            b.win(id);
+        }
+    } else {
+        num_virus_downloaded++;
+        if (num_virus_downloaded >= b.NUM_VIRUS_DOWNLOADED_TO_LOSE) {
+            alive = false;
+            b.checkWinCondition();
+        }
     }
 }
