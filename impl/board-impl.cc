@@ -66,7 +66,7 @@ string Board::move(char link, string dir) {
     // Check if link is alive
     int player_id = getCurrentPlayerID();
 
-    Link *link_ptr = ph.players[player_id]->getLinkPointerFromSymbol(link);
+    Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
     if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
