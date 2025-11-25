@@ -8,7 +8,8 @@ import <vector>;
 
 using namespace std;
 
-&ostream Display::operator<<(&, Board &b, PlayerHeader & ph, int player) override {
+
+ostream& Display::operator<<(&, Board &b, PlayerHeader & ph, int player) override {
     if (this->xw) {
         int cellSize = 50;
         int offset_x = 25;
