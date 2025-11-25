@@ -1,8 +1,13 @@
 module Terminal;
 import Board;
 import PlayerHeader;
+import <iostream>;
 
 using namespace std;
+
+void notify(const Board & b) {
+    printOutput(cout, b);
+}
 
 void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bool owner) { // owner is the player whose turn it is
     o << "Player " << player << ":" << endl;
@@ -38,8 +43,9 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
 
 // currently the output is designed for a two-player setup
 // modifications come
-ostream& Terminal::operator<<(ostream & o, Board & b, PlayerHeader & ph, int player) {
-
+string Terminal::printOutput(ostream & o, Board & b) {
+    PlayerHeader& ph = b.ph;
+    int player = b.getCurrentPlayerId();
     print_player_info(o, b, ph, player, true);
     // Symbol of border printed
     const char BORDER = "="
