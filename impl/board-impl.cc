@@ -83,39 +83,46 @@ string Board::move(char link, string dir) {
         }
         // Check if your link is in that spot
         if ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id) {
-            return "Invalid input: One of your Links already occupies this cell";
+            return "Invalid input: You cannot move to this spot";
         }
 
         
     } else if (dir == "down") {
         new_posn.r--;
-        
+
         // if opponent's link, download
         if ((new_place.item == DATA || new_place.item == VIRUS) && (new_place.player != player_id)) {
             // download
         }
-
         
         // make sure you're not moving onto your own server ports
         // check if your link is in that spot
         // check out of bounds
-        new_posn.r--;
-        
+        if (((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS)
+         && (new_place.player == player_id)) || !isValidPos(new_posn)) {
+            return "Invalid input: You cannot move to this spot";
+        }        
     } else if (dir == "left") {
+        new_posn.c--;
         // if opponent's link, download
+        if ((new_place.item == DATA || new_place.item == VIRUS) && (new_place.player != player_id)) {
+            // download
+        }
+        
         // if opponent's server port, it's downloaded by the opponent
+        
         // make sure you're not moving onto your own server ports
         // check if your link is in that spot
         // check out of bounds
-        new_posn.c--;
 
     } else if (dir == "right") {
+        new_posn.c++;
+
         // if opponent's link, download
         // if opponent's server port, it's downloaded by the opponent
         // make sure you're not moving onto your own server ports
         // check if your link is in that spot
         // check out of bounds
-        new_posn.c++;
 
 
     }
