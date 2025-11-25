@@ -38,10 +38,11 @@ export class Board : public ISubject {
         {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
     }
     
+    /**
+     * Variable that indicates whether or not an ability
+     * has been used
+     */
     bool ability_used;
-
-    bool validPos(const Coords c);
-    void initializePlayer(Player* p);
 
     public:
     /**
@@ -58,6 +59,7 @@ export class Board : public ISubject {
              */
             void clear();
         }
+        
         
         static inline const int NUM_ROWS = 8;
         static inline const int NUM_COLS = 8;
@@ -90,12 +92,43 @@ export class Board : public ISubject {
         bool double_down;
         bool link_boost;
 
+        /**
+         * 
+         */
         Board(vector<string> link_orderings, vector<string> ability_selections);
+
+        /**
+         * 
+         */
         bool isValidPos(const Coords coords) const;
+
+        /**
+         * 
+         */
         string move(string link, string dir);
+
+        /**
+         * 
+         */
         string useAbility(char ability, Coords coords = {-1, -1}, char link1 = '\0', char link2 = '\0');
+       
+        /**
+         * 
+         */
         void win(Player* p);
+
+        /**
+         * 
+         */
         void checkWinCondition();
+
+        /**
+         * 
+         */
         int getCurrentPlayerID();
+
+        /**
+         * 
+         */
         Player* getCurrentPlayer();
 };
