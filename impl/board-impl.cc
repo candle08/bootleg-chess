@@ -115,9 +115,13 @@ string Board::move(char link, string dir) {
     // Make sure previous spot is now empty cell
     board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1};
 
-    turn_number++;
-    ability_used = false;
-    
+    if (double_down) {
+        double_down = false;
+        ability_used = true;
+    } else {
+        turn_number++;
+        ability_used = false;
+    }
     // Notify the observers
 }
 
