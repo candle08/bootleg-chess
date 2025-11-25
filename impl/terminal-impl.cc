@@ -43,7 +43,7 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
 
 // currently the output is designed for a two-player setup
 // modifications come
-string Terminal::printOutput(ostream & o, Board & b) {
+void Terminal::printOutput(ostream & o, Board & b) {
     PlayerHeader& ph = b.ph;
     int player = b.getCurrentPlayerId();
     print_player_info(o, b, ph, player, true);
@@ -81,5 +81,4 @@ string Terminal::printOutput(ostream & o, Board & b) {
             print_player_info(o, b, ph, i, false);
         }
     }
-    return o;
 }
