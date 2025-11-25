@@ -66,6 +66,8 @@ string Board::move(string link, string dir) {
     int opponent_id = (turn_number + 1) % NUM_PLAYERS;
 
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromString(link);
+
+
     if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
     }
@@ -80,6 +82,8 @@ string Board::move(string link, string dir) {
         if (player_id == 0) {
             if (link_ptr->coords.r - 1 < 0) {
                 link_ptr->download_status = true;
+                if (link_ptr->type == "virus") ++ph.players[player_id]->num_virus_downloaded;
+                if (link_ptr->type == "data") ++ph.players[player_id]->num_data_downloaded;
                 ph.players[player_id]->downloaded.emplace_back(link_ptr);
             }
         } else {
@@ -96,7 +100,7 @@ string Board::move(string link, string dir) {
     } else if (dir == "right") {
 
     }
-    // move the piece, make sure you leave behind empty cell or server port
+    // move the piece, make sure you leave behind empty cell 
         
     turn_number++;
     ability_used = false;
@@ -111,6 +115,9 @@ string Board::useAbility(char ability, Coords coords, string link) {
     return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link,);
 }
 
+int Board::getCurrPlayer() {
+    return turn_number % NUM_PLAYERS;
+}
 
 
 
