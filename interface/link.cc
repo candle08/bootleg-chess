@@ -7,6 +7,7 @@ export struct Link {
     string type;
     bool download_status;
     char symbol;
+    bool revealed;
 
     Link(int level, Coords coords, string type, char symbol);
 
