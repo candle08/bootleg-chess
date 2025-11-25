@@ -53,6 +53,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
             board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0};
         }
+
     }
 }
 
@@ -71,63 +72,32 @@ string Board::move(char link, string dir) {
     }
 
     Coord new_posn = link_ptr->coords;
-    Cell new_place = board[new_posn.r][new_posn.c];
-
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
     if (dir == "up") {
         new_posn.r++;
-        if (new_posn.r >= NUM_ROWS || new_place.item == 'S' ||
-            ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id)) {
-            // download
-        }
-        // Check if your link is in that spot
-        if ((new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id) {
-            return "Invalid input: You cannot move to this spot";
-        }
-
-        
     } else if (dir == "down") {
         new_posn.r--;
-
-        // if opponent's link, download
-        if ((new_place.item == DATA || new_place.item == VIRUS) && (new_place.player != player_id)) {
-            // download
-        }
-        
-        // make sure you're not moving onto your own server ports
-        // check if your link is in that spot
-        // check out of bounds
-        if (((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS)
-         && (new_place.player == player_id)) || !isValidPos(new_posn)) {
-            return "Invalid input: You cannot move to this spot";
-        }        
     } else if (dir == "left") {
         new_posn.c--;
-        // if opponent's link, download
-        if ((new_place.item == DATA || new_place.item == VIRUS) && (new_place.player != player_id)) {
-            // download
-        }
-        
-        // if opponent's server port, it's downloaded by the opponent
-        
-        // make sure you're not moving onto your own server ports
-        // check if your link is in that spot
-        // check out of bounds
-
     } else if (dir == "right") {
         new_posn.c++;
-
-        // if opponent's link, download
-        // if opponent's server port, it's downloaded by the opponent
-        // make sure you're not moving onto your own server ports
-        // check if your link is in that spot
-        // check out of bounds
-
-
     }
-    // move the piece, make sure you leave behind empty cell 
-        
+
+    Cell new_place = board[new_posn.r][new_posn.c];
+    // valid: opponent's edge, server port, or link
+    if ((player_id == 0 && new_posn.r < 0) || 
+    (player_id == 1 && new_posn.r > NUM_ROWS) ||
+    ((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS) && new_place.player != player_id)) {
+        //download
+    }
+
+    // invalid: out of bounds, own server port, or own link
+    if ((!isValidPos(new_posn) && )|| 
+    ((new_place.item == 'S' || new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id)) {
+        return "Invalid Input: You cannot move to this cell";
+    }
+
     turn_number++;
     ability_used = false;
 }
