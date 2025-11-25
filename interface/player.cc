@@ -11,9 +11,6 @@ export class Player {
     vector<Virus *> all_virus;
     vector<Data *> all_data;
     vector<Ability *> abilities;
-
-    map<char, Link *> positions; // A hashmap of the position association of each Link for a player
-
     bool alive;
     int id;
 
