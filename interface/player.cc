@@ -14,6 +14,8 @@ export class Player {
 
     map<char, Link *> positions; // A hashmap of the position association of each Link for a player
 
+    bool alive;
+    int id;
 
     /**
      * An array of links that the player has downloaded
@@ -29,7 +31,7 @@ export class Player {
          * @param abilities_selected The abilities selected, represented as a length-5 string
          * @param positions A size-8 vector of the corodinates of the links
          */
-        Player(string link_orderings, string abilities_selected, vector<Coords> positions)
+        Player(string link_orderings, string abilities_selected, vector<Coords> positions, int id)
         
         
 
@@ -45,5 +47,12 @@ export class Player {
          * It is assumed that ability is valid (a capitalized letter representing the ability)
          */
         string useAbility(char ability, Board& b, Coords& c, string link);
+
+        /**
+         * Downloads the link from the given Link*
+         * Also updates the relevant fields of the link
+         */
+        void download(Link* link);
+
         ~Player();
 };
