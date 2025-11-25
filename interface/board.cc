@@ -79,7 +79,7 @@ export class Board : public ISubject {
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;
         string move(string link, string dir);
-        string useAbility(char ability, Coords coords = {-1, -1}, string link = "") {
+        string useAbility(char ability, Coords coords = {-1, -1}, string link = "");
 
 
 };

@@ -63,14 +63,23 @@ bool Board::isValidPos(const Coords coords) const {
 string Board::move(string link, string dir) {
     // Check if link is alive
     int player_id = turn_number % NUM_PLAYERS;
-    if (ph.players[player_id]->getLinkPointerFromString(link)->download_status) {
+    Link *link_ptr = ph.players[player_id]->getLinkPointerFromString(link);
+    if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
     }
+
     // Check if the link will stay on the board
-    
+    if (dir == "up") {
+        
+    } else if (dir == "down") {
+
+    } else if (dir == "left") {
+        
+    } else if (dir == "right") {
+
+    }
     // move the piece
         
-
     turn_number++;
     ability_used = false;
 }
