@@ -86,7 +86,7 @@ export class Board : public ISubject {
         Board(vector<string> link_orderings, vector<string> ability_selections);
         bool isValidPos(const Coords coords) const;
         string move(string link, string dir);
-        string useAbility(char ability, char link1 = '\0', Coords coords = {-1, -1}, char link2 = '\0');
+        string useAbility(char ability, Coords coords = {-1, -1}, char link1 = '\0', char link2 = '\0');
         void win(Player* p);
         void checkWinCondition();
         int getCurrentPlayerID();

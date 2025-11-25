@@ -114,13 +114,13 @@ string Board::move(char link, string dir) {
     // Notify the observers
 }
 
-string Board::useAbility(char ability, char link1, Coords coords, char link2) {
+string Board::useAbility(char ability, Coords coords, char link1, char link2) {
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
     ability_used = true;
 
-    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, link1, coords, link2);
+    return ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
 }
 
 Player* Board::getCurrentPlayer() {
