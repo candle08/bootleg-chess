@@ -83,7 +83,7 @@ string Board::move(char link, string dir) {
     // Check if the link will stay on the board
     // check if moving onto board, server port, out of bounds, opponent's edge
     // Using LinkBoost ability
-    if (link_ptr->linkboost = true) {
+    if (link_ptr->linkboost) {
         if (dir == "up") {
             new_posn.r+= 2;
         } else if (dir == "down") {
