@@ -10,6 +10,8 @@ import <string>;
 using namespace std;
 
 export class Board : public ISubject {
+    vector<IObserver*> observers;
+
     /** 
      * A matrix of coordinates storing the starting coords of links
      * The vector at index i is the positions for the i+1th player's links
@@ -54,6 +56,11 @@ export class Board : public ISubject {
             int level; // level of the link in the cell, or 0 if there isn't a link in the cell
             bool firewall; // whether or not a player has set a firewall at that square
             
+            /**
+             * Overriding default constructor of cell to write specific values
+             */
+            Cell();
+
             /**
              * Remove items from cell, clearing fields
              */
@@ -148,4 +155,19 @@ export class Board : public ISubject {
          * 
          */
         Player* getCurrentPlayer();
+
+        /**
+         * Adds an observer
+         */
+        void subscribe(IObserver* o);
+
+        /**
+         * Removes an observer
+         */
+        void unsubscribe(IObserver* o);
+
+        /**
+         * Calls notify to all observers
+         */
+        void notifyObservers();
 };

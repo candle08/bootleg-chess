@@ -6,8 +6,16 @@ import Link;
 import PlayerHeader;
 import Player;
 import <vector>;
+import <algorithm>
 
 using namespace std;
+
+Cell::Cell() {
+    player = -1;
+    item = '\0';
+    level = -1;
+    firewall = false;
+}
 
 void Cell::clear() {
     player = -1;
@@ -42,13 +50,13 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find viruses of player
         for (int j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
-            board[virus.coords.r][virus.coords.c] = {i, VIRUS, virus.level};
+            board[virus.coords.r][virus.coords.c] = {i, VIRUS, virus->level};
         }
 
         // Find data of player
         for (int j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
-            board[data.coords.r][data.coords.c] = {i, DATA, data.level};
+            board[data.coords.r][data.coords.c] = {i, DATA, data->level};
         }
 
         // Place server ports
@@ -77,7 +85,7 @@ string Board::move(char link, string dir) {
 
     // checking if user is not frozen from twosum
     if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
-        return "Invalid input: link is frozen for " + link_ptr->level - (turn_number - link->frozen_on_turn) + "more moves";
+        return "Invalid input: link is frozen for " + ((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2) + "more moves";
     }
     
     // Check if the link will stay on the board
@@ -168,6 +176,7 @@ string Board::move(char link, string dir) {
     
 
     // Notify the observers
+    notifyObservers();
     return "";
 }
 
@@ -179,6 +188,7 @@ string Board::useAbility(char ability, Coords coords, char link1, char link2) {
     string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
     if (retval == "") {
         ability_used = true;
+        notifyObservers();
     }
     return retval;
 }
@@ -209,5 +219,19 @@ void checkWinCondition() {
     }
     if (winner != -1) {
         win(winner);
+    }
+}
+
+Board::subscribe(IObserver* o) {
+    observers.push_back(o);
+}
+
+Board::unsubscriber(IObserver* o) {
+    observers.erase(find(observers.begin(), observers.end(), o));
+}
+
+Board::notifyObservers() {
+    for (auto o : observers) {
+        o->notify(*this);
     }
 }
