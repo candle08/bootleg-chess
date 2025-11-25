@@ -172,7 +172,7 @@ int main(int argc, char* argv[]) {
                 char link;
                 *current_stream >> link;
 
-                retval = board.useAbility('L', link);
+                retval = board.useAbility('L', {-1, -1}, link);
             } else if (id == '2' || id == 'f' || id == 'F') {
                 // firewall
                 int r, c;
@@ -184,18 +184,18 @@ int main(int argc, char* argv[]) {
                 char link;
                 *current_stream >> link;
 
-                retval = board.useAbility('L', link);
+                retval = board.useAbility('L', {-1, -1}, link);
             } else if (id == '4' || id == 'p' || id == 'P') {
                 // polarize
                 char link;
                 *current_stream >> link;
 
-                retval = board.useAbility('P', link);
+                retval = board.useAbility('P', {-1, -1}, link);
             } else if (id == '5' || id == 's' || id == 'S') {
                 // scan
                 char link;
                 *current_stream >> link;
-                retval = board.useAbility('S', link);
+                retval = board.useAbility('S', {-1, -1}, link);
             } else if (id == '6' || id == 'b' || id == 'B') {
                 // doubledown
                 retval = board.useAbility('B');
@@ -203,12 +203,12 @@ int main(int argc, char* argv[]) {
                 // twosum
                 char link;
                 *current_stream >> link;
-                retval = board.useAbility('T', link);
+                retval = board.useAbility('T', {-1, -1}, link);
             } else if (id == '8' || id == 'w' || id == 'W') {
                 // smallswap
                 char link1, link2;
                 *current_stream >> link1 >> link2;
-                retval = board.useAbility('W', link2, {-1, -1}, link2);
+                retval = board.useAbility('W', {-1, -1}, link1, link2);
             } else {
                 cerr << "Invalid input for ability" << endl;
             }

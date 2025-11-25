@@ -43,7 +43,7 @@ export class Player {
          * Returns the empty string on success, or an error message on failure
          * It is assumed that ability is valid (a capitalized letter representing the ability)
          */
-        string useAbility(char ability, Board& b, Coords& c, string link);
+        string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
 
         /**
          * Downloads the link from the given Link*

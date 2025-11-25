@@ -66,11 +66,12 @@ Link* Player::getLinkPointerFromChar(char link) {
     return nullptr;
 }
 
-string Player::useAbility(char ability, Board& b, Coords& c, string link) {
+string Player::useAbility(char ability, Board& b, Coords& c, char link1, char link2) {
     for (auto it = abilities.begin(); it != abilities.end(); it++) {
         if (it->name == ability) {
-            Link* link_pointer = getLinkPointerFromString(link)
-            string retval = it->usePower(b, c, link_pointer);
+            Link* link_pointer1 = getLinkPointerFromChar(link1);
+            Link* link_pointer2 = getLinkPointerFromChar(link2);
+            string retval = it->usePower(b, c, link_pointer1, link_pointer2, this);
             abilities.erase(it);
             return retval;
         }
