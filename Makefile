@@ -6,8 +6,7 @@ EXEC = exec
 
 INTERFACE_OBJS = o/gameplay.o o/data.o o/graphic.o o/gui.o o/iobserver.o o/isubject.o o/link.o o/terminal.o o/virus.o o/coords.o 
 
-IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/player-header-impl.o o/virus-impl.o 
-o/gameplay.o o/double-down-impl.o o/download-impl.o o/firewall-impl.o o/link-boost-impl.o o/polarize-impl.o  o/scan-impl.o o/small-swap-impl.o o/two-sum-impl.o
+IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/player-header-impl.o o/virus-impl.o o/gameplay.o o/double-down-impl.o o/download-impl.o o/firewall-impl.o o/link-boost-impl.o o/polarize-impl.o  o/scan-impl.o o/small-swap-impl.o o/two-sum-impl.o
 
 HARNESS_OBJ = o/main.o
 
@@ -40,7 +39,7 @@ o/link.o: interface/link.cc o/coords.o
 o/virus.o: interface/virus.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
-o/gameplay.o: interface/gameplay.cc o/coords.o o/link.o o/virus.o o/data.o o/coords.o 
+o/gameplay.o: interface/gameplay.cc o/coords.o o/link.o o/virus.o o/data.o o/coords.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c interface/gameplay.cc
 
 o/link-boost.o: interface/abilities/link-boost.cc o/gameplay.o o/link.o o/coords.o
