@@ -8,6 +8,7 @@ import Virus;
 import <string>;
 import <algorithm>;
 import <vector>;
+import <iostream>;
 
 using namespace std;
 

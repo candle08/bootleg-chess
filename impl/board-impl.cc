@@ -210,7 +210,7 @@ string Board::move(char link, string dir) {
 
     // Using firewall ability after move has been made
     if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id) { // firewall ability activated
-        cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id " returned true
+        cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true";
         link_ptr->revealed = true;
         if (link_ptr->type == "virus") {
             ph.players[player_id]->download(link_ptr, *this);

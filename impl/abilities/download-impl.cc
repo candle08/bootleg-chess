@@ -2,6 +2,7 @@ module Gameplay;
 
 import Coords;
 import Link;
+import <iostream>
 
 import <string>;
 
