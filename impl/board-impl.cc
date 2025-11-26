@@ -27,12 +27,13 @@ void Cell::clear() {
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // debug 
     cout << "board ctor called:" << endl;
-    for (size_t i = 0; i < link_orderings; i++) {
+    for (size_t i = 0; i < link_orderings.size(); i++) {
         cout << "link ordering " << i << ": " << link_orderings[i] << endl;
     }
-    for (size_t i = 0; i < ability_selections; i++) {
+    for (size_t i = 0; i < ability_selections.size(); i++) {
         cout << "ability_selections " << i << ": " << ability_selections[i] << endl;
     }
+    // debug
 
     turn_number = 0;
     ability_used = false;
@@ -42,6 +43,8 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // Create the players
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
+        // debug
+        cout << "player " << i << " made with: link ordering " << link_orderings[i] << ", ability_selections " << ability_selections[i] << ", link_starting_coords: " << link_starting_coords[i] << ", symbols: " << symbols[i] << endl;
         Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i], i};
         ph.players.push_back(p);
     }
@@ -53,25 +56,37 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         board.push_back(v);
     }
 
+    // debug
+    cout << "board is " << NUM_ROWS << " rows by " << NUM_COLS << " cols" << endl;
+
     // Place player pieces
     for (int i = 0; i < NUM_PLAYERS; i++) {
         Player* p = ph.players[i];
+
+        // debug
+        cout << "PLAYER " << i << endl;
 
         // Find viruses of player
         for (size_t j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
             board[virus->coords.r][virus->coords.c] = {i, VIRUS, virus->level, false};
+            // debug
+            cout << "placing virus level " << virus->level << "at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
         }
 
         // Find data of player
         for (size_t j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
             board[data->coords.r][data->coords.c] = {i, DATA, data->level, false};
+            // debug
+            cout << "placing data level " << data->level << "at (r, c): " << data->coords.r << ", " << data->coords.c << endl;
         }
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
             board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0, false};
+            // debug
+            cout << "placing server port at " << server_port_coords[i][j].r << ", " << server_port_coords[i][j].c << endl;
         }
     }
 
