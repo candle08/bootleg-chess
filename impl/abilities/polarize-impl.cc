@@ -51,7 +51,7 @@ string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Playe
             Data* data = static_cast<Data*>(link1);
             p->all_data.push_back(data);
             //debug
-            cerr << "in polarize, adding a data to the list"
+            cerr << "in polarize, adding a data to the list";
         }
 
         return "";

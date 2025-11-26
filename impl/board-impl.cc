@@ -71,7 +71,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
             Virus* virus = p->all_virus[j];
             board[virus->coords.r][virus->coords.c] = {i, VIRUS, virus->level, false};
             // debug
-            cerr << "placing virus level " << virus->level << "at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
+            cerr << "placing virus level " << virus->level << " at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
         }
 
         // Find data of player
