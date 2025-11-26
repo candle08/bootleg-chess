@@ -19,6 +19,8 @@ Cell::Cell() : player{-1}, item{'\0'}, level{-1}, firewall{false} {}
 Cell::Cell(int player, char item, int level, bool firewall): player{player}, item{item}, level{level}, firewall{firewall} {}
 
 void Cell::clear() {
+    // debug
+    cerr << "clearing cell";
     player = -1;
     item = '\0';
     level = -1;
@@ -34,13 +36,16 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         cerr << "ability_selections " << i << ": " << ability_selections[i] << endl;
     }
     // debug
-
+    cerr << "turn num " << turn_number << "ability used " << ability_used
+    << "winner " << winner << "double down " << double_down << "\n";
     turn_number = 0;
     ability_used = false;
     winner = -1;
     double_down = false;
 
     // Create the players
+    //debug
+    cerr << "creating the player header\n";
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
         // debug
@@ -51,6 +56,8 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
 
     // Build the board matrix
     // Build empty matrix
+    // debug
+    cerr << "building the empty board matrix";
     for (int r = 0; r < NUM_ROWS; r++) {
         vector<Cell> v(NUM_COLS);
         board.push_back(v);
@@ -60,6 +67,9 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     cerr << "board is " << NUM_ROWS << " rows by " << NUM_COLS << " cols" << endl;
 
     // Place player pieces
+
+    //debug
+    cerr << "placing the player pieces";
     for (int i = 0; i < NUM_PLAYERS; i++) {
         Player* p = ph.players[i];
 
@@ -108,7 +118,7 @@ string Board::move(char link, string dir) {
     if (!link_ptr) {
         cerr << "link_ptr null in MOVE";
     }
-
+    cerr << "link_ptr NOT null in move";
     
     
     if (link_ptr->download_status) {
@@ -226,6 +236,8 @@ string Board::move(char link, string dir) {
 }
 
 string Board::useAbility(char ability, Coords coords, char link1, char link2) {
+    //debug
+    cerr << "board's useAbility called"
     // Check if ability has already been used
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
