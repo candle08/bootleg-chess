@@ -100,17 +100,17 @@ bool Board::isValidPos(const Coords coords) const {
 string Board::move(char link, string dir) {
     // Check if link is alive
     int player_id = getCurrentPlayerID();
+    Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
     // debug
-    cerr << "player_id " << player_id << endl;
+    cerr << "player_id: " << player_id << endl;
     cerr << "turn number: " << turn_number << endl;
     if (!link_ptr) {
-        cerr << "link_ptr null";
+        cerr << "link_ptr null in MOVE";
     }
 
     
-    Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
-
+    
     if (link_ptr->download_status) {
         return "Invalid input: Link is no longer alive";
     }
@@ -195,7 +195,8 @@ string Board::move(char link, string dir) {
 
     // Make sure previous spot is now empty cell
     board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1, false};
-    cerr << "printing out previous, cleared cell after move " << board[link_ptr->coords.r][link_ptr->coords.c] << endl;
+    cerr << "printing out previous, cleared cell after move " << "player " << board[link_ptr->coords.r][link_ptr->coords.c].player
+    << "item " << board[link_ptr->coords.r][link_ptr->coords.c].item << "level " << board[link_ptr->coords.r][link_ptr->coords.c].level << endl;
 
     // Checking ability usage
     if (double_down) {
