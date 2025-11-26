@@ -6,7 +6,8 @@ EXEC = exec
 
 INTERFACE_OBJS = o/gameplay.o o/data.o o/graphic.o o/gui.o o/iobserver.o o/isubject.o o/link.o o/terminal.o o/virus.o o/coords.o 
 
-IMPL_OBJS = o/data-impl.o o/graphic-impl.o o/virus-impl.o o/gameplay.o o/double-down-impl.o o/download-impl.o o/firewall-impl.o o/link-boost-impl.o o/polarize-impl.o  o/scan-impl.o o/small-swap-impl.o o/two-sum-impl.o
+IMPL_OBJS = o/board-impl.o o/data-impl.o o/graphic-impl.o o/player-impl.o o/player-header-impl.o o/virus-impl.o 
+o/gameplay.o o/double-down-impl.o o/download-impl.o o/firewall-impl.o o/link-boost-impl.o o/polarize-impl.o  o/scan-impl.o o/small-swap-impl.o o/two-sum-impl.o
 
 HARNESS_OBJ = o/main.o
 
@@ -39,7 +40,7 @@ o/link.o: interface/link.cc o/coords.o
 o/virus.o: interface/virus.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
-o/gameplay.o: interface/gameplay.cc o/coords.o  o/link.o o/virus.o o/data.o o/coords.o 
+o/gameplay.o: interface/gameplay.cc o/coords.o o/link.o o/virus.o o/data.o o/coords.o 
 	$(CXX) $(CXXFLAGS) -c interface/gameplay.cc
 
 o/link-boost.o: interface/abilities/link-boost.cc o/gameplay.o o/link.o o/coords.o
@@ -69,9 +70,8 @@ o/small-swap.o: interface/abilities/small-swap.cc o/gameplay.o o/link.o o/coords
 o/data.o: interface/data.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/data.cc
 
-
 o/gui.o: interface/gui.cc o/iobserver.o o/gameplay.o
-o	$(CXX) $(CXXFLAGS) -c interface/gui.cc
+	$(CXX) $(CXXFLAGS) -c interface/gui.cc
 	
 o/terminal.o: interface/terminal.cc o/gui.o o/gameplay.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
@@ -82,25 +82,34 @@ o/graphic.o: interface/graphic.cc o/gui.o o/gameplay.o
 o/coords-impl.o: interface/coords-impl.cc o/gameplay.o	
 	$(CXX) $(CXXFLAGS) -c interface/coords-impl.cc
 
-o/gameplay-impl.o: impl/board-impl.cc o/isubject.o o/iobserver.o o/link.o o/player-header.o o/coords.o o/virus.o o/data.o
+o/gameplay-impl.o: impl/gameplay-impl.cc o/isubject.o o/iobserver.o o/link.o o/coords.o o/virus.o o/data.o
 	$(CXX) $(CXXFLAGS) -c impl/gameplay-impl.cc
 
 o/data-impl.o: impl/data-impl.cc o/coords.o o/gameplay.o
 	$(CXX) $(CXXFLAGS) -c impl/data-impl.cc
 
-.oo/graphic-impl.o: impl/graphic-impl.cc o/gameplay.o o/iobserver.o
+o/graphic-impl.o: impl/graphic-impl.cc o/gameplay.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c impl/graphic-impl.cc
 
 o/link-impl.o: impl/link-impl.cc o/coords	
 	$(CXX) $(CXXFLAGS) -c impl/link-impl.cc	
 
+o/board-impl.o: impl/board-impl.cc o/isubject.o o/iobserver.o o/link.o o/gameplay.o o/coords.o
+	$(CXX) $(CXXFLAGS) -c impl/board-impl.cc
+
+o/player-header-impl.o: impl/player-header-impl.cc o/gameplay.o o/coords.o
+	$(CXX) $(CXXFLAGS) -c impl/player-header-impl.cc
+
+o/player-impl.o: impl/player-impl.cc o/link-boost.o o/firewall.o o/polarize.o o/scan.o o/small-swap.o o/two-sum.o o/double-down.o o/download.o o/virus.o o/data.o
+	$(CXX) $(CXXFLAGS) -c impl/board-impl.cc
+
 o/virus-impl.o: impl/virus-impl.cc o/coords.o
 	$(CXX) $(CXXFLAGS) -c impl/virus-impl.cc
 
-o/terminal-impl.o: impl/terminal-impl.cc o/board.o o/gameplay.oplayer-header.o o/iobserver.o
+o/terminal-impl.o: impl/terminal-impl.cc o/gameplay.o o/iobserver.o
 	$(CXX) $(CXXFLAGS) -c impl/terminal-impl.cc
 
-o/download-impl.o: impl/abilities/download-impl.cc o/coords.o o/player.o o/board.o o/link.o
+o/download-impl.o: impl/abilities/download-impl.cc o/coords.o o/link.o
 	$(CXX) $(CXXFLAGS) -c impl/download-impl.cc
 
 o/firewall-impl.o: impl/abilities/firewall-impl.cc o/coords.o o/gameplay.o o/link.o
