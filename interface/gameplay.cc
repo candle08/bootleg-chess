@@ -3,10 +3,14 @@ import Virus;
 import Data;
 import Coords;
 import Link;
+import IObserver;
 import <vector>;
 import <string>;
 
 using namespace std;
+
+class Ability;
+class Board;
 
 export class Player {
     vector<Virus *> all_virus;
