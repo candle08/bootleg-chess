@@ -13,7 +13,7 @@ string DoubleDown::usePower(Board & b, Coords & c, Link * link1, Link * link2, P
     b.double_down = true;
 
     // debug
-    cerr << "couldn't use double down";
+    cerr << "in double down";
     
 
     return "";

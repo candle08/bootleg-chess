@@ -15,7 +15,7 @@ string Scan::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player 
         link1->revealed = true;
         return "";
     } else {
-        return "error, link1 is a nullptr";
+        return "error, link1 is a nullptr in SCAN";
     }
 
 

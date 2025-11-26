@@ -14,6 +14,6 @@ string TwoSum::usePower(Board & b, Coords & c, Link * link1, Link * link2, Playe
         link1->frozen_on_turn = b.turn_number;
         return "";
     } else {
-        return "link1 nullptr gg";
+        return "link1 nullptr gg in TWOSUM";
     }
 }
