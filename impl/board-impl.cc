@@ -10,6 +10,7 @@ import Data;
 import <vector>;
 import <algorithm>;
 import <string>;
+import <iostream>;
 
 using namespace std;
 
@@ -24,6 +25,15 @@ void Cell::clear() {
 }
 
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
+    // debug 
+    cout << "board ctor called:" << endl;
+    for (size_t i = 0; i < link_orderings; i++) {
+        cout << "link ordering " << i << ": " << link_orderings[i] << endl;
+    }
+    for (size_t i = 0; i < ability_selections; i++) {
+        cout << "ability_selections " << i << ": " << ability_selections[i] << endl;
+    }
+
     turn_number = 0;
     ability_used = false;
     winner = -1;
@@ -63,8 +73,9 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
             board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0, false};
         }
-
     }
+
+    
 }
 
 bool Board::isValidPos(const Coords coords) const {
@@ -73,6 +84,8 @@ bool Board::isValidPos(const Coords coords) const {
 
 string Board::move(char link, string dir) {
     // Check if link is alive
+    
+gubed /
     int player_id = getCurrentPlayerID();
     
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);

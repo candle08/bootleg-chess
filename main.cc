@@ -9,6 +9,7 @@ import Data;
 import Virus;
 import Graphic;
 import Terminal;
+
 import Gameplay;
 
 using namespace std;
@@ -137,6 +138,13 @@ int main(int argc, char* argv[]) {
 
     Board board{{link1, link2}, {ability1, ability2}};
 
+    // populate board's observers array
+    
+    Terminal* terminal = new Terminal{};    
+    // Graphic* graphic = new Graphic{};
+    board.subscribe(terminal);
+    // board.subscribe(graphic);    
+    
     // ----- INPUT READER -----
     ifstream file_stream;
     istream* current_stream = &cin;
