@@ -9,6 +9,8 @@ import xwindow;
 using namespace std;
 
 void Graphic::notify(const ISubject & b) {
+    // debug
+    cerr << "notify called";
     Board& boardRef = (Board&)b;    
     printOutput(cout, boardRef);
 }

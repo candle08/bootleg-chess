@@ -15,6 +15,8 @@ using namespace std;
 Polarize::Polarize(): Ability{'P'} {}
 
 string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Player * p) {
+    // debug
+    cerr << "polarize called";
     if (link1) {
         // changing the type of the link from data to virus or vice versa
         // and updating the corresponding vectors in player

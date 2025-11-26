@@ -4,12 +4,15 @@ import Coords;
 import Link;
 
 import <string>;
+import <iostream>;
 
 using namespace std;
 
 Scan::Scan(): Ability{'S'} {}
 
 string Scan::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
+    //debug
+    cerr << "Scan called";
     // Setting revealed to true, thereby revealing the type and strength on board
     if (link1) {
         link1->revealed = true;

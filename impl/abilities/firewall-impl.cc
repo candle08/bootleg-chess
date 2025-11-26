@@ -12,6 +12,8 @@ using namespace std;
 Firewall::Firewall(): Ability{'F'} {}
 
 string Firewall::usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) {
+    //debug
+    cerr << "firewall called";
     // Check if cell is empty
     if (b.board[c.r][c.c].item != b.EMPTY) {
         return "Selected cell is not empty";
