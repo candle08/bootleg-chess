@@ -157,6 +157,9 @@ export class Board : public ISubject {
         static inline const int NUM_SERVER_PORTS_PER_PLAYER = 2;
         static inline const int NUM_DATA_DOWNLOADED_TO_WIN = 4;
         static inline const int NUM_VIRUS_DOWNLOADED_TO_LOSE = 4;
+        static inline const int NUM_OF_ABILITIES = 5;
+        static inline const int MAX_NUM_OF_EACH_ABILITY = 2;
+        static inline const int NUM_OF_LINKS = 8;
 
         // Symbols for the Cell.item field; compare value with constant directly
         static inline const char DATA = 'D';

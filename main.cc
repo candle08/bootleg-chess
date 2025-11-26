@@ -7,7 +7,6 @@ import <map>;
 
 import Data;
 import Virus;
-import Display;
 import Graphic;
 import Gameplay;
 
@@ -31,24 +30,24 @@ int main(int argc, char* argv[]) {
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
     string link1 = "V1V2V3V4D1D2D3D4", link2 = "V1V2V3V4D1D2D3D4";
-    bool graphics_enabled = false;
+    // bool graphics_enabled = false;
 
     for (int i = 1; i < argc; i++) {
         string cur_arg = argv[i];
         if (prev_arg != "") {
             if (prev_arg == "-ability1" || prev_arg == "-ability2") {
                 // validate length
-                if (cur_arg.length() != NUM_OF_ABILITIES) {
-                    cerr << "Parameter for " << prev_arg << " is not length " << NUM_OF_ABILITIES << endl;
+                if (cur_arg.length() != Board::NUM_OF_ABILITIES) {
+                    cerr << "Parameter for " << prev_arg << " is not length " << Board::NUM_OF_ABILITIES << endl;
                     return 1;
                 }
 
                 // validate that the argument only has characters valid letters, and that each letter appears no more than twice
                 map<char, int> ability_counts;
-                for (int j = 0; j < NUM_OF_ABILITIES; j++) {
+                for (int j = 0; j < Board::NUM_OF_ABILITIES; j++) {
                     // check that all letters are valid
                     int index_of_letter = -1;
-                    for (int k = 0; k < ABILITY_LETTERS.size(); k++) {
+                    for (size_t k = 0; k < ABILITY_LETTERS.size(); k++) {
                         if (cur_arg[j] == ABILITY_LETTERS[k]) {
                             index_of_letter = k;
                             break;
@@ -65,7 +64,7 @@ int main(int argc, char* argv[]) {
                         ability_counts.insert({cur_arg[j], 0});
                     }
                     ability_counts[cur_arg[j]]++;
-                    if (ability_counts[cur_arg[j]] > MAX_NUM_OF_EACH_ABILITY) {
+                    if (ability_counts[cur_arg[j]] > Board::MAX_NUM_OF_EACH_ABILITY) {
                         cerr << "Parameter for " << prev_arg << " had more than two copies of an ability" << endl;
                         return 1;
                     }
@@ -78,13 +77,13 @@ int main(int argc, char* argv[]) {
                 }
             } else if (prev_arg == "-link1" || prev_arg == "-link2") {
                 // validate length
-                if (cur_arg.length() != NUM_OF_LINKS * 2) {
+                if (cur_arg.length() != Board::NUM_OF_LINKS * 2) {
                     cerr << "Parameter for " << prev_arg << " is not length 16" << endl;
                     return 1;
                 }
                 
                 map<string, bool> link_counts; 
-                for (int j = 0; j < NUM_OF_LINKS * 2; j += 2) {
+                for (int j = 0; j < Board::NUM_OF_LINKS * 2; j += 2) {
                     string link = cur_arg.substr(j, 2);
                     
                     // validate link formatting
@@ -113,7 +112,7 @@ int main(int argc, char* argv[]) {
                 // this code should never run but it's here just in case
                 cerr << "Unrecognized argument " << prev_arg << endl;
                 return 1;
-            }/
+            }
             prev_arg = "";
         } else if (
             cur_arg == "-ability1" ||
@@ -123,7 +122,7 @@ int main(int argc, char* argv[]) {
         ) {
             prev_arg = cur_arg;
         } else if (cur_arg == "-graphics") {
-            graphics_enabled = true;
+            // graphics_enabled = true;
         } else {
             cerr << "Argument " << cur_arg << " not recognized" << endl;
             return 1;
@@ -151,7 +150,8 @@ int main(int argc, char* argv[]) {
         // this string will store the resulting error message, if applicable
         string retval = "";
         if (in == "move") {
-            char link, dir;
+            char link;
+            string dir;
             *current_stream >> link >> dir;
 
             if (dir != "up" && dir != "down" && dir != "left" && dir != "right") {
@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
                 int r, c;
                 *current_stream >> r >> c;
 
-                retval = board.useAbility('F', '\0', {r, c});
+                retval = board.useAbility('F', {r, c});
             } else if (id == '3' || id == 'd' || id == 'D') {
                 // download
                 char link;
@@ -222,7 +222,7 @@ int main(int argc, char* argv[]) {
             if (!file_stream) {
                 cerr << "Invalid input for sequence: could not open file" << endl;
             } else {
-                cur = &file_stream;
+                current_stream = &file_stream;
             }
             
         } else if (in == "quit") {
@@ -232,7 +232,7 @@ int main(int argc, char* argv[]) {
             cout << "Invalid input detected" << endl;
         }
 
-        if (retval) {
+        if (retval != "") {
             cerr << retval << endl;
         }
 
