@@ -46,6 +46,8 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
 Link* Player::getLinkPointerFromChar(char link) {
     // If link is a Data
 
+    cerr << "called getlinkptrfromchar" << endl;
+    
     for (size_t i = 0; i < all_data.size(); i++) {
         cerr << "getting link ptr from char, checking data\n";
         if (all_data[i]->symbol == link) {
@@ -69,10 +71,11 @@ string Player::useAbility(char ability, Board& b, Coords& c, char link1, char li
     cerr << "in player's use ability now \n";
     for (auto it = abilities.begin(); it != abilities.end(); it++) {
         // Check that the player has the ability, use and remove it.
-        cerr << "checking that the player as the ability: " << ability << "with link 1: "
+        cerr << "checking that the player has the ability: " << ability << " with link 1: "
         << link1 << " and link2: " << link2 << "\n";
+        cerr << "currently iterator in useAbility is the symbol: " << (*it)->symbol << "\n";
+
         if ((*it)->symbol == ability) {
-            cerr << "currently iterator in useability is the symbol: " << (*it)->symbol << "\n";
             Link* link_pointer1 = getLinkPointerFromChar(link1);
             if (!link_pointer1) cerr << "link_pointer1 is null\n";
             Link* link_pointer2 = getLinkPointerFromChar(link2);
