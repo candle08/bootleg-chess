@@ -85,8 +85,14 @@ bool Board::isValidPos(const Coords coords) const {
 string Board::move(char link, string dir) {
     // Check if link is alive
     
-gubed /
+    // debug
+    cerr << "player_id " << player_id << endl;
+    cerr << "turn number: " << turn_number << endl;
+    if (!link_ptr) {
+        cerr << "link_ptr null";
+    }
     int player_id = getCurrentPlayerID();
+
     
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
 
@@ -95,6 +101,9 @@ gubed /
     }
 
     Coords new_posn = link_ptr->coords;
+    // debug
+    cerr << "new_posn: r " << new_posn.r << "c " << new_posn.c << endl;
+    cerr << "link_ptr->level " << link_ptr->level << endl;
 
     // Checking if user is not frozen from twosum
     if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
@@ -128,6 +137,8 @@ gubed /
     
 
     Cell new_place = board[new_posn.r][new_posn.c];
+    cerr << "new_posn.r " << new_posn.r << "new_posn.c " << new_posn.c << endl;
+    cerr << "player_id " << player_id << endl;
     
     if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
         // Opponent's edge
@@ -157,6 +168,7 @@ gubed /
             ph.players[new_place.player]->download(link_ptr, *this);
         }
     }
+
     
     // Invalid: out of bounds, own server port, or own link
     if (!isValidPos(new_posn)|| 
@@ -168,6 +180,7 @@ gubed /
 
     // Make sure previous spot is now empty cell
     board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1, false};
+    cerr << "printing out previous, cleared cell after move " << board[link_ptr->coords.r][link_ptr->coords.c] << endl;
 
     // Checking ability usage
     if (double_down) {
@@ -178,16 +191,21 @@ gubed /
         ability_used = false;
     }
 
+    cerr << "printing out double_down, ability_used, turn_number (in this order) " << double_down << ability_used << turn_number << endl;
+
     // Using firewall ability after move has been made
     if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id) { // firewall ability activated
+        cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id " returned true
         link_ptr->revealed = true;
         if (link_ptr->type == "virus") {
             ph.players[player_id]->download(link_ptr, *this);
         }
     }
 
+
     // Notify the observers
     notifyObservers();
+    delete link_ptr;
     return "";
 }
 
