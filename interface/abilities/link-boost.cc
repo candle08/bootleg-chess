@@ -1,9 +1,8 @@
 export module LinkBoost;
 
-import Ability;
-import Board;
 import Coords;
-import Player;
+import Gameplay;
+import Link;
 
 using namespace std;
 

@@ -1,9 +1,8 @@
 export module Firewall;
 
-import Board;
 import Coords;
-import Ability;
-import Player;
+import Gameplay;
+import Link;
 
 using namespace std;
 

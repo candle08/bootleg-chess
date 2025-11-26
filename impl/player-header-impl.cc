@@ -1,7 +1,6 @@
-module PlayerHeader;
+module Gameplay;
 
 import <vector>;
-import Player;
 
 void Player::addPlayer(Player *p) {
     players.push_back(p);

@@ -1,5 +1,4 @@
 export module PlayerHeader;
-import Player;
 import <vector>;
 
 using namespace std;

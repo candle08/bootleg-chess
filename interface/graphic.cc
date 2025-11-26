@@ -1,5 +1,5 @@
 export module Graphic;
-import Board;
+import Gameplay;
 import IObserver;
 import GUI;
 

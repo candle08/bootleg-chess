@@ -1,6 +1,5 @@
 module Terminal;
-import Board;
-import PlayerHeader;
+import Gameplay;
 import <iostream>;
 
 using namespace std;

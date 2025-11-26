@@ -1,9 +1,10 @@
 module Firewall;
 
-import Board;
 import Coords;
-import Ability;
-import Player;
+import Gameplay;
+import Link;
+
+import vector;
 
 using namespace std;
 

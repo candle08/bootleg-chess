@@ -1,19 +1,92 @@
-export module Board;
-import ISubject;
-import IObserver;
-import Link;
-import PlayerHeader;
+export module Gameplay;
+import Virus;
+import Data;
 import Coords;
+import Link;
 import <vector>;
 import <string>;
 
-export class Player;
-
 using namespace std;
 
-/**
-         * A simple struct for holding the information of a cell
+export class Player {
+    vector<Virus *> all_virus;
+    vector<Data *> all_data;
+    vector<Ability *> abilities;
+    bool alive;
+    int id;
+
+    /**
+     * An array of links that the player has downloaded
+    */
+    vector<Link *> downloaded;
+    int num_virus_downloaded;
+    int num_data_downloaded;
+
+    public:
+        /**
+         * Initialize a player class with the passed parameters
+         * @param link_orderings The order of links, represented as a length-16 string (e.g. "D1D2V1V2...")
+         * @param abilities_selected The abilities selected, represented as a length-5 string
+         * @param positions A size-8 vector of the corodinates of the links
+         * @param id Player number, id is i for the i+1th player
          */
+        Player(string link_orderings, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id);
+        
+        
+
+        /**
+         * Returns a pointer to the corresponding virus or data that the string represents
+         * It is assumed that the string is of valid format
+         */
+        Link* getLinkPointerFromChar(char link);
+
+        /**
+         * Use and remove the ability represented by the char
+         * Returns the empty string on success, or an error message on failure
+         * It is assumed that ability is valid (a capitalized letter representing the ability)
+         * @param ability
+         * @param b
+         * @param c
+         * @param link1
+         * @param link2
+         */
+        string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
+
+        /**
+         * Downloads the link from the given Link*
+         * Also updates the relevant fields of the link
+         */
+        void download(Link* link, Board& b);
+
+        ~Player();
+};
+
+export struct PlayerHeader {
+    vector<Player*> players;
+    int num_players;
+    void addPlayer(Player* p);
+    ~PlayerHeader();
+};
+
+
+export class Ability {
+    string name;
+
+    public:
+
+        /**
+         * Use the corresponding ability's power
+         * Returns either the empty string on success, or an error message on failure
+         * @param board A reference to the playing board
+         * @param coords A reference to the coordinates of the ability, or {-1, -1} if not applicable
+         * @param link1 A pointer to the first link targeted in the ability, or nullptr if not applicable
+         * @param link2 A pointer to the second link targeted in the ability, or nullptr if not applciable
+         * @param p A pointer to the player using the ability
+         */
+        virtual string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p);
+        virtual ~Ability() = 0;
+};
+
 export struct Cell {
     int player; // Player number that the item in the cell belongs to: 0 if N/A
     char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty

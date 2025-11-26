@@ -1,7 +1,5 @@
 module Graphic;
-import Board;
-import PlayerHeader; 
-import Player; 
+import Gameplay; 
 import <iostream>;
 import <string>;
 import <vector>;

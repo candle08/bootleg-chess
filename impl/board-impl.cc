@@ -1,9 +1,8 @@
-module Board;
+module Gameplay;
 
 import ISubject;
 import IObserver;
 import Link;
-import PlayerHeader;
 import Coords;
 import Virus;
 import Data;
@@ -49,13 +48,13 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find viruses of player
         for (int j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
-            board[virus.coords.r][virus.coords.c] = {i, VIRUS, virus->level};
+            board[virus->coords.r][virus->coords.c] = {i, VIRUS, virus->level};
         }
 
         // Find data of player
         for (int j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
-            board[data.coords.r][data.coords.c] = {i, DATA, data->level};
+            board[data->coords.r][data->coords.c] = {i, DATA, data->level};
         }
 
         // Place server ports
@@ -136,11 +135,11 @@ string Board::move(char link, string dir) {
         && new_place.player != player_id) {
         // Moving onto opponent's link --> initiates a battle
         if (link_ptr->level >= new_place.level) {
-            ph.players[player_id]->download(ph.players[new_place.player]->getLinkPointerFromChar(new_place.item), );
+            ph.players[player_id]->download(ph.players[new_place.player]->getLinkPointerFromChar(new_place.item), *this);
             link_ptr->coords = {new_posn.r, new_posn.c};
             board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level};
         } else {
-            ph.players[new_place.player]->download(link_ptr);
+            ph.players[new_place.player]->download(link_ptr, *this);
         }
     }
     
@@ -165,7 +164,7 @@ string Board::move(char link, string dir) {
     }
 
     // Using firewall ability after move has been made
-    if (board[new_posn.r][new_posn.c]->firewall && board[new_posn.r][new_posn.c]->player != ph.players[player_id]) { // firewall ability activated
+    if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != ph.players[player_id]) { // firewall ability activated
         getLinkPointerFromChar(link)->revealed = true;
         if (getLinkPointerFromChar(link)->type = "virus") {
             download(getLinkPointerFromChar(link), *this);

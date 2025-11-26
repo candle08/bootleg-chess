@@ -1,9 +1,8 @@
 export module Download;
 
-import Board;
 import Coords;
-import Ability;
-import Player;
+import Gameplay;
+import Link;
 
 export class Download : public Ability {
     public:

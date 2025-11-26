@@ -1,5 +1,9 @@
 module Polarize;
 
+import Coords;
+import Gameplay;
+import Link;
+
 string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Player * p) override {
     if (link1) {
         // changing the type of the link from data to virus or vice versa and deleting the link from its corresponding vector in player

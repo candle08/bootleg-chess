@@ -1,8 +1,8 @@
 export module DoubleDown;
-import Board;
+
 import Coords;
-import Ability;
-import Player;
+import Gameplay;
+import Link;
 
 using namespace std;
 

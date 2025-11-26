@@ -5,13 +5,11 @@ import <string>;
 import <fstream>;
 import <map>;
 
-import Ability;
-import Board;
 import Data;
 import Virus;
 import Display;
 import Graphic;
-import Player;
+import Gameplay;
 
 using namespace std;
 

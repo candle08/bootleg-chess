@@ -1,9 +1,8 @@
 export module Terminal;
-import Board;
+import Gameplay;
 import GUI;
 import IObserver;
 import <iostream>;
-import PlayerHeader;
 
 using namespace std;
 

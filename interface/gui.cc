@@ -1,6 +1,6 @@
 export module GUI;
 import IObserver;
-import Board;
+import Gameplay;
 
 using namespace std;
 

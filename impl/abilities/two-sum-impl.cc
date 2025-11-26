@@ -1,11 +1,9 @@
 module TwoSum;
 
-import Board;
-import Link;
 import Coords;
-import Player;
+import Gameplay;
+import Link;
 
-using namespace std;
 
 string TwoSum::usePower(Board & b, Coords & b, Link * link1, Link * link2, Player * p) override {
     if (link1) {
