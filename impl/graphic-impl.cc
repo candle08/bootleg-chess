@@ -6,7 +6,14 @@ import <vector>;
 
 using namespace std;
 
-&ostream Graphic::operator<<(&, Board &b, PlayerHeader & ph, int player) override {
+void notify(const IObserver & b) {
+    printOutput(cout, b);
+}
+
+void Graphic::printOutput(ostream& o, Board &b) override {
+    PlayerHeader& ph = b.ph;
+    int player = b.getCurrentPlayerID();
+
     if (this->xw) {
         int cellSize = 50;
         int offset_x = 25;
