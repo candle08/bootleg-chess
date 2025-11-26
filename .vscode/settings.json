@@ -71,6 +71,7 @@
     "span": "cpp",
     "format": "cpp",
     "text_encoding": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "ostream": "cpp"
   }
 }

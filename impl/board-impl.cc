@@ -99,14 +99,14 @@ bool Board::isValidPos(const Coords coords) const {
 
 string Board::move(char link, string dir) {
     // Check if link is alive
-    
+    int player_id = getCurrentPlayerID();
+
     // debug
     cerr << "player_id " << player_id << endl;
     cerr << "turn number: " << turn_number << endl;
     if (!link_ptr) {
         cerr << "link_ptr null";
     }
-    int player_id = getCurrentPlayerID();
 
     
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
