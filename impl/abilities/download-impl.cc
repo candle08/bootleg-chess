@@ -4,7 +4,11 @@ import Coords;
 import Gameplay;
 import Link;
 
-string Download::usePower(Board & b, Coords & b, Link * link1, Link * link2, Player * p) override {
-    p->download(link1);
+import <string>;
+
+using namespace std;
+
+string Download::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
+    p->download(link1, b);
     return "";
 }

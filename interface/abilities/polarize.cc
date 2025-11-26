@@ -4,6 +4,8 @@ import Coords;
 import Gameplay;
 import Link;
 
+import <string>;
+
 using namespace std;
 
 export class Polarize : public Ability {

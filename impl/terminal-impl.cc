@@ -4,7 +4,7 @@ import <iostream>;
 
 using namespace std;
 
-void notify(const IObserver & b) {
+void Terminal::notify(const ISubject & b) {
     printOutput(cout, b);
 }
 

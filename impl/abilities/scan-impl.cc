@@ -4,7 +4,11 @@ import Gameplay;
 import Coords;
 import Link;
 
-string Scan::usePower(Board & b, Coords & b, Link * link1, Link * link2, Player * p) override {
+import <string>;
+
+using namespace std;
+
+string Scan::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
     // setting revealed to true, thereby revealing the type and strength on board
     if (link1) {
         link1->revealed = true;

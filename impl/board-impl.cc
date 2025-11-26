@@ -1,7 +1,7 @@
 module Gameplay;
 
-import ISubject;
-import IObserver;
+
+import Observer;
 import Link;
 import Coords;
 import Virus;
@@ -14,6 +14,8 @@ import <string>;
 using namespace std;
 
 Cell::Cell() : player{-1}, item{'\0'}, level{-1}, firewall{false} {}
+
+Cell::Cell(int player, char item, int level, bool firewall): player{player}, item{item}, level{level}, firewall{firewall} {}
 
 void Cell::clear() {
     player = -1;
@@ -46,20 +48,20 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         Player* p = ph.players[i];
 
         // Find viruses of player
-        for (int j = 0; j < p->all_virus.size(); j++) {
+        for (size_t j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
-            board[virus->coords.r][virus->coords.c] = {i, VIRUS, virus->level};
+            board[virus->coords.r][virus->coords.c] = {i, VIRUS, virus->level, false};
         }
 
         // Find data of player
-        for (int j = 0; j < p->all_data.size(); j++) {
+        for (size_t j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
-            board[data->coords.r][data->coords.c] = {i, DATA, data->level};
+            board[data->coords.r][data->coords.c] = {i, DATA, data->level, false};
         }
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
-            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0};
+            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = {j, 'S', 0, false};
         }
 
     }
@@ -83,7 +85,7 @@ string Board::move(char link, string dir) {
 
     // checking if user is not frozen from twosum
     if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
-        return "Invalid input: link is frozen for " + string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2)) + "more moves";
+        return "Invalid input: link is frozen for " + to_string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2)) + "more moves";
     }
     
     // Check if the link will stay on the board
@@ -137,7 +139,7 @@ string Board::move(char link, string dir) {
         if (link_ptr->level >= new_place.level) {
             ph.players[player_id]->download(ph.players[new_place.player]->getLinkPointerFromChar(new_place.item), *this);
             link_ptr->coords = {new_posn.r, new_posn.c};
-            board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level};
+            board[new_posn.r][new_posn.c] = {player_id, link_ptr->symbol, link_ptr->level, false};
         } else {
             ph.players[new_place.player]->download(link_ptr, *this);
         }
@@ -152,7 +154,7 @@ string Board::move(char link, string dir) {
     
 
     // Make sure previous spot is now empty cell
-    board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1};
+    board[link_ptr->coords.r][link_ptr->coords.c] = {-1, '\0', -1, false};
 
     // Checking ability usage
     if (double_down) {
@@ -164,10 +166,10 @@ string Board::move(char link, string dir) {
     }
 
     // Using firewall ability after move has been made
-    if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != ph.players[player_id]) { // firewall ability activated
-        getLinkPointerFromChar(link)->revealed = true;
-        if (getLinkPointerFromChar(link)->type = "virus") {
-            download(getLinkPointerFromChar(link), *this);
+    if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id) { // firewall ability activated
+        link_ptr->revealed = true;
+        if (link_ptr->type == "virus") {
+            ph.players[player_id]->download(link_ptr, *this);
         }
     }
 
@@ -205,8 +207,8 @@ void Board::win(int index) {
 
 void Board::checkWinCondition() {
     int winner = -1;
-    for (int i = 0; i < ph.players.size(); i++) {
-        if (ph.players[i].alive) {
+    for (size_t i = 0; i < ph.players.size(); i++) {
+        if (ph.players[i]->alive) {
             if (winner != -1) {
                 // at least two alive: no one has won
                 return;
@@ -226,7 +228,7 @@ void Board::subscribe(IObserver* o) {
 
 void Board::unsubscribe(IObserver* o) {
     observers.erase(find(observers.begin(), observers.end(), o));
-}
+}   
 
 void Board::notifyObservers() {
     for (auto o : observers) {

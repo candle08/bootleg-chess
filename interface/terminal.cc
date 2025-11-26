@@ -1,14 +1,14 @@
 export module Terminal;
 import Gameplay;
 import GUI;
-import IObserver;
+import Observer;
 import <iostream>;
 
 using namespace std;
 
 export class Terminal : public GUI {
     public:
-        void notify(const IObserver & b) override;
+        void notify(const ISubject & b) override;
         void printOutput(ostream& o, Board &b);
 };
 

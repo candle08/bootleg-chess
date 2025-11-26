@@ -3,8 +3,8 @@ import Virus;
 import Data;
 import Coords;
 import Link;
-import IObserver;
-import ISubject;
+import Observer;
+
 import <vector>;
 import <string>;
 
@@ -13,7 +13,7 @@ using namespace std;
 export class Ability;
 export class Board;
 
-export class Player {
+export struct Player {
     vector<Virus *> all_virus;
     vector<Data *> all_data;
     vector<Ability *> abilities;
@@ -26,44 +26,42 @@ export class Player {
     vector<Link *> downloaded;
     int num_virus_downloaded;
     int num_data_downloaded;
+/**
+     * Initialize a player class with the passed parameters
+     * @param link_orderings The order of links, represented as a length-16 string (e.g. "D1D2V1V2...")
+     * @param abilities_selected The abilities selected, represented as a length-5 string
+     * @param positions A size-8 vector of the corodinates of the links
+     * @param id Player number, id is i for the i+1th player
+     */
+    Player(string link_orderings, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id);
+    
+    
 
-    public:
-        /**
-         * Initialize a player class with the passed parameters
-         * @param link_orderings The order of links, represented as a length-16 string (e.g. "D1D2V1V2...")
-         * @param abilities_selected The abilities selected, represented as a length-5 string
-         * @param positions A size-8 vector of the corodinates of the links
-         * @param id Player number, id is i for the i+1th player
-         */
-        Player(string link_orderings, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id);
-        
-        
+    /**
+     * Returns a pointer to the corresponding virus or data that the string represents
+     * It is assumed that the string is of valid format
+     */
+    Link* getLinkPointerFromChar(char link);
 
-        /**
-         * Returns a pointer to the corresponding virus or data that the string represents
-         * It is assumed that the string is of valid format
-         */
-        Link* getLinkPointerFromChar(char link);
+    /**
+     * Use and remove the ability represented by the char
+     * Returns the empty string on success, or an error message on failure
+     * It is assumed that ability is valid (a capitalized letter representing the ability)
+     * @param ability
+     * @param b
+     * @param c
+     * @param link1
+     * @param link2
+     */
+    string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
 
-        /**
-         * Use and remove the ability represented by the char
-         * Returns the empty string on success, or an error message on failure
-         * It is assumed that ability is valid (a capitalized letter representing the ability)
-         * @param ability
-         * @param b
-         * @param c
-         * @param link1
-         * @param link2
-         */
-        string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
+    /**
+     * Downloads the link from the given Link*
+     * Also updates the relevant fields of the link
+     */
+    void download(Link* link, Board& b);
 
-        /**
-         * Downloads the link from the given Link*
-         * Also updates the relevant fields of the link
-         */
-        void download(Link* link, Board& b);
-
-        ~Player();
+    ~Player();
 };
 
 export struct PlayerHeader {
@@ -102,6 +100,11 @@ export struct Cell {
      * Overriding default constructor of cell to write specific values
      */
     Cell();
+
+    /**
+     * Default ctor of cell
+     */
+    Cell(int player, char item, int level, bool firewall);
 
     /**
      * Remove items from cell, clearing fields

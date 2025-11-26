@@ -1,8 +1,9 @@
-export module ISubject;
-import IObserver;
+export module Observer;
 import <vector>;
 
 using namespace std;
+
+export class IObserver;
 
 export class ISubject {
     vector<IObserver *> observers;
@@ -23,4 +24,9 @@ export class ISubject {
          */
         void notifyObservers();
         virtual ~ISubject() = 0;
+};
+
+export class IObserver {
+    public:
+        virtual void notify(const ISubject &b) = 0;
 };
