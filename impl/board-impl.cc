@@ -20,7 +20,7 @@ Cell::Cell(int player, char item, int level, bool firewall): player{player}, ite
 
 void Cell::clear() {
     // debug
-    cerr << "clearing cell";
+    cerr << "clearing cell\n";
     player = -1;
     item = '\0';
     level = -1;
@@ -35,13 +35,15 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     for (size_t i = 0; i < ability_selections.size(); i++) {
         cerr << "ability_selections " << i << ": " << ability_selections[i] << endl;
     }
-    // debug
-    cerr << "turn num " << turn_number << "ability used " << ability_used
-    << "winner " << winner << "double down " << double_down << "\n";
+    
     turn_number = 0;
     ability_used = false;
     winner = -1;
     double_down = false;
+
+        // debug
+    cerr << "turn num " << turn_number << " ability used " << ability_used
+    << " winner " << winner << " double down " << double_down << "\n";
 
     // Create the players
     //debug
@@ -49,15 +51,34 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     ph = PlayerHeader{};
     for (int i = 0; i < NUM_PLAYERS; i++) {
         // debug
-        cerr << "player " << i << " made with: link ordering " << link_orderings[i] << ", ability_selections " << ability_selections[i] << endl;
+        cerr << "player " << i << " made with: link ordering " << link_orderings[i] << ", ability_selections " << ability_selections[i] <<
+        ", symbols ";
+        for (int j = 0; j < 8; j++) {
+            cerr << symbols[i][j];
+        }
+        cerr << endl;
         Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i], i};
+        
+        // debug
+        cerr << "this player's all_data: " << endl;
+        for (size_t i = 0; i < p->all_data.size(); i++) {
+            cerr << p->all_data[i]->symbol << p->all_data[i]->level;
+        }
+        cerr << endl;
+
+        cerr << "this player's all_virus: " << endl;
+        for (size_t i = 0; i < p->all_virus.size(); i++) {
+            cerr << p->all_virus[i]->symbol << p->all_virus[i]->level;
+        }
+        cerr << endl;
+
         ph.players.push_back(p);
     }
 
     // Build the board matrix
     // Build empty matrix
     // debug
-    cerr << "building the empty board matrix";
+    cerr << "building the empty board matrix\n";
     for (int r = 0; r < NUM_ROWS; r++) {
         vector<Cell> v(NUM_COLS);
         board.push_back(v);
@@ -69,7 +90,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // Place player pieces
 
     //debug
-    cerr << "placing the player pieces";
+    cerr << "placing the player pieces\n";
     for (int i = 0; i < NUM_PLAYERS; i++) {
         Player* p = ph.players[i];
 
@@ -116,9 +137,9 @@ string Board::move(char link, string dir) {
     cerr << "player_id: " << player_id << endl;
     cerr << "turn number: " << turn_number << endl;
     if (!link_ptr) {
-        cerr << "link_ptr null in MOVE";
+        cerr << "link_ptr null in MOVE\n";
     }
-    cerr << "link_ptr NOT null in move";
+    cerr << "link_ptr NOT null in move\n";
     
     
     if (link_ptr->download_status) {
@@ -237,12 +258,14 @@ string Board::move(char link, string dir) {
 
 string Board::useAbility(char ability, Coords coords, char link1, char link2) {
     //debug
-    cerr << "board's useAbility called"
+    cerr << "board's useAbility called for ability " << ability << " with link1: " << link1 <<
+    " and link2: " << link2 << "\n";
     // Check if ability has already been used
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
-    
+
+    cerr << "calling player's use ability in board\n";
     string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
     if (retval == "") {
     // Ability use succeeded
