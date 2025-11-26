@@ -91,8 +91,9 @@ export struct Ability {
 
 export struct Cell {
     int player; // Player number that the item in the cell belongs to: 0 if N/A
-    char item; // 'S' for server port, 'V' for virus, 'D' for data, '\0' for empty
+    char item; // 'S' for server port, 'V' for virus, 'D' for data, '.' for empty
     int level; // level of the link in the cell, or 0 if there isn't a link in the cell
+    char symbol; // if the item is DATA or VIRUS, this represents its symbol when printed out to terminal
     bool firewall; // whether or not a player has set a firewall at that square
     
     /**
@@ -103,12 +104,22 @@ export struct Cell {
     /**
      * Default ctor of cell
      */
-    Cell(int player, char item, int level, bool firewall);
+    Cell(int player, char item, int level, char symbol, bool firewall);
 
     /**
-     * Remove items from cell, clearing fields
+     * Remove items from cell, clearing fields, EXCEPT FOR FIREWALL
      */
     void clear();
+
+    /**
+     * Copy assignment operator that copies over everything except firewall
+     */
+    Cell& operator=(const Cell& other);
+
+    /**
+     * Print out the contents of a cell
+     */
+    friend ostream& operator<<(ostream& o, const Cell& cell);
 };
 
 export class Board : public ISubject {
@@ -163,7 +174,7 @@ export class Board : public ISubject {
         // Symbols for the Cell.item field; compare value with constant directly
         static inline const char DATA = 'D';
         static inline const char VIRUS = 'V';
-        static inline const char EMPTY = '\0';
+        static inline const char EMPTY = '.';
         static inline const char SERVER = 'S';
 
         /**

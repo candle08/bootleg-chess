@@ -249,4 +249,5 @@ int main(int argc, char* argv[]) {
             current_stream = &cin;
         }
     }
+    delete current_stream;
 }

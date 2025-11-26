@@ -20,11 +20,9 @@ string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Playe
     if (link1) {
         // changing the type of the link from data to virus or vice versa
         // and updating the corresponding vectors in player
-        if (link1->type == "data") {
-            cerr << "in polarize, changing data to virus\n";
-
-            link1->type = "virus";
-            // debug
+        if (link1->type == Board::DATA) {
+            link1->type = Board::VIRUS;
+            
             // Find and remove the Data object from data vector
             cerr << "in polarize, removing the data object from data vector\n";
             auto data_it = find(p->all_data.begin(), p->all_data.end(), static_cast<Data*>(link1));
@@ -41,7 +39,7 @@ string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Playe
             // debug
             
         } else {
-            link1->type = "data";
+            link1->type = Board::DATA;
             
             cerr << "in polarize, removing the virus from the list\n";
             // Find and remove the Virus object from all_virus

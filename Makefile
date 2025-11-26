@@ -11,7 +11,7 @@ IMPL_OBJS = ability-impl.o board-impl.o data-impl.o graphic-impl.o player-impl.o
 
 HARNESS_OBJ = main.o
 
-HEADERS = iostream vector algorithm fstream map string cstdlib
+HEADERS = iostream vector algorithm fstream map stdexcept string cstdlib
 
 %: %.o ;
 

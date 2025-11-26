@@ -9,20 +9,29 @@ import Data;
 using namespace std;
 
 Player::Player(string link_ordering, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id): id{id} {
+    // debug
+    cerr << endl << "PLAYER CTOR " << endl;
+    
     alive = true;
     
     // initialize link_ordering
     for (size_t i = 0; i < link_ordering.length(); i += 2) {
         int level = link_ordering[i + 1] - '0';
         if (link_ordering[i] == 'D' || link_ordering[i] == 'd') {
+            // debug
+            cerr << "initializing data: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
             all_data.push_back(new Data{level, positions[i / 2], symbols[i / 2]});
         } else {
+            // debug
+            cerr << "initializing virus: level: " << level << ", coords: ()" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
             all_virus.push_back(new Virus{level, positions[i / 2], symbols[i / 2]});
         }
     }
 
     // initialize abilities
     for (size_t i = 0; i < abilities_selected.length(); i++) {
+        // debug
+        cerr << "ability: " << abilities_selected[i] << endl;
         if (abilities_selected[i] == 'L') {
             abilities.push_back(new LinkBoost{});
         } else if (abilities_selected[i] == 'D') {
@@ -41,6 +50,8 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
             abilities.push_back(new SmallSwap{});
         }
     }
+    // debug
+    cerr << endl << "END OF PLAYER CTOR " << endl;
 }
 
 Link* Player::getLinkPointerFromChar(char link) {
@@ -103,7 +114,7 @@ void Player::download(Link* link, Board& b) {
 
     // Remove the link from the board
     link->coords = {-1, -1};
-    if (link->type == "data") {
+    if (link->type == Board::DATA) {
         num_data_downloaded++;
         if (num_data_downloaded >= b.NUM_DATA_DOWNLOADED_TO_WIN) {
             b.win(id);
