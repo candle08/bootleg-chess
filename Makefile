@@ -39,7 +39,7 @@ o/link.o: interface/link.cc o/coords.o
 o/virus.o: interface/virus.cc o/link.o o/coords.o
 	$(CXX) $(CXXFLAGS) -c interface/virus.cc
 
-o/gameplay.o: interface/gameplay.cc o/coords.o o/link.o o/virus.o o/data.o o/coords.o o/iobserver.o
+o/gameplay.o: interface/gameplay.cc o/coords.o o/link.o o/virus.o o/data.o o/coords.o o/iobserver.o o/isubject.o
 	$(CXX) $(CXXFLAGS) -c interface/gameplay.cc
 
 o/link-boost.o: interface/abilities/link-boost.cc o/gameplay.o o/link.o o/coords.o
