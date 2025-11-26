@@ -1,6 +1,5 @@
-module Scan;
+module Gameplay;
 
-import Gameplay;
 import Coords;
 import Link;
 
@@ -8,8 +7,10 @@ import <string>;
 
 using namespace std;
 
+Scan::Scan(): Ability{'S'} {}
+
 string Scan::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
-    // setting revealed to true, thereby revealing the type and strength on board
+    // Setting revealed to true, thereby revealing the type and strength on board
     if (link1) {
         link1->revealed = true;
         return "";

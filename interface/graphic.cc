@@ -12,7 +12,13 @@ export class Graphic : public GUI {
     Xwindow *xw;
     public:
         Graphic();
+
+        /**
+         *
+         */
         void printOutput(ostream& o, Board &b);
+
+
         void notify(const ISubject & b) override;
         ~Graphic();
 };

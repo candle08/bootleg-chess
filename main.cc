@@ -8,6 +8,7 @@ import <map>;
 import Data;
 import Virus;
 import Graphic;
+import Terminal;
 import Gameplay;
 
 using namespace std;

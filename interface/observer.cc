@@ -12,21 +12,22 @@ export class ISubject {
         /**
          * Adds an observer
          */
-        void subscribe(IObserver* o);
+        virtual void subscribe(IObserver* o) = 0;
 
         /**
          * Removes an observer
          */
-        void unsubscribe(IObserver* o);
+        virtual void unsubscribe(IObserver* o) = 0;
 
         /**
          * Calls notify to all observers
          */
-        void notifyObservers();
-        virtual ~ISubject() = 0;
+        virtual void notifyObservers() = 0;
+        virtual ~ISubject() = default;
 };
 
 export class IObserver {
     public:
         virtual void notify(const ISubject &b) = 0;
+        virtual ~IObserver() = default;
 };

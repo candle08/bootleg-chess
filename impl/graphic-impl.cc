@@ -17,6 +17,8 @@ Graphic::Graphic() {
     xw = new Xwindow{};
 }
 
+
+
 void Graphic::printOutput(ostream& o, Board &b) {
     PlayerHeader& ph = b.ph;
     int player = b.getCurrentPlayerID();

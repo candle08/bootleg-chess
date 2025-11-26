@@ -83,7 +83,7 @@ string Board::move(char link, string dir) {
 
     Coords new_posn = link_ptr->coords;
 
-    // checking if user is not frozen from twosum
+    // Checking if user is not frozen from twosum
     if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
         return "Invalid input: link is frozen for " + to_string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2)) + "more moves";
     }
@@ -173,20 +173,20 @@ string Board::move(char link, string dir) {
         }
     }
 
-    
-
     // Notify the observers
     notifyObservers();
     return "";
 }
 
 string Board::useAbility(char ability, Coords coords, char link1, char link2) {
+    // Check if ability has already been used
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
     
     string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
     if (retval == "") {
+    // Ability use succeeded
         ability_used = true;
         notifyObservers();
     }
@@ -201,8 +201,8 @@ int Board::getCurrentPlayerID() {
     return turn_number % NUM_PLAYERS;
 }
 
-void Board::win(int index) {
-    winner = index;
+void Board::win(int p) {
+    winner = p;
 }
 
 void Board::checkWinCondition() {
@@ -233,5 +233,11 @@ void Board::unsubscribe(IObserver* o) {
 void Board::notifyObservers() {
     for (auto o : observers) {
         o->notify(*this);
+    }
+}
+
+Board::~Board() {
+    for (auto o : observers) {
+        delete o;
     }
 }

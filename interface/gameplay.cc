@@ -72,22 +72,21 @@ export struct PlayerHeader {
 };
 
 
-export class Ability {
-    string name;
-
-    public:
-
-        /**
-         * Use the corresponding ability's power
-         * Returns either the empty string on success, or an error message on failure
-         * @param board A reference to the playing board
-         * @param coords A reference to the coordinates of the ability, or {-1, -1} if not applicable
-         * @param link1 A pointer to the first link targeted in the ability, or nullptr if not applicable
-         * @param link2 A pointer to the second link targeted in the ability, or nullptr if not applciable
-         * @param p A pointer to the player using the ability
-         */
-        virtual string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p);
-        virtual ~Ability() = 0;
+export struct Ability {
+    char symbol;
+    
+    Ability(char symbol);
+    /**
+     * Use the corresponding ability's power
+     * Returns either the empty string on success, or an error message on failure
+     * @param board A reference to the playing board
+     * @param coords A reference to the coordinates of the ability, or {-1, -1} if not applicable
+     * @param link1 A pointer to the first link targeted in the ability, or nullptr if not applicable
+     * @param link2 A pointer to the second link targeted in the ability, or nullptr if not applciable
+     * @param p A pointer to the player using the ability
+     */
+    virtual string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) = 0;
+    virtual ~Ability() = default;
 };
 
 export struct Cell {
@@ -234,37 +233,88 @@ export class Board : public ISubject {
         string useAbility(char ability, Coords coords = {-1, -1}, char link1 = '\0', char link2 = '\0');
        
         /**
-         * @param p
+         * Sets the winner to the p+1th player
          */
         void win(int p);
 
         /**
-         * 
+         * Checks whether there is currently a winner, if there is,
+         * sets the winner to that player
          */
         void checkWinCondition();
 
         /**
-         * 
+         * Gets the ID of the player who's playing the current turn
          */
         int getCurrentPlayerID();
 
         /**
-         * 
+         * Gets a pointer to the player who's playing the current turn
          */
         Player* getCurrentPlayer();
 
         /**
          * Adds an observer o
          */
-        void subscribe(IObserver* o);
+        void subscribe(IObserver* o) override;
 
         /**
          * Removes an observer o
          */
-        void unsubscribe(IObserver* o);
+        void unsubscribe(IObserver* o) override;
 
         /**
          * Calls notify to all observers
          */
-        void notifyObservers();
+        void notifyObservers() override;
+
+        ~Board();
+};
+
+export class DoubleDown : public Ability {
+    public:
+        DoubleDown();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class Download : public Ability {
+    public:
+        Download();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class Firewall : public Ability {
+    public:
+        Firewall();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class LinkBoost : public Ability {
+    public:
+        LinkBoost();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class Polarize : public Ability {
+    public:
+        Polarize();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class Scan : public Ability {
+    public:
+        Scan();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class SmallSwap : public Ability {
+    public:
+        SmallSwap();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+};
+
+export class TwoSum : public Ability {
+    public:
+        TwoSum();
+        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
 };

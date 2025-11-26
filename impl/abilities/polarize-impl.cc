@@ -1,7 +1,6 @@
-module Polarize;
+module Gameplay;
 
 import Coords;
-import Gameplay;
 import Link;
 import Data;
 import Virus;
@@ -11,6 +10,8 @@ import <algorithm>;
 import <vector>;
 
 using namespace std;
+
+Polarize::Polarize(): Ability{'P'} {}
 
 string Polarize::usePower(Board &b, Coords &c, Link * link1, Link * link2, Player * p) {
     if (link1) {

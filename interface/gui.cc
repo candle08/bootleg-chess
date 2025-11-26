@@ -6,6 +6,6 @@ using namespace std;
 
 export class GUI : public IObserver {
     public:
-        virtual ~GUI() = 0;
+        virtual ~GUI() = default;
         void virtual notify(const ISubject& b) override = 0;
 };
