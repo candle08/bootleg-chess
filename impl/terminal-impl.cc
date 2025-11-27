@@ -82,8 +82,8 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
 // modifications come
 void Terminal::printOutput(ostream & o, Board & b) {
     PlayerHeader& ph = b.ph;
-    // int player = b.getCurrentPlayerID();
-    print_player_info(o, b, ph, 0, true);
+    int player = b.getCurrentPlayerID();
+    print_player_info(o, b, ph, 0, player == 0);
     // Symbol of border printed
     const char BORDER = '=';
 
@@ -109,5 +109,5 @@ void Terminal::printOutput(ostream & o, Board & b) {
 
     o << endl;
 
-    print_player_info(o, b, ph, 1, false);
+    print_player_info(o, b, ph, 1, player == 1);
 }
