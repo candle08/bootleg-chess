@@ -3,6 +3,7 @@ module Gameplay;
 import <vector>;
 import <iostream>;
 import <algorithm>;
+import <iostream>;
 
 import Virus;
 import Data;
@@ -96,6 +97,8 @@ string Player::useAbility(int id, vector<char> args, Board& b) {
 }
 
 Player::~Player() {
+    cerr << "player dtor" << endl;
+
     for (size_t i = 0; i < all_virus.size(); i++) {
         delete all_virus[i];
     }

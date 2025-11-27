@@ -1,5 +1,6 @@
 module Gameplay;
 
+import <iostream>;
 import <vector>;
 using namespace std;
 void PlayerHeader::addPlayer(Player *p) {
@@ -8,6 +9,7 @@ void PlayerHeader::addPlayer(Player *p) {
 }
 
 PlayerHeader::~PlayerHeader() {
+    cerr << "player header dtor" << endl;
     for (int i = 0; i < num_players; i++) {
         delete players[i];
     }
