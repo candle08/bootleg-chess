@@ -95,7 +95,6 @@ void Terminal::printOutput(ostream & o, Board & b) {
         }
         o << endl;
     }
-    o << endl;
 
     // Printing bottom border of board
     for (int i = 0; i < Board::NUM_COLS; i ++) {
