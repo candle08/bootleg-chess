@@ -193,24 +193,27 @@ int main(int argc, char* argv[]) {
             int id;
             *current_stream >> id;
 
-            id--;
-
-            cerr << "calculating required args" << endl;
-            int req_args = board.getNumArgumentsForAbility(id);
-            cerr << "req args: " << to_string(req_args) << endl;
             
-            if (req_args == -1) {
-                retval = "Ability's symbol not recognized (somehow)";
+            if (id < 1 || id > 5) {
+                retval = "Ability index out of bounds";
             } else {
-                vector<char> args;
-                for (int i = 0; i < req_args; i++) {
-                    char c;
-                    *current_stream >> c;
-                    args.push_back(c);
+                id--;
+                cerr << "calculating required args" << endl;
+                int req_args = board.getNumArgumentsForAbility(id);
+                cerr << "req args: " << to_string(req_args) << endl;
+                
+                if (req_args == -1) {
+                    retval = "Ability's symbol not recognized (somehow)";
+                } else {
+                    vector<char> args;
+                    for (int i = 0; i < req_args; i++) {
+                        char c;
+                        *current_stream >> c;
+                        args.push_back(c);
+                    }
+                    retval = board.useAbility(id, args);
                 }
-                retval = board.useAbility(id, args);
             }
-
         } else if (in == "board") {
             // ------------------------ TODO: call print board ------------------------
 
