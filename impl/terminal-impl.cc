@@ -19,7 +19,7 @@ void Terminal::notify(const ISubject & b) {
 
 void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bool owner) { // owner is the player whose turn it is    
     Player* p = ph.players[player];
-    o << "Player " << player << ":" << endl;
+    o << "Player " << player + 1 << ":" << endl;
     o << "Downloaded: " << p->num_data_downloaded << "D, " << p->num_virus_downloaded << "V" << endl;
 
     int abilities_left = 0;

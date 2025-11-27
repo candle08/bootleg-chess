@@ -105,7 +105,7 @@ player_id 1
 turn number: 1
 new_posn: r 7, c 0
 link_ptr->level 1
-Invalid input: link is frozen for 0more moves
+Invalid input: link is frozen for 1 more moves
 
 
 PROCESSING COMMAND move

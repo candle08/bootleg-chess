@@ -1,12 +1,12 @@
 board ctor called:
 link ordering 0: V1V2V3V4D1D2D3D4
 link ordering 1: V1V2V3V4D1D2D3D4
-ability_selections 0: LFDSP
+ability_selections 0: DDDDF
 ability_selections 1: LFDSP
 turn num 0 ability used 0 winner -1 double down 0
 creating the player header
 player header dtor
-player 0 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections LFDSP, symbols abcdefgh
+player 0 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections DDDDF, symbols abcdefgh
 
 PLAYER CTOR 
 initializing virus: level: 1, coords: (0, 0), symbol: a
@@ -17,11 +17,11 @@ initializing data: level: 1, coords: (1, 4), symbol: e
 initializing data: level: 2, coords: (0, 5), symbol: f
 initializing data: level: 3, coords: (0, 6), symbol: g
 initializing data: level: 4, coords: (0, 7), symbol: h
-ability: L
-ability: F
 ability: D
-ability: S
-ability: P
+ability: D
+ability: D
+ability: D
+ability: F
 
 END OF PLAYER CTOR 
 this player's all_data: 
@@ -79,12 +79,11 @@ placing server port at 7, 4
 
 PROCESSING COMMAND ability
 
-board's useAbility called for id 4
+board's useAbility called for id 0
 calling player's use ability in board
 in player's use ability now 
-polarize called
-in polarize, removing the virus from the list
-in polarize, adding a data to the list
+download called
+Data downloaded! we now have 1
 
 
 PROCESSING COMMAND move
@@ -101,38 +100,101 @@ clearing cell
 printing out double_down, ability_used, turn_number (in this order) 001
 
 
-PROCESSING COMMAND ability
-
-board's useAbility called for id 4
-calling player's use ability in board
-in player's use ability now 
-polarize called
-in polarize, removing the virus from the list
-in polarize, adding a data to the list
-
-
 PROCESSING COMMAND move
 
 player_id 1
 turn number: 1
-new_posn: r 0, c 1
-link_ptr->level 2
+new_posn: r 7, c 0
+link_ptr->level 1
 passed frozen check
-clearing cell
-Data downloaded! we now have 1
+new_posn.r 6, new_posn.c 0
+player_id 1
+Updating new cell
 clearing cell
 printing out double_down, ability_used, turn_number (in this order) 002
+
+
+PROCESSING COMMAND ability
+
+board's useAbility called for id 1
+calling player's use ability in board
+in player's use ability now 
+download called
+Data downloaded! we now have 2
 
 
 PROCESSING COMMAND move
 
 player_id 0
 turn number: 2
-Invalid input: Link is no longer alive
+new_posn: r 1, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 2, new_posn.c 0
+player_id 0
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 003
 
 
-PROCESSING COMMAND quit
+PROCESSING COMMAND move
 
+player_id 1
+turn number: 3
+new_posn: r 6, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 5, new_posn.c 0
+player_id 1
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 004
+
+
+PROCESSING COMMAND ability
+
+board's useAbility called for id 2
+calling player's use ability in board
+in player's use ability now 
+download called
+Data downloaded! we now have 3
+
+
+PROCESSING COMMAND move
+
+player_id 0
+turn number: 4
+new_posn: r 2, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 1, new_posn.c 0
+player_id 0
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 005
+
+
+PROCESSING COMMAND move
+
+player_id 1
+turn number: 5
+new_posn: r 5, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 6, new_posn.c 0
+player_id 1
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 006
+
+
+PROCESSING COMMAND ability
+
+board's useAbility called for id 3
+calling player's use ability in board
+in player's use ability now 
+download called
+Data downloaded! we now have 4
 board dtor
 deleting observer pointer
 player header dtor
