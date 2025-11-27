@@ -104,5 +104,5 @@ void Terminal::printOutput(ostream & o, Board & b) {
 
     o << endl;
 
-    print_player_info(o, b, ph, 1, true);
+    print_player_info(o, b, ph, 1, false);
 }
