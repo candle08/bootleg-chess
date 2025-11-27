@@ -168,7 +168,7 @@ string Board::move(char link, string dir) {
         // Checking if user is not frozen from twosum
         if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
             // debug
-            throw logic_error("Invalid input: link is frozen for " + to_string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2)) + "more moves");
+            throw logic_error("Invalid input: link is frozen for " + to_string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2) + 1) + " more moves");
         }
         cerr << "passed frozen check" << endl;
         
