@@ -188,6 +188,7 @@ int main(int argc, char* argv[]) {
             *current_stream >> id;
 
             int req_args = board.getNumArgumentsForAbility(id);
+            
             if (req_args == -1) {
                 retval = "Ability's symbol not recognized (somehow)";
             } else {
