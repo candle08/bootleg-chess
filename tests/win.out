@@ -1,0 +1,380 @@
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+...de...
+........
+........
+........
+........
+...DE...
+ABCSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+....e...
+...d....
+........
+........
+........
+...DE...
+ABCSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+....e...
+...d....
+........
+........
+........
+.B.DE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+...de...
+........
+........
+........
+........
+.B.DE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+...de...
+........
+........
+........
+........
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+.b.de...
+........
+........
+........
+........
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+.b.de...
+........
+........
+........
+........
+A.BDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+.b......
+........
+........
+........
+A.BDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+.b......
+........
+........
+........
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+.b......
+........
+........
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+.b......
+........
+........
+A.BDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+.b......
+........
+A.BDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+.b......
+........
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+.b......
+..BDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+.b......
+A.BDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+........
+AbBDE...
+..CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+........
+.bBDE...
+A.CSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+........
+..BDE...
+AbCSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+a.cSSfgh
+...de...
+........
+........
+........
+........
+A.BDE...
+.bCSSFGH
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: ?  B: ?  C: ?  D: ?  
+E: ?  F: ?  G: ?  H: ?  
