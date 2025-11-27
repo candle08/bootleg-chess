@@ -31,13 +31,9 @@ string SmallSwap::usePower(Board &b, vector<char> args, Player * p) {
 
     swap(*link1, *link2);
 
-    Coords temp = link1->coords;
-    link1->coords = link2->coords;
-    link2->coords = temp;
+    swap(link1->coords, link2->coords);
 
-    Cell temp_cell = b.board[link1->coords.r][link1->coords.c];
-    b.board[link1->coords.r][link1->coords.c] = b.board[link2->coords.r][link2->coords.c];
-    b.board[link2->coords.r][link2->coords.c] = temp_cell;
+    swap(b.board[link1->coords.r][link1->coords.c], b.board[link2->coords.r][link2->coords.c]);
 
     return "";
 }

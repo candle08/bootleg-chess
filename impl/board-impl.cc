@@ -22,10 +22,15 @@ Cell::Cell(int player, char item, int level, char symbol, int firewall): player{
 void Cell::clear() {
     // debug
     cerr << "clearing cell\n";
-    player = -1;
     item = Board::EMPTY;
     level = -1;
-    symbol = Board::EMPTY;
+    if (firewall != -1) {
+        symbol = Board::FIREWALLS[firewall];
+        player = firewall;
+    } else {
+        symbol = Board::EMPTY;
+        player = -1;
+    }
 }
 
 ostream& operator<<(ostream& o, const Cell& cell) {
@@ -243,7 +248,8 @@ string Board::move(char link, string dir) {
                 } else {
                     ph.players[new_cell.player]->download(link_ptr, *this);
                 }
-            } else if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
+            }
+            if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
                 cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
                 link_ptr->revealed = true;
                 if (link_ptr->type == Board::VIRUS) {
@@ -265,10 +271,6 @@ string Board::move(char link, string dir) {
         
         // Make sure previous spot is now empty cell
         board[old_posn.r][old_posn.c].clear();
-        if (board[old_posn.r][old_posn.c].firewall != -1) {
-            board[old_posn.r][old_posn.c].symbol = FIREWALLS[board[old_posn.r][old_posn.c].firewall];
-            board[old_posn.r][old_posn.c].player = board[old_posn.r][old_posn.c].firewall;
-        } 
     
         // Checking ability usage
         if (double_down) {

@@ -29,6 +29,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
         // and updating the corresponding vectors in player
         if (link_ptr->type == Board::DATA) {
             link_ptr->type = Board::VIRUS;
+
             
             // Find and remove the Data object from data vector
             cerr << "in polarize, removing the data object from data vector\n";
@@ -44,6 +45,12 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
             Virus* virus = static_cast<Virus*>(link_ptr);
             owner->all_virus.push_back(virus);
             // debug
+
+            // check for firewall
+            if (b.board[link_ptr->coords.r][link_ptr->coords.c].firewall != -1 && b.board[link_ptr->coords.r][link_ptr->coords.c].firewall != owner->id) {
+                b.board[link_ptr->coords.r][link_ptr->coords.c].symbol = Board::FIREWALLS[b.board[link_ptr->coords.r][link_ptr->coords.c].firewall];
+                owner->download(virus, b);
+            }
             
         } else {
             link_ptr->type = Board::DATA;
