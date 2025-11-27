@@ -5,9 +5,9 @@ HEADERFLAGS = -c -x c++-system-header
 
 EXEC = exec
 
-INTERFACE_OBJS = gameplay.o data.o graphic.o gui.o observer.o link.o terminal.o virus.o coords.o xwindow.o
+INTERFACE_OBJS = gameplay.o data.o graphic.o gui.o observer.o link.o terminal.o virus.o coords.o
 
-IMPL_OBJS = ability-impl.o board-impl.o data-impl.o graphic-impl.o player-impl.o player-header-impl.o virus-impl.o double-down-impl.o download-impl.o firewall-impl.o link-boost-impl.o polarize-impl.o scan-impl.o small-swap-impl.o two-sum-impl.o xwindow-impl.o link-impl.o terminal-impl.o
+IMPL_OBJS = ability-impl.o board-impl.o data-impl.o graphic-impl.o player-impl.o player-header-impl.o virus-impl.o double-down-impl.o download-impl.o firewall-impl.o link-boost-impl.o polarize-impl.o scan-impl.o small-swap-impl.o two-sum-impl.o link-impl.o terminal-impl.o
 
 HARNESS_OBJ = main.o
 
@@ -51,16 +51,14 @@ gui.o: interface/gui.cc observer.o gameplay.o
 terminal.o: interface/terminal.cc gui.o gameplay.o observer.o
 	$(CXX) $(CXXFLAGS) -c interface/terminal.cc
 	
-xwindow.o: interface/xwindow.cc 
-	$(CXX) $(CXXFLAGS) -c interface/xwindow.cc
 
-graphic.o: interface/graphic.cc gui.o gameplay.o xwindow.o
+graphic.o: interface/graphic.cc gui.o gameplay.o
 	$(CXX) $(CXXFLAGS) -c interface/graphic.cc
 
 data-impl.o: impl/data-impl.cc coords.o gameplay.o link.o
 	$(CXX) $(CXXFLAGS) -c impl/data-impl.cc
 
-graphic-impl.o: impl/graphic-impl.cc gameplay.o observer.o xwindow.o
+graphic-impl.o: impl/graphic-impl.cc gameplay.o observer.o
 	$(CXX) $(CXXFLAGS) -c impl/graphic-impl.cc
 
 link-impl.o: impl/link-impl.cc coords	
@@ -107,9 +105,6 @@ double-down-impl.o: impl/abilities/double-down-impl.cc coords.o gameplay.o link.
 
 small-swap-impl.o: impl/abilities/small-swap-impl.cc coords.o gameplay.o link.o gameplay.o
 	$(CXX) $(CXXFLAGS) -c impl/abilities/small-swap-impl.cc
-	
-xwindow-impl.o: impl/xwindow-impl.cc xwindow.o
-	$(CXX) $(CXXFLAGS) -c impl/xwindow-impl.cc
 
 main.o: main.cc data.o virus.o graphic.o gameplay.o coords.o terminal.o
 	$(CXX) $(CXXFLAGS) -c main.cc

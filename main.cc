@@ -140,10 +140,11 @@ int main(int argc, char* argv[]) {
 
     // populate board's observers array
     
-    Terminal* terminal = new Terminal{};    
-    // Graphic* graphic = new Graphic{};
+    Terminal* terminal = new Terminal{};   
+ 
+    Graphic* graphic = new Graphic{};
     board.subscribe(terminal);
-    // board.subscribe(graphic);    
+    board.subscribe(graphic);    
     
     // ----- INPUT READER -----
     ifstream file_stream;
