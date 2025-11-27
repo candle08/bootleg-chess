@@ -72,6 +72,10 @@
     "format": "cpp",
     "text_encoding": "cpp",
     "typeinfo": "cpp",
+<<<<<<< Updated upstream
     "ostream": "cpp"
+=======
+    "iosfwd": "cpp"
+>>>>>>> Stashed changes
   }
 }

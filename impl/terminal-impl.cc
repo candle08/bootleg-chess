@@ -18,27 +18,29 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
         for (int i = 0; i < Board::NUM_COLS; i ++) {
             char reference = 'a' + i;
             o << reference << ": "; // TODO: print d1 v1
-            if (i == Board::NUM_COLS/2) {
+            
+            if (i == Board::NUM_COLS/2 - 1) {
                 o << endl;
             }
         }   
     } else {
         for (int i = 0; i < Board::NUM_COLS; i ++) {
-            char reference = 'a' + i;
+            char reference = 'A' + i;
             o << reference << ": ";
 
             // Checking if that char has been revealed
             if (ph.players[player]->getLinkPointerFromChar(reference)->revealed) {
                 o << ph.players[player]->getLinkPointerFromChar(reference)->symbol << " ";
             } else {
-                o << "?  ";
+                o << "? ";
             }
-            if (i == Board::NUM_COLS/2) {
+            if (i == Board::NUM_COLS/2 - 1) {
                 o << endl;
             }
         }
     }
     
+    o << endl;
 }
 
 // currently the output is designed for a two-player setup
@@ -57,11 +59,11 @@ void Terminal::printOutput(ostream & o, Board & b) {
 
     o << endl;
 
-    // Printing the squares of the boardan
+    // Printing the squares of the board
     for (auto array : b.board) {
         for (Cell c : array) {
             if (player == c.player) {
-                o << c.item;
+                o << c.symbol;
             }
         }
         o << endl;
