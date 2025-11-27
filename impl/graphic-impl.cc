@@ -1,26 +1,27 @@
 module;
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <unistd.h> // For usleep
+#include <unistd.h> 
 module Graphic;
 
 import Gameplay; 
-import Link; // Import Link to access Link properties (type, level, revealed)
+import Link; 
 import Observer;
 import <iostream>;
 import <string>;
 import <vector>;
-import <algorithm>; // Required for std::sort
-import <cstdlib>; // For exit
+import <algorithm>; 
+import <cstdlib>; 
 
 using namespace std;
 
 // ==========================================
-// Constructor: Sets up X11 Window
+// Constructor
 // ==========================================
 Graphic::Graphic(const ISubject & b) {
+    // Increased height to accommodate the "Sandwich" layout (P1 -> Board -> P2)
     int width = 500;
-    int height = 650; // Increased to 650 to comfortably fit text at bottom
+    int height = 750; 
 
     d = XOpenDisplay(NULL);
     if (d == NULL) {
@@ -43,6 +44,7 @@ Graphic::Graphic(const ISubject & b) {
     // Set up colours
     XColor xcolour;
     Colormap cmap;
+    // Added LightGray/DarkGray logic if needed, but sticking to basics for now
     char color_vals[10][10]={"white", "black", "red", "green", "blue", "cyan", "yellow", "magenta", "orange", "brown"};
 
     cmap=DefaultColormap(d,DefaultScreen(d));
@@ -59,7 +61,6 @@ Graphic::Graphic(const ISubject & b) {
 
     XSetForeground(d,gc,colours[Black]);
 
-    // Make window non-resizeable
     XSizeHints hints;
     hints.flags = (USPosition | PSize | PMinSize | PMaxSize );
     hints.height = hints.base_height = hints.min_height = hints.max_height = height;
@@ -73,22 +74,18 @@ Graphic::Graphic(const ISubject & b) {
     notify(b);
 }
 
-// ==========================================
-// Destructor: Cleans up X11
-// ==========================================
 Graphic::~Graphic() {
-    cerr << "graphic dtor" << endl;
     XFreeGC(d, gc);
     XCloseDisplay(d);
 }
 
 // ==========================================
-// Helper Drawing Functions
+// Drawing Helpers
 // ==========================================
 void Graphic::fillRectangle(int x, int y, int width, int height, int colour) {
     XSetForeground(d, gc, colours[colour]);
     XFillRectangle(d, w, gc, x, y, width, height);
-    XSetForeground(d, gc, colours[Black]);
+    XSetForeground(d, gc, colours[Black]); // Reset to black for text/lines
 }
 
 void Graphic::drawString(int x, int y, string msg) {
@@ -96,12 +93,10 @@ void Graphic::drawString(int x, int y, string msg) {
 }
 
 // ==========================================
-// Game Logic
+// Core Logic
 // ==========================================
 
 void Graphic::notify(const ISubject & b) {
-    // debug
-    // cerr << "notify called of graphic notify\n";
     Board& boardRef = (Board&)b;    
     printOutput(cout, boardRef);
 }
@@ -110,135 +105,151 @@ void Graphic::printOutput(ostream& o, Board &b) {
     PlayerHeader& ph = b.ph;
     int currentPlayer = b.getCurrentPlayerID();
 
-    int cellSize = 50;
-    int offset_x = 25;
-    int offset_y = 100; // Shifted down to make room for P1 text
+    // Layout Constants
+    const int CELL_SIZE = 50;
+    const int BOARD_X_OFFSET = 50; 
+    const int P1_Y_START = 20;
+    const int BOARD_Y_START = 160; // Pushed down to make room for P1 stats
+    const int P2_Y_START = BOARD_Y_START + (8 * CELL_SIZE) + 40;
 
-    // 1. Clear view area 
-    fillRectangle(0, 0, 500, 650, White);
+    // Clear Screen
+    fillRectangle(0, 0, 500, 750, White);
 
-    // =========================================================
-    // Helper Lambda to Draw Player Info (Replaces print_player_info)
-    // =========================================================
-    auto drawPlayerInfo = [&](int playerID, int startX, int startY, bool isOwner) {
+    // ========================================================================
+    // LAMBDA: Draw Player Info (Replicates Terminal::print_player_info logic)
+    // ========================================================================
+    auto drawPlayerInfo = [&](int playerID, int startY, bool isOwner) {
         Player* p = ph.players[playerID];
-        
-        // 1. Stats Line
-        string header = "Player " + to_string(playerID) + ":";
+        int x = 10;
+        int y = startY;
+        int lineHeight = 15;
+
+        // 1. Player Header
+        drawString(x, y, "Player " + to_string(playerID + 1) + ":");
+        y += lineHeight;
+
+        // 2. Downloaded Stats
         string stats = "Downloaded: " + to_string(p->num_data_downloaded) + "D, " 
-                       + to_string(p->num_virus_downloaded) + "V";
-        string abilities = "Abilities: " + to_string(p->abilities.size());
+                     + to_string(p->num_virus_downloaded) + "V";
+        drawString(x, y, stats);
+        y += lineHeight;
 
-        drawString(startX, startY, header);
-        drawString(startX + 80, startY, stats);
-        drawString(startX + 300, startY, abilities);
+        // 3. Abilities Left
+        int abilities_left = 0;
+        for (auto a : p->abilities) {
+            if (!a->used) ++abilities_left;
+        }
+        string abStr = "Abilities: " + to_string(abilities_left);
+        drawString(x, y, abStr);
+        y += lineHeight + 5; // Extra gap before links
 
-        // 2. Build Symbol List
+        // 4. Link Legend
         vector<char> symbols;
-        for (size_t i = 0; i < p->all_data.size(); i++) {
-            symbols.push_back(p->all_data[i]->symbol);
-        }
-        for (size_t i = 0; i < p->all_virus.size(); i++) {
-            symbols.push_back(p->all_virus[i]->symbol);
-        }
+        for (size_t i = 0; i < p->all_data.size(); i++) symbols.push_back(p->all_data[i]->symbol);
+        for (size_t i = 0; i < p->all_virus.size(); i++) symbols.push_back(p->all_virus[i]->symbol);
         sort(symbols.begin(), symbols.end());
 
-        // 3. Draw Links
-        int linkX = startX;
-        int linkY = startY + 15; // Start drawing links on next line
         int count = 0;
-
+        int linkX = x;
+        
         for (size_t i = 0; i < symbols.size(); i++) {
-            char reference = symbols[i];
-            Link* link_ptr = p->getLinkPointerFromChar(reference);
-            
-            string infoString = "";
-            infoString += reference;
-            infoString += ": ";
+            char ref = symbols[i];
+            Link* link_ptr = p->getLinkPointerFromChar(ref);
+            string info = string(1, ref) + ": ";
 
-            if (link_ptr == nullptr) {
-               // Should not happen
-            } else if (isOwner || link_ptr->revealed) {
-                infoString += link_ptr->type;
-                infoString += to_string(link_ptr->level);
-            } else {
-                infoString += "?";
+            if (link_ptr) {
+                if (isOwner || link_ptr->revealed) {
+                    info += link_ptr->type + to_string(link_ptr->level);
+                } else {
+                    info += "?";
+                }
             }
 
-            drawString(linkX, linkY, infoString);
-
-            // Spacing for next link
-            linkX += 50; 
+            drawString(linkX, y, info);
+            
+            // Advance position
+            linkX += 60; // Width of one link entry
             count++;
 
-            // Break line logic (similar to i == Board::NUM_COLS/2 - 1 in terminal)
-            if (count == 4) {
-                linkX = startX;
-                linkY += 15;
+            // Break line logic: (i == Board::NUM_COLS/2 - 1) in Terminal
+            // This usually breaks after 4 items
+            if (count % 4 == 0) {
+                linkX = x;
+                y += lineHeight;
             }
         }
     };
 
-    // =========================================================
-    // Draw Components
-    // =========================================================
+    // ========================================================================
+    // EXECUTION
+    // ========================================================================
 
-    // 1. Draw Player 1 (Top) - mimics print_player_info(..., 0, true)
-    drawPlayerInfo(0, 10, 20, true);
+    // 1. Draw Player 1 Info (Owner if currentPlayer == 0)
+    drawPlayerInfo(0, P1_Y_START, (currentPlayer == 0));
 
-    // 2. Draw Grid and Cells
+    // 2. Draw Top Border (Visual representation of =======)
+    // Drawing a thick black line above the board
+    fillRectangle(BOARD_X_OFFSET, BOARD_Y_START - 5, (8*CELL_SIZE), 3, Black);
+
+    // 3. Draw The Board Grid
     for (int r = 0; r < b.NUM_ROWS; ++r) {
         for (int c = 0; c < b.NUM_COLS; ++c) {
             Cell &cell = b.board[r][c];
             
-            int x = offset_x + c * cellSize;
-            int y = offset_y + r * cellSize;
-            
-            int color = White; 
-            string label = "";
+            int x = BOARD_X_OFFSET + c * CELL_SIZE;
+            int y = BOARD_Y_START + r * CELL_SIZE;
 
+            int bgColour = White;
+            string text = "";
+
+            // Determine Background & Text
             if (cell.item == b.SERVER) {
-                color = Blue; 
-                label = "S";
-            } else if (cell.item != b.EMPTY) {
-                // Logic for Links on Board
-                if (cell.player == currentPlayer) {
-                    if (cell.item == b.DATA) {
-                        color = Green;
-                        label = "D" + to_string(cell.level);
-                    } else if (cell.item == b.VIRUS) {
-                        color = Red;
-                        label = "V" + to_string(cell.level);
-                    }
-                } else {
-                    color = Black;
-                    label = "?"; // Opponent hidden
-                }
+                bgColour = Blue; // Server Port
+                text = "S";
+            } 
+            else if (cell.item == b.VIRUS || cell.item == b.DATA) {
+                // It's a link
+                if (cell.player == 0) bgColour = Green; // P1 is Green-ish
+                else bgColour = Red; // P2 is Red-ish
+                
+                // Logic for what text to show inside the square
+                // The terminal shows the 'symbol' (e.g., 'a'). 
+                // X11 allows us to show the symbol AND the type if known.
+                // Let's stick to the Symbol to be faithful to the grid representation.
+                text = string(1, cell.symbol);
+                
+                // Optional: If you want to see "D4" inside the box visually:
+                // if (cell.player == currentPlayer || /* link is revealed logic */) ...
+            }
+            else if (cell.firewall != -1) {
+                bgColour = Orange; // Firewall
+                text = "w"; // Or "m" depending on owner? Terminal uses 'w'/'m' usually
+                if (cell.firewall == 0) text = "m"; // P1 firewall
+                else text = "w"; // P2 firewall
+            }
+            else {
+                // Empty
+                text = ".";
             }
 
-            // Draw Cell Background
-            fillRectangle(x, y, cellSize, cellSize, color);
+            // Draw Box
+            fillRectangle(x, y, CELL_SIZE, CELL_SIZE, bgColour);
             
-            // Draw Firewall Indicator
-            if (cell.firewall != -1) {
-                fillRectangle(x+2, y+2, cellSize-4, cellSize-4, Orange);
-                if (cell.item == b.EMPTY) label = Board::FIREWALLS[cell.firewall]; 
-            }            
-            
-            // Draw Text Label inside cell
-            if (!label.empty()) {
-                // Contrast adjustment: if background is Black/Red/Blue, use White text? 
-                // X11 simple drawString is usually just foreground color. 
-                // Currently simple Black text. might be hard to see on Black/Blue.
-                // Assuming XSetForeground handles the drawString color, 
-                // we reset to Black at start of fillRectangle helper, so text is Black.
-                drawString(x + 20, y + 30, label); 
+            // Draw Border for Box
+            XDrawRectangle(d, w, DefaultGC(d, s), x, y, CELL_SIZE, CELL_SIZE);
+
+            // Draw Text Centered
+            // If background is dark (Blue/Red/Green), standard black text might be hard to read.
+            // But simple X11 usually handles Black on those colors okay.
+            if (!text.empty()) {
+                drawString(x + 20, y + 30, text);
             }
         }
     }
-    
-    // 3. Draw Player 2 (Bottom) - mimics print_player_info(..., 1, false)
-    // Calculate Y position: Offset + (Rows * Size) + Padding
-    int p2_y = offset_y + (8 * cellSize) + 30;
-    drawPlayerInfo(1, 10, p2_y, false);
+
+    // 4. Draw Bottom Border
+    fillRectangle(BOARD_X_OFFSET, BOARD_Y_START + (8*CELL_SIZE) + 2, (8*CELL_SIZE), 3, Black);
+
+    // 5. Draw Player 2 Info (Owner if currentPlayer == 1)
+    drawPlayerInfo(1, P2_Y_START, (currentPlayer == 1));
 }

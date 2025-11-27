@@ -174,7 +174,7 @@ string Board::move(char link, string dir) {
         cerr << "link frozen at turn " << link_ptr->frozen_on_turn << endl;
         cerr << "turn_number: " << turn_number << endl;
         // Checking if user is not frozen from twosum
-        if (link_ptr->frozen_on_turn != -1 && turn_number <= link_ptr->level * NUM_PLAYERS + link_ptr->frozen_on_turn) {
+        if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->level * NUM_PLAYERS + link_ptr->frozen_on_turn) {
             // debug
             
             throw logic_error("Invalid input: link is frozen for " + to_string((1 + link_ptr->level * NUM_PLAYERS + link_ptr->frozen_on_turn - turn_number)/NUM_PLAYERS) + " more moves");
