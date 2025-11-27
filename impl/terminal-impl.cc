@@ -21,7 +21,12 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
     Player* p = ph.players[player];
     o << "Player " << player << ":" << endl;
     o << "Downloaded: " << p->num_data_downloaded << "D, " << p->num_virus_downloaded << "V" << endl;
-    o << "Abilities: " << p->abilities.size() << endl;
+
+    int abilities_left = 0;
+    for (auto a : p->abilities) {
+        if (!a->used) ++abilities_left;
+    }
+    o << "Abilities: " << abilities_left << endl;
 
     // build array of all symbols this player has
     vector<char> symbols;
