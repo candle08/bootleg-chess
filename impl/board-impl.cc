@@ -363,7 +363,7 @@ Board::~Board() {
 
 int Board::getNumArgumentsForAbility(int id) {
     Player* p = getCurrentPlayer();
-    id--;
+    
     if (p->abilities[id]->symbol == 'L') {
         return 1;
     } else if (p->abilities[id]->symbol == 'F') {
@@ -382,4 +382,14 @@ int Board::getNumArgumentsForAbility(int id) {
         return 2;   
     }
     return -1;
+}
+
+Link* Board::getLinkPointerFromChar(char symbol) {
+    for (Player* p : ph.players) {
+        Link* link = p->getLinkPointerFromChar(symbol);
+        if (link != nullptr) {
+            return link;
+        }
+    }
+    return nullptr;
 }

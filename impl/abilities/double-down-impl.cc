@@ -18,7 +18,6 @@ string DoubleDown::usePower(Board &b, vector<char> args, Player * p) {
     }
 
     b.double_down = true;
-    
 
     return "";
 }
