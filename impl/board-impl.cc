@@ -351,9 +351,13 @@ void Board::notifyObservers() {
 }
 
 Board::~Board() {
+    
     for (auto o : observers) {
-        delete o;
+        cerr << "deleting observer pointer\n";
+         delete o;
     }
+
+    
 }
 
 int Board::getNumArgumentsForAbility(int id) {
