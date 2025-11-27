@@ -22,7 +22,9 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
     }
 
     Link* link_ptr = b.getLinkPointerFromChar(args[0]);
+    
     if (link_ptr) {
+        Player* owner = b.ph.players[b.board[link_ptr->coords.r][link_ptr->coords.c].player];
         // changing the type of the link from data to virus or vice versa
         // and updating the corresponding vectors in player
         if (link_ptr->type == Board::DATA) {
@@ -30,9 +32,9 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
             
             // Find and remove the Data object from data vector
             cerr << "in polarize, removing the data object from data vector\n";
-            auto data_it = find(p->all_data.begin(), p->all_data.end(), static_cast<Data*>(link_ptr));
-            if (data_it != p->all_data.end()) {
-                p->all_data.erase(data_it);
+            auto data_it = find(owner->all_data.begin(), owner->all_data.end(), static_cast<Data*>(link_ptr));
+            if (data_it != owner->all_data.end()) {
+                owner->all_data.erase(data_it);
                 // debug
             }
             
@@ -40,7 +42,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
             cerr << "in polarize, adding a virus to the list\n";
 
             Virus* virus = static_cast<Virus*>(link_ptr);
-            p->all_virus.push_back(virus);
+            owner->all_virus.push_back(virus);
             // debug
             
         } else {
@@ -48,16 +50,16 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
             
             cerr << "in polarize, removing the virus from the list\n";
             // Find and remove the Virus object from all_virus
-            auto virus_it = find(p->all_virus.begin(), p->all_virus.end(), static_cast<Virus*>(link_ptr));
-            if (virus_it != p->all_virus.end()) {
-                p->all_virus.erase(virus_it);
+            auto virus_it = find(owner->all_virus.begin(), owner->all_virus.end(), static_cast<Virus*>(link_ptr));
+            if (virus_it != owner->all_virus.end()) {
+                owner->all_virus.erase(virus_it);
                 // debug
             }
             
             cerr << "in polarize, adding a data to the list\n";
             // Add as Data to all_data
             Data* data = static_cast<Data*>(link_ptr);
-            p->all_data.push_back(data);
+            owner->all_data.push_back(data);
             //debug
         }
 

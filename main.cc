@@ -195,7 +195,9 @@ int main(int argc, char* argv[]) {
 
             id--;
 
+            cerr << "calculating required args" << endl;
             int req_args = board.getNumArgumentsForAbility(id);
+            cerr << "req args: " << to_string(req_args) << endl;
             
             if (req_args == -1) {
                 retval = "Ability's symbol not recognized (somehow)";
