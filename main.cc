@@ -184,11 +184,11 @@ int main(int argc, char* argv[]) {
                 retval = board.move(link, dir);
             }
         } else if (in == "abilities") {
-            // vector<Ability*>& abilities = board.ph.players[board.getCurrentPlayerID()]->abilities;
-            // cout << "Abilities for player " << to_string(board.getCurrentPlayerID() + 1) << " (* means used):" << endl;
-            // for (size_t i = 0; i < abilities.size(); i++) {
-            //     cout << to_string(i + 1) << ": " << ABILITY_NAMES[abilities[i]->symbol] << (abilities[i]->used ? "*" : "") << endl;
-            // }
+            vector<Ability*>& abilities = board.ph.players[board.getCurrentPlayerID()]->abilities;
+            cout << "Abilities for player " << to_string(board.getCurrentPlayerID() + 1) << " (* means used):" << endl;
+            for (size_t i = 0; i < abilities.size(); i++) {
+                cout << to_string(i + 1) << ": " << ABILITY_NAMES.at(abilities[i]->symbol) << (abilities[i]->used ? "*" : "") << endl;
+            }
 
         } else if (in == "ability") {
             int id;
