@@ -24,6 +24,7 @@ int main(int argc, char* argv[]) {
      * F: Firewall
      * D: Download
      * S: Scan
+     * P: Polarize
      * B: DoubleDown
      * T: TwoSum
      * W: SmallSwap
