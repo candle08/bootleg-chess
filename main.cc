@@ -79,13 +79,13 @@ int main(int argc, char* argv[]) {
                 }
             } else if (prev_arg == "-link1" || prev_arg == "-link2") {
                 // validate length
-                if (cur_arg.length() != Board::NUM_OF_LINKS * 2) {
+                if (cur_arg.length() != Board::NUM_LINKS * 2) {
                     cerr << "Parameter for " << prev_arg << " is not length 16" << endl;
                     return 1;
                 }
                 
                 map<string, bool> link_counts; 
-                for (int j = 0; j < Board::NUM_OF_LINKS * 2; j += 2) {
+                for (int j = 0; j < Board::NUM_LINKS * 2; j += 2) {
                     string link = cur_arg.substr(j, 2);
                     
                     // validate link formatting
