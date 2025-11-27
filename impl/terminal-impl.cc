@@ -58,9 +58,9 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
             if (link_ptr == nullptr) {
                 cerr << "somehow, link_ptr in terminal is null" << endl;
             } else if (link_ptr->revealed) {
-                o << reference << ": " << link_ptr->type << to_string(link_ptr->level) << " ";
+                o << reference << ": " << link_ptr->type << to_string(link_ptr->level) << "  ";
             } else {
-                o << "? ";
+                o << reference << ": " << "?  ";
             }
             
             if (i == Board::NUM_COLS/2 - 1) {
