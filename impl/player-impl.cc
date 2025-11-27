@@ -116,8 +116,13 @@ void Player::download(Link* link, Board& b) {
         cerr << "link is null\n";
     }
 
+    // update board
+    b.board[link->coords.r][link->coords.c].clear();
+
     // Remove the link from the board
     link->coords = {-1, -1};
+
+
     if (link->type == Board::DATA) {
         num_data_downloaded++;
         cerr << "Data downloaded! we now have " << num_data_downloaded << endl;
