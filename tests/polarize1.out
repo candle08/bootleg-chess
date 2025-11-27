@@ -124,6 +124,13 @@ clearing cell
 printing out double_down, ability_used, turn_number (in this order) 002
 
 
+PROCESSING COMMAND move
+
+player_id 0
+turn number: 2
+Invalid input: Link is no longer alive
+
+
 PROCESSING COMMAND quit
 
 board dtor
