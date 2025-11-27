@@ -144,13 +144,15 @@ bool Board::isValidPos(const Coords coords) const {
 }
 
 string Board::move(char link, string dir) {
+     cerr << "\n\n START OF NEW MOVE \n turn number: " << turn_number << endl;
+
+
     int player_id = getCurrentPlayerID();
     Link *link_ptr = ph.players[player_id]->getLinkPointerFromChar(link);
     string retval = "";
     try {
         // debug
         cerr << "player_id " << player_id << endl;
-        cerr << "turn number: " << turn_number << endl;
         // getting to line 153 before segfault
         if (link_ptr == nullptr) {
             throw logic_error("Invalid input: No link associated with symbol " + to_string(link));
@@ -164,13 +166,17 @@ string Board::move(char link, string dir) {
         // debug
         cerr << "new_posn: r " << new_posn.r << ", c " << new_posn.c << endl;
         cerr << "link_ptr->level " << link_ptr->level << endl;
-    
+        cerr << "link frozen at turn " << link_ptr->frozen_on_turn << endl;
+        cerr << "turn_number: " << turn_number << endl;
         // Checking if user is not frozen from twosum
-        if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level * 2) {
+        if (link_ptr->frozen_on_turn != -1 && turn_number < link_ptr->frozen_on_turn + link_ptr->level) {
             // debug
-            throw logic_error("Invalid input: link is frozen for " + to_string(((turn_number - link_ptr->frozen_on_turn - link_ptr->level * 2) / 2) + 1) + " more moves");
+            
+            throw logic_error("Invalid input: link is frozen for " + to_string(1 + link_ptr->frozen_on_turn + link_ptr->level - turn_number) + " more moves");
+        } else {
+            cerr << "passed frozen check" << endl;
+
         }
-        cerr << "passed frozen check" << endl;
         
         // Check if the link will stay on the board
         // check if moving onto board, server port, out of bounds, opponent's edge
