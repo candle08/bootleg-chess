@@ -25,6 +25,7 @@ void Cell::clear() {
     player = -1;
     item = Board::EMPTY;
     level = -1;
+    symbol = Board::EMPTY;
 }
 
 ostream& operator<<(ostream& o, const Cell& cell) {
@@ -114,7 +115,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find viruses of player
         for (size_t j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
-            board[virus->coords.r][virus->coords.c] = Cell{i, VIRUS, virus->level, Board::EMPTY, false};
+            board[virus->coords.r][virus->coords.c] = Cell{i, VIRUS, virus->level, virus->symbol, false};
             // debug
             cerr << "placing virus level " << virus->level << " at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
         }
@@ -122,14 +123,14 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find data of player
         for (size_t j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
-            board[data->coords.r][data->coords.c] = Cell{i, DATA, data->level, Board::EMPTY, false};
+            board[data->coords.r][data->coords.c] = Cell{i, DATA, data->level, data->symbol, false};
             // debug
             cerr << "placing data level " << data->level << " at (r, c): " << data->coords.r << ", " << data->coords.c << endl;
         }
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
-            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = Cell{j, SERVER, -1, Board::EMPTY, false};
+            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = Cell{j, SERVER, -1, Board::SERVER, false};
             // debug
             cerr << "placing server port at " << server_port_coords[i][j].r << ", " << server_port_coords[i][j].c << endl;
         }
@@ -271,11 +272,6 @@ string Board::move(char link, string dir) {
     } catch (const logic_error& e) {
         retval = string(e.what());
     }
-
-    delete link_ptr;
-
-    // debug
-    cerr << "MOVE HAS COMPLETED" << endl;
 
     return retval;
 }

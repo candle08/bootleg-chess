@@ -129,7 +129,7 @@ export class Board : public ISubject {
      * A matrix of coordinates storing the starting coords of links
      * The vector at index i is the positions for the i+1th player's links
      */ 
-    const vector<vector<Coords>> link_starting_coords = {
+    static inline const vector<vector<Coords>> link_starting_coords = {
         {{0, 0}, {0, 1}, {0, 2}, {1, 3}, {1, 4}, {0, 5}, {0, 6}, {0, 7}},
         {{7, 0}, {7, 1}, {7, 2}, {6, 3}, {6, 4}, {7, 5}, {7, 6}, {7, 7}}
     };
@@ -138,20 +138,12 @@ export class Board : public ISubject {
      * A matrix of coordinates storing the locations for server ports
      * The vector at index i is the positions for the i+1th player's server ports
      */
-    const vector<vector<Coords>> server_port_coords = {
+    static inline const vector<vector<Coords>> server_port_coords = {
         {{0, 3}, {0, 4}},
         {{7, 3}, {7, 4}}
     };
 
-    /**
-     * A matrix of characters storing the symbol for each
-     * player's links. The vector at index i is the symbols of the i+1th
-     * player's links
-     */
-    const vector<vector<char>> symbols = {
-        {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
-        {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
-    };
+    
     
     /**
      * Variable that indicates whether or not an ability
@@ -176,6 +168,16 @@ export class Board : public ISubject {
         static inline const char VIRUS = 'V';
         static inline const char EMPTY = '.';
         static inline const char SERVER = 'S';
+
+        /**
+         * A matrix of characters storing the symbol for each
+         * player's links. The vector at index i is the symbols of the i+1th
+         * player's links
+         */
+        static inline const vector<vector<char>> symbols = {
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
+            {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
+        };
 
         /**
          * A 2D matrix of Cells representing the board; updated every turn

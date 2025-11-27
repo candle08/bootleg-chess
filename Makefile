@@ -78,7 +78,7 @@ player-header-impl.o: impl/player-header-impl.cc gameplay.o coords.o
 virus-impl.o: impl/virus-impl.cc coords.o link.o
 	$(CXX) $(CXXFLAGS) -c impl/virus-impl.cc
 
-terminal-impl.o: impl/terminal-impl.cc gameplay.o observer.o
+terminal-impl.o: impl/terminal-impl.cc link.o gameplay.o observer.o
 	$(CXX) $(CXXFLAGS) -c impl/terminal-impl.cc
 
 ability-impl.o: impl/ability-impl.cc

@@ -2,6 +2,7 @@ module Gameplay;
 
 import <vector>;
 import <iostream>;
+import <algorithm>;
 
 import Virus;
 import Data;
@@ -56,28 +57,26 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
 
 Link* Player::getLinkPointerFromChar(char link) {
     // If link is a Data
-    cerr << endl << "CHECKING GET LINK PTR FROM CHAR" << endl;
-
-    cerr << "called getlinkptrfromchar" << endl;
+    // cerr << endl << "CHECKING GET LINK PTR FROM CHAR" << endl;
     
     for (size_t i = 0; i < all_data.size(); i++) {
-        cerr << "all data[i] symbol is " << all_data[i]->symbol << endl;
+        // cerr << "all data[i] symbol is " << all_data[i]->symbol << endl;
         if (all_data[i]->symbol == link) {
-            cerr << "found data!!";
+            // cerr << "found data!!";
             return all_data[i];
         }
     }
     
     // If link is a Virus
     for (size_t i = 0; i < all_virus.size(); i++) {
-        cerr << "all virus[i] symbol is " << all_data[i]->symbol << endl;
+        // cerr << "all virus[i] symbol is " << all_data[i]->symbol << endl;
         if (all_virus[i]->symbol == link) {
-            cerr << "found virus!!";
+            // cerr << "found virus!!";
             return all_virus[i];
         }
     }
 
-    cerr << "found nothing" << endl;
+    // cerr << "found nothing" << endl;
 
     return nullptr;
 }
