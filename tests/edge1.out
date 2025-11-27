@@ -1,0 +1,158 @@
+board ctor called:
+link ordering 0: V1V2V3V4D1D2D3D4
+link ordering 1: V1V2V3V4D1D2D3D4
+ability_selections 0: TWLFD
+ability_selections 1: LFDSP
+turn num 0 ability used 0 winner -1 double down 0
+creating the player header
+player header dtor
+player 0 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections TWLFD, symbols abcdefgh
+
+PLAYER CTOR 
+initializing virus: level: 1, coords: (0, 0), symbol: a
+initializing virus: level: 2, coords: (0, 1), symbol: b
+initializing virus: level: 3, coords: (0, 2), symbol: c
+initializing virus: level: 4, coords: (1, 3), symbol: d
+initializing data: level: 1, coords: (1, 4), symbol: e
+initializing data: level: 2, coords: (0, 5), symbol: f
+initializing data: level: 3, coords: (0, 6), symbol: g
+initializing data: level: 4, coords: (0, 7), symbol: h
+ability: T
+ability: W
+ability: L
+ability: F
+ability: D
+
+END OF PLAYER CTOR 
+this player's all_data: 
+e1f2g3h4
+this player's all_virus: 
+a1b2c3d4
+player 1 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections LFDSP, symbols ABCDEFGH
+
+PLAYER CTOR 
+initializing virus: level: 1, coords: (7, 0), symbol: A
+initializing virus: level: 2, coords: (7, 1), symbol: B
+initializing virus: level: 3, coords: (7, 2), symbol: C
+initializing virus: level: 4, coords: (6, 3), symbol: D
+initializing data: level: 1, coords: (6, 4), symbol: E
+initializing data: level: 2, coords: (7, 5), symbol: F
+initializing data: level: 3, coords: (7, 6), symbol: G
+initializing data: level: 4, coords: (7, 7), symbol: H
+ability: L
+ability: F
+ability: D
+ability: S
+ability: P
+
+END OF PLAYER CTOR 
+this player's all_data: 
+E1F2G3H4
+this player's all_virus: 
+A1B2C3D4
+building the empty board matrix
+board is 8 rows by 8 cols
+placing the player pieces
+PLAYER 0
+placing virus level 1 at (r, c): 0, 0
+placing virus level 2 at (r, c): 0, 1
+placing virus level 3 at (r, c): 0, 2
+placing virus level 4 at (r, c): 1, 3
+placing data level 1 at (r, c): 1, 4
+placing data level 2 at (r, c): 0, 5
+placing data level 3 at (r, c): 0, 6
+placing data level 4 at (r, c): 0, 7
+placing server port at 0, 3
+placing server port at 0, 4
+PLAYER 1
+placing virus level 1 at (r, c): 7, 0
+placing virus level 2 at (r, c): 7, 1
+placing virus level 3 at (r, c): 7, 2
+placing virus level 4 at (r, c): 6, 3
+placing data level 1 at (r, c): 6, 4
+placing data level 2 at (r, c): 7, 5
+placing data level 3 at (r, c): 7, 6
+placing data level 4 at (r, c): 7, 7
+placing server port at 7, 3
+placing server port at 7, 4
+
+
+PROCESSING COMMAND ability
+
+calculating required args
+req args: 1
+board's useAbility called for id 0
+calling player's use ability in board
+in player's use ability now 
+two sum called
+
+
+PROCESSING COMMAND move
+
+player_id 0
+turn number: 0
+new_posn: r 0, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 1, new_posn.c 0
+player_id 0
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 001
+
+
+PROCESSING COMMAND board
+
+
+
+PROCESSING COMMAND move
+
+player_id 1
+turn number: 1
+new_posn: r 7, c 1
+link_ptr->level 2
+passed frozen check
+new_posn.r 6, new_posn.c 1
+player_id 1
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 002
+
+
+PROCESSING COMMAND board
+
+
+
+PROCESSING COMMAND ability
+
+calculating required args
+req args: 2
+board's useAbility called for id 1
+calling player's use ability in board
+in player's use ability now 
+small swap called
+
+
+PROCESSING COMMAND board
+
+
+
+PROCESSING COMMAND move
+
+player_id 0
+turn number: 2
+new_posn: r 1, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 2, new_posn.c 0
+player_id 0
+Updating new cell
+clearing cell
+printing out double_down, ability_used, turn_number (in this order) 003
+
+
+PROCESSING COMMAND quit
+
+board dtor
+deleting observer pointer
+player header dtor

@@ -1,0 +1,16 @@
+ability 1 0 0
+ability 1 1 0
+move a down
+ability 1 6 7
+move H up
+ability 2 6 0
+move a down
+move A up
+ability 3 5 4
+move a right
+move H up
+move a right
+move E up
+move a right
+move E right
+quit

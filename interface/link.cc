@@ -10,7 +10,7 @@ export struct Link {
     bool download_status; // whether or not the link has been downloaded
     char symbol; // its symbol on the board
     bool revealed; // whether or not a link has been revealed
-    bool linkboost; // whether or not a link has been boosted
+    int linkboost; // whether or not a link has been boosted (0, 1, 2) since linkboost is stackable
     int frozen_on_turn; // number of frozen turns
 
     Link(int level, Coords coords, char type, char symbol);
