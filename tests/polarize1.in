@@ -1,5 +1,6 @@
 ability 5 a
 move a down
 ability 5 b
-move b up
+move b down
+move b down
 quit

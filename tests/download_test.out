@@ -79,12 +79,11 @@ placing server port at 7, 4
 
 PROCESSING COMMAND ability
 
-board's useAbility called for id 4
+board's useAbility called for id 2
 calling player's use ability in board
 in player's use ability now 
-polarize called
-in polarize, removing the virus from the list
-in polarize, adding a data to the list
+download called
+clearing cell
 
 
 PROCESSING COMMAND move
@@ -103,36 +102,25 @@ printing out double_down, ability_used, turn_number (in this order) 001
 
 PROCESSING COMMAND ability
 
-board's useAbility called for id 4
+board's useAbility called for id 2
 calling player's use ability in board
 in player's use ability now 
-polarize called
-in polarize, removing the virus from the list
-in polarize, adding a data to the list
+download called
+clearing cell
 
 
 PROCESSING COMMAND move
 
 player_id 1
 turn number: 1
-new_posn: r 0, c 1
-link_ptr->level 2
+new_posn: r 7, c 2
+link_ptr->level 3
 passed frozen check
-clearing cell
-Data downloaded! we now have 1
+new_posn.r 6, new_posn.c 2
+player_id 1
+Updating new cell
 clearing cell
 printing out double_down, ability_used, turn_number (in this order) 002
-
-
-PROCESSING COMMAND move
-
-player_id 0
-turn number: 2
-Invalid input: Link is no longer alive
-
-
-PROCESSING COMMAND quit
-
 board dtor
 deleting observer pointer
 player header dtor
