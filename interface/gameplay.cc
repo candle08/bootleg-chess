@@ -10,7 +10,7 @@ import <string>;
 
 using namespace std;
 
-export class Ability;
+export struct Ability;
 export class Board;
 
 export struct Player {
@@ -265,6 +265,7 @@ export class Board : public ISubject {
 
         /**
          * Returns the number of arguments the current player's ability ID takes
+         * @param id The 0-indexed id of the ability
          */
         int getNumArgumentsForAbility(int id);
 

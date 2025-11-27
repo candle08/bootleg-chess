@@ -9,7 +9,6 @@ import Data;
 import Virus;
 import Graphic;
 import Terminal;
-
 import Gameplay;
 
 using namespace std;
@@ -30,7 +29,7 @@ int main(int argc, char* argv[]) {
      */
     const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P', 'B', 'T', 'W'};
     
-    const map<char, string> ABILITY_DESCRIPTIONS = {
+    const map<char, string> ABILITY_NAMES = {
         {'L', "Link Boost"},
         {'F', "Firewall"},
         {'D', "Download"},
@@ -38,7 +37,7 @@ int main(int argc, char* argv[]) {
         {'P', "Polarize"},
         {'B', "Double Down"},
         {'T', "TwoSum"},
-        {'W', "Small Swap"},
+        {'W', "Small Swap"}
     };
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
@@ -184,7 +183,11 @@ int main(int argc, char* argv[]) {
                 retval = board.move(link, dir);
             }
         } else if (in == "abilities") {
-            // vector<char> v = board.getCurrentAbilitySymbols();
+            // vector<Ability*>& abilities = board.ph.players[board.getCurrentPlayerID()]->abilities;
+            // cout << "Abilities for player " << to_string(board.getCurrentPlayerID() + 1) << " (* means used):" << endl;
+            // for (size_t i = 0; i < abilities.size(); i++) {
+            //     cout << to_string(i + 1) << ": " << ABILITY_NAMES[abilities[i]->symbol] << (abilities[i]->used ? "*" : "") << endl;
+            // }
 
         } else if (in == "ability") {
             int id;
@@ -197,9 +200,11 @@ int main(int argc, char* argv[]) {
             if (req_args == -1) {
                 retval = "Ability's symbol not recognized (somehow)";
             } else {
-                vector<char> args(2);
+                vector<char> args;
                 for (int i = 0; i < req_args; i++) {
-                    *current_stream >> args[i];
+                    char c;
+                    *current_stream >> c;
+                    args.push_back(c);
                 }
                 retval = board.useAbility(id, args);
             }

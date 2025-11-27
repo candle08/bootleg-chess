@@ -4,3 +4,4 @@
 
 gcm.cache/
 exec
+*.out
