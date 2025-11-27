@@ -21,10 +21,11 @@ string LinkBoost::usePower(Board &b, vector<char> args, Player * p) {
     }
 
     Link* link_ptr = p->getLinkPointerFromChar(args[0]);
-    link_ptr->linkboost += 1;
-
+    
     if (link_ptr == nullptr) {
         return "Error in LinkBoost: link not found";
     }
+    
+    link_ptr->linkboost += 1;
     return "";
 }
