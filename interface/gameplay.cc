@@ -93,7 +93,7 @@ export struct Cell {
     char item; // 'S' for server port, 'V' for virus, 'D' for data, '.' for empty
     int level; // level of the link in the cell, or 0 if there isn't a link in the cell
     char symbol; // if the item is DATA or VIRUS, this represents its symbol when printed out to terminal
-    bool firewall; // whether or not a player has set a firewall at that square
+    int firewall; // the owner of the firewall, or -1 if the cell is not a firewall
     
     /**
      * Overriding default constructor of cell to write specific values
@@ -103,7 +103,7 @@ export struct Cell {
     /**
      * Default ctor of cell
      */
-    Cell(int player, char item, int level, char symbol, bool firewall);
+    Cell(int player, char item, int level, char symbol, int firewall);
 
     /**
      * Remove items from cell, clearing fields, EXCEPT FOR FIREWALL
@@ -167,6 +167,7 @@ export class Board : public ISubject {
         static inline const char VIRUS = 'V';
         static inline const char EMPTY = '.';
         static inline const char SERVER = 'S';
+        static inline const vector<char> FIREWALLS = {'M', 'W'};
 
         /**
          * A matrix of characters storing the symbol for each

@@ -25,7 +25,7 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
             all_data.push_back(new Data{level, positions[i / 2], symbols[i / 2]});
         } else {
             // debug
-            cerr << "initializing virus: level: " << level << ", coords: ()" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
+            cerr << "initializing virus: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
             all_virus.push_back(new Virus{level, positions[i / 2], symbols[i / 2]});
         }
     }

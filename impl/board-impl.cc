@@ -15,9 +15,9 @@ import <stdexcept>;
 
 using namespace std;
 
-Cell::Cell() : player{-1}, item{Board::EMPTY}, level{-1}, symbol{Board::EMPTY}, firewall{false} {}
+Cell::Cell() : player{-1}, item{Board::EMPTY}, level{-1}, symbol{Board::EMPTY}, firewall{-1} {}
 
-Cell::Cell(int player, char item, int level, char symbol, bool firewall): player{player}, item{item}, level{level}, symbol{symbol}, firewall{firewall} {}
+Cell::Cell(int player, char item, int level, char symbol, int firewall): player{player}, item{item}, level{level}, symbol{symbol}, firewall{firewall} {}
 
 void Cell::clear() {
     // debug
@@ -115,7 +115,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find viruses of player
         for (size_t j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
-            board[virus->coords.r][virus->coords.c] = Cell{i, VIRUS, virus->level, virus->symbol, false};
+            board[virus->coords.r][virus->coords.c] = Cell{i, VIRUS, virus->level, virus->symbol, -1};
             // debug
             cerr << "placing virus level " << virus->level << " at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
         }
@@ -123,14 +123,14 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
         // Find data of player
         for (size_t j = 0; j < p->all_data.size(); j++) {
             Data* data = p->all_data[j];
-            board[data->coords.r][data->coords.c] = Cell{i, DATA, data->level, data->symbol, false};
+            board[data->coords.r][data->coords.c] = Cell{i, DATA, data->level, data->symbol, -1};
             // debug
             cerr << "placing data level " << data->level << " at (r, c): " << data->coords.r << ", " << data->coords.c << endl;
         }
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
-            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = Cell{j, SERVER, -1, Board::SERVER, false};
+            board[server_port_coords[i][j].r][server_port_coords[i][j].c] = Cell{j, SERVER, -1, Board::SERVER, -1};
             // debug
             cerr << "placing server port at " << server_port_coords[i][j].r << ", " << server_port_coords[i][j].c << endl;
         }
@@ -210,12 +210,12 @@ string Board::move(char link, string dir) {
     
         } else if (!isValidPos(new_posn)) {
             // Out of bounds
-            throw logic_error("Invalid Input: You cannot move to this cell");
+            throw logic_error("Invalid Input: You cannot move to this cell (1)");
     
         } else if ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) 
             && new_cell.player == player_id) {
             // Player's own links/servers
-            throw logic_error("Invalid Input: You cannot move to this cell");
+            throw logic_error("Invalid Input: You cannot move to this cell (2)");
     
         } else if (new_cell.item == SERVER && new_cell.player != player_id) {
             // Opponent's server port
@@ -233,17 +233,19 @@ string Board::move(char link, string dir) {
                 cerr << "hitting here before segfault\n";
                 
                 link_ptr->coords = Coords{new_posn.r, new_posn.c};
-                board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, false};
+                board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, board[new_posn.r][new_posn.c].firewall};
             } else {
                 ph.players[new_cell.player]->download(link_ptr, *this);
             }
-        } else {
-            // Invalid: out of bounds, own server port, or own link
-            if (!isValidPos(new_posn)|| 
-            ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) && new_cell.player == player_id)) {
-                throw logic_error("Invalid Input: You cannot move to this cell");
+        } else if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
+            cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
+            link_ptr->revealed = true;
+            if (link_ptr->type == Board::VIRUS) {
+                ph.players[player_id]->download(link_ptr, *this);
+            } else {
+                board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
             }
-            
+        } else {
             // Update new cell
             board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
             
@@ -253,6 +255,10 @@ string Board::move(char link, string dir) {
         
         // Make sure previous spot is now empty cell
         board[old_posn.r][old_posn.c].clear();
+        if (board[old_posn.r][old_posn.c].firewall != -1) {
+            board[old_posn.r][old_posn.c].symbol = FIREWALLS[board[old_posn.r][old_posn.c].firewall];
+            board[old_posn.r][old_posn.c].player = board[old_posn.r][old_posn.c].firewall;
+        } 
     
         // Checking ability usage
         if (double_down) {
@@ -264,15 +270,6 @@ string Board::move(char link, string dir) {
         }
     
         cerr << "printing out double_down, ability_used, turn_number (in this order) " << double_down << ability_used << turn_number << endl;
-    
-        // Using firewall ability after move has been made
-        if (board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id) { // firewall ability activated
-            cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
-            link_ptr->revealed = true;
-            if (link_ptr->type == Board::VIRUS) {
-                ph.players[player_id]->download(link_ptr, *this);
-            }
-        }
     
     
         // Notify the observers

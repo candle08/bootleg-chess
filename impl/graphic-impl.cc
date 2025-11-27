@@ -220,9 +220,9 @@ void Graphic::printOutput(ostream& o, Board &b) {
             fillRectangle(x, y, cellSize, cellSize, color);
             
             // Draw Firewall Indicator
-            if (cell.firewall) {
+            if (cell.firewall != -1) {
                 fillRectangle(x+2, y+2, cellSize-4, cellSize-4, Orange);
-                if (cell.item == b.EMPTY) label = "M"; 
+                if (cell.item == b.EMPTY) label = Board::FIREWALLS[cell.firewall]; 
             }            
             
             // Draw Text Label inside cell
