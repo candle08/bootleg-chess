@@ -188,7 +188,6 @@ int main(int argc, char* argv[]) {
         } else if (in == "board") {
             // prints board again
             board.notifyObservers();
-          
 
         } else if (in == "ability") {
             int id;

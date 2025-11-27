@@ -23,6 +23,10 @@ string Download::usePower(Board &b, vector<char> args, Player * p) {
         return "Invalid input for Download: invalid link symbol";
     }
 
+    if (link_ptr->download_status) {
+        return "Error in DOwnload: link already downloaded";
+    }
+
     p->download(link_ptr, b);
     return "";
 }
