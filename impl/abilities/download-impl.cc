@@ -18,7 +18,7 @@ string Download::usePower(Board &b, vector<char> args, Player * p) {
         return "Invalid input for Download: invalid number of args";
     }
 
-    Link* link_ptr = p->getLinkPointerFromChar(args[0]);
+    Link* link_ptr = b.getLinkPointerFromChar(args[0]);
     if (link_ptr == nullptr) {
         return "Invalid input for Download: invalid link symbol";
     }

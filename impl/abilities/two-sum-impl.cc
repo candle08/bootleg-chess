@@ -19,23 +19,10 @@ string TwoSum::usePower(Board &b, vector<char> args, Player * p) {
     }
 
     char symbol = args[0];
-    PlayerHeader& ph = b.ph;
-    for (size_t i = 0; i < ph.players.size(); i++) {
-        if (ph.players[i]->id != p->id) {
-            for (size_t j = 0; j < ph.players[i]->all_data.size(); j++) {
-                if (ph.players[i]->all_data[j]->symbol == symbol) {
-                    ph.players[i]->all_data[j]->frozen_on_turn = b.turn_number;
-                    return "";
-                }
-            }
-
-            for (size_t j = 0; j < ph.players[i]->all_virus.size(); j++) {
-                if (ph.players[i]->all_virus[j]->symbol == symbol) {
-                    ph.players[i]->all_data[j]->frozen_on_turn = b.turn_number;
-                    return "";
-                }
-            }
-        }
+    Link* link_ptr = b.getLinkPointerFromChar(symbol);
+    if (link_ptr != nullptr) {
+        link_ptr->frozen_on_turn = b.turn_number;
+        return "";
     }
 
     return "Error in TwoSum: link not found for symbol";

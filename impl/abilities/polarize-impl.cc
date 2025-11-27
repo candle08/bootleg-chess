@@ -21,7 +21,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
         return "Invalid input for polarize: invalid number of abilities";
     }
 
-    Link* link_ptr = p->getLinkPointerFromChar(args[0]);
+    Link* link_ptr = b.getLinkPointerFromChar(args[0]);
     if (link_ptr) {
         // changing the type of the link from data to virus or vice versa
         // and updating the corresponding vectors in player

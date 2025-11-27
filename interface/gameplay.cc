@@ -270,6 +270,12 @@ export class Board : public ISubject {
         int getNumArgumentsForAbility(int id);
 
         /**
+         * Returns a link pointer to the link with the passed symbol, owned by any player
+         * @param symbol The symbol of the link
+         */
+        Link* getLinkPointerFromChar(char symbol);
+
+        /**
          * Adds an observer o
          */
         void subscribe(IObserver* o) override;
