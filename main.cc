@@ -189,6 +189,10 @@ int main(int argc, char* argv[]) {
             for (size_t i = 0; i < abilities.size(); i++) {
                 cout << to_string(i + 1) << ": " << ABILITY_NAMES.at(abilities[i]->symbol) << (abilities[i]->used ? "*" : "") << endl;
             }
+        } else if (in == "board") {
+            // prints board again
+            board.notifyObservers();
+          
 
         } else if (in == "ability") {
             int id;
