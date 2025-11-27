@@ -2,17 +2,27 @@ module Gameplay;
 
 import Coords;
 import Link;
-import <iostream>;
 
+import <iostream>;
+import <vector>;
 import <string>;
 
 using namespace std;
 
 Download::Download(): Ability{'D'} {}
 
-string Download::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
+string Download::usePower(Board &b, vector<char> args, Player * p) {
     // debug
     cerr << "download called\n";
-    p->download(link1, b);
+    if (args.size() != 1) {
+        return "Invalid input for Download: invalid number of args";
+    }
+
+    Link* link_ptr = p->getLinkPointerFromChar(args[0]);
+    if (link_ptr == nullptr) {
+        return "Invalid input for Download: invalid link symbol";
+    }
+
+    p->download(link_ptr, b);
     return "";
 }

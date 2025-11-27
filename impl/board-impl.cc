@@ -276,17 +276,20 @@ string Board::move(char link, string dir) {
     return retval;
 }
 
-string Board::useAbility(char ability, Coords coords, char link1, char link2) {
+string Board::useAbility(int id, vector<char> args) {
     //debug
-    cerr << "board's useAbility called for ability " << ability << " with link1: " << link1 <<
-    " and link2: " << link2 << "\n";
+    cerr << "board's useAbility called for id " << id << endl;
     // Check if ability has already been used
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
 
     cerr << "calling player's use ability in board\n";
-    string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
+    if (id < 0 || id >= NUM_ABILITIES) {
+        return "Invalid input: ability index is out of bounds";
+    }
+
+    string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(id, args, *this);
     if (retval == "") {
         // Ability use succeeded
         ability_used = true;
@@ -344,11 +347,25 @@ Board::~Board() {
     }
 }
 
-vector<char> Board::getCurrentAbilitySymbols() {
+int Board::getNumArgumentsForAbility(int id) {
     Player* p = getCurrentPlayer();
-    vector<char> v;
-    for (size_t i = 0; i < p->abilities.size(); i++) {
-        v.push_back(p->abilities[i]->symbol);
+    id--;
+    if (p->abilities[id]->symbol == 'L') {
+        return 1;
+    } else if (p->abilities[id]->symbol == 'F') {
+        return 2;   
+    } else if (p->abilities[id]->symbol == 'D') {
+        return 1;   
+    } else if (p->abilities[id]->symbol == 'S') {
+        return 1;   
+    } else if (p->abilities[id]->symbol == 'P') {
+        return 1;   
+    } else if (p->abilities[id]->symbol == 'B') {
+        return 0;   
+    } else if (p->abilities[id]->symbol == 'T') {
+        return 1;   
+    } else if (p->abilities[id]->symbol == 'W') {
+        return 2;   
     }
-    return v;
+    return -1;
 }

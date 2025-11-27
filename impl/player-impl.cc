@@ -81,27 +81,18 @@ Link* Player::getLinkPointerFromChar(char link) {
     return nullptr;
 }
 
-string Player::useAbility(char ability, Board& b, Coords& c, char link1, char link2) {
+string Player::useAbility(int id, vector<char> args, Board& b) {
     // debug
     cerr << "in player's use ability now \n";
-    for (auto it = abilities.begin(); it != abilities.end(); it++) {
-        // Check that the player has the ability, use and remove it.
-        cerr << "checking that the player has the ability: " << ability << " with link 1: "
-        << link1 << " and link2: " << link2 << "\n";
-        cerr << "currently iterator in useAbility is the symbol: " << (*it)->symbol << "\n";
-
-        if ((*it)->symbol == ability) {
-            Link* link_pointer1 = getLinkPointerFromChar(link1);
-            if (!link_pointer1) cerr << "link_pointer1 is null\n";
-            Link* link_pointer2 = getLinkPointerFromChar(link2);
-            if (!link_pointer2) cerr << "link_pointer2 is null\n";
-
-            string retval = (*it)->usePower(b, c, link_pointer1, link_pointer2, this);
-            abilities.erase(it);
-            return retval;
+    if (!abilities[id]->used) {
+        string retval = abilities[id]->usePower(b, args, this);
+        if (retval == "") {
+            abilities[id]->used = true;
         }
-    }   
-    return "Invalid input: player does not have that ability";
+        return retval;
+    } else {
+        return "Ability has already been used";
+    }
 }
 
 Player::~Player() {

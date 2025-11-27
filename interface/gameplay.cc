@@ -47,13 +47,11 @@ export struct Player {
      * Use and remove the ability represented by the char
      * Returns the empty string on success, or an error message on failure
      * It is assumed that ability is valid (a capitalized letter representing the ability)
-     * @param ability
+     * @param id
+     * @param args
      * @param b
-     * @param c
-     * @param link1
-     * @param link2
      */
-    string useAbility(char ability, Board& b, Coords& c, char link1, char link2);
+    string useAbility(int id, vector<char> args, Board& b);
 
     /**
      * Downloads the link from the given Link*
@@ -74,6 +72,7 @@ export struct PlayerHeader {
 
 export struct Ability {
     char symbol;
+    bool used;
     
     Ability(char symbol);
     /**
@@ -85,7 +84,7 @@ export struct Ability {
      * @param link2 A pointer to the second link targeted in the ability, or nullptr if not applciable
      * @param p A pointer to the player using the ability
      */
-    virtual string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) = 0;
+    virtual string usePower(Board &b, vector<char> args, Player * p) = 0;
     virtual ~Ability() = default;
 };
 
@@ -159,7 +158,7 @@ export class Board : public ISubject {
         static inline const int NUM_SERVER_PORTS_PER_PLAYER = 2;
         static inline const int NUM_DATA_DOWNLOADED_TO_WIN = 4;
         static inline const int NUM_VIRUS_DOWNLOADED_TO_LOSE = 4;
-        static inline const int NUM_OF_ABILITIES = 5;
+        static inline const int NUM_ABILITIES = 5;
         static inline const int MAX_NUM_OF_EACH_ABILITY = 2;
         static inline const int NUM_LINKS = 8;
 
@@ -238,12 +237,10 @@ export class Board : public ISubject {
         /**
          * Use and remove the ability of the current player represented by the char
          * See the "Player" module for more information
-         * @param ability 
-         * @param coords
-         * @param link1
-         * @param link2
+         * @param id
+         * @param args
          */
-        string useAbility(char ability, Coords coords = {-1, -1}, char link1 = '\0', char link2 = '\0');
+        string useAbility(int id, vector<char> args);
        
         /**
          * Sets the winner to the p+1th player
@@ -267,9 +264,9 @@ export class Board : public ISubject {
         Player* getCurrentPlayer();
 
         /**
-         * Returns a string of all the current player's abilities
+         * Returns the number of arguments the current player's ability ID takes
          */
-        string getCurrentAbilitySymbols();
+        int getNumArgumentsForAbility(int id);
 
         /**
          * Adds an observer o
@@ -292,47 +289,47 @@ export class Board : public ISubject {
 export class DoubleDown : public Ability {
     public:
         DoubleDown();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class Download : public Ability {
     public:
         Download();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class Firewall : public Ability {
     public:
         Firewall();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class LinkBoost : public Ability {
     public:
         LinkBoost();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class Polarize : public Ability {
     public:
         Polarize();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class Scan : public Ability {
     public:
         Scan();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class SmallSwap : public Ability {
     public:
         SmallSwap();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };
 
 export class TwoSum : public Ability {
     public:
         TwoSum();
-        string usePower(Board &b, Coords &c, Link* link1, Link* link2, Player * p) override;
+        string usePower(Board &b, vector<char> args, Player * p) override;
 };

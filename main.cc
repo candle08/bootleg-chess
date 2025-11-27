@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
         {'B', "Double Down"},
         {'T', "TwoSum"},
         {'W', "Small Swap"},
-    }
+    };
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
     string link1 = "V1V2V3V4D1D2D3D4", link2 = "V1V2V3V4D1D2D3D4";
@@ -50,14 +50,14 @@ int main(int argc, char* argv[]) {
         if (prev_arg != "") {
             if (prev_arg == "-ability1" || prev_arg == "-ability2") {
                 // validate length
-                if (cur_arg.length() != Board::NUM_OF_ABILITIES) {
-                    cerr << "Parameter for " << prev_arg << " is not length " << Board::NUM_OF_ABILITIES << endl;
+                if (cur_arg.length() != Board::NUM_ABILITIES) {
+                    cerr << "Parameter for " << prev_arg << " is not length " << Board::NUM_ABILITIES << endl;
                     return 1;
                 }
 
                 // validate that the argument only has characters valid letters, and that each letter appears no more than twice
                 map<char, int> ability_counts;
-                for (int j = 0; j < Board::NUM_OF_ABILITIES; j++) {
+                for (int j = 0; j < Board::NUM_ABILITIES; j++) {
                     // check that all letters are valid
                     int index_of_letter = -1;
                     for (size_t k = 0; k < ABILITY_LETTERS.size(); k++) {
@@ -181,56 +181,21 @@ int main(int argc, char* argv[]) {
                 retval = board.move(link, dir);
             }
         } else if (in == "abilities") {
-            vector<char> v = board.getCurrentAbilitySymbols();
+            // vector<char> v = board.getCurrentAbilitySymbols();
 
         } else if (in == "ability") {
-            char id;
+            int id;
             *current_stream >> id;
 
-            if (id == '1' || id == 'l' || id == 'L') {
-                // link boost
-                char link;
-                *current_stream >> link;
-
-                retval = board.useAbility('L', {-1, -1}, link);
-            } else if (id == '2' || id == 'f' || id == 'F') {
-                // firewall
-                int r, c;
-                *current_stream >> r >> c;
-
-                retval = board.useAbility('F', {r, c});
-            } else if (id == '3' || id == 'd' || id == 'D') {
-                // download
-                char link;
-                *current_stream >> link;
-
-                retval = board.useAbility('L', {-1, -1}, link);
-            } else if (id == '4' || id == 'p' || id == 'P') {
-                // polarize
-                char link;
-                *current_stream >> link;
-
-                retval = board.useAbility('P', {-1, -1}, link);
-            } else if (id == '5' || id == 's' || id == 'S') {
-                // scan
-                char link;
-                *current_stream >> link;
-                retval = board.useAbility('S', {-1, -1}, link);
-            } else if (id == '6' || id == 'b' || id == 'B') {
-                // doubledown
-                retval = board.useAbility('B');
-            } else if (id == '7' || id == 't' || id == 'T') {
-                // twosum
-                char link;
-                *current_stream >> link;
-                retval = board.useAbility('T', {-1, -1}, link);
-            } else if (id == '8' || id == 'w' || id == 'W') {
-                // smallswap
-                char link1, link2;
-                *current_stream >> link1 >> link2;
-                retval = board.useAbility('W', {-1, -1}, link1, link2);
+            int req_args = board.getNumArgumentsForAbility(id);
+            if (req_args == -1) {
+                retval = "Ability's symbol not recognized (somehow)";
             } else {
-                cerr << "Invalid input for ability" << endl;
+                vector<char> args(2);
+                for (int i = 0; i < req_args; i++) {
+                    *current_stream >> args[i];
+                }
+                retval = board.useAbility(id, args);
             }
 
         } else if (in == "board") {

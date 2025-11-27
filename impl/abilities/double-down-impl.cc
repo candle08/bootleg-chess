@@ -2,16 +2,21 @@ module Gameplay;
 
 import Coords;
 import Link;
-import <iostream>;
 
+import <iostream>;
+import <vector>;
 import <string>;
 using namespace std;
 DoubleDown::DoubleDown(): Ability{'B'} {}
 
-string DoubleDown::usePower(Board & b, Coords & c, Link * link1, Link * link2, Player * p) {
+string DoubleDown::usePower(Board &b, vector<char> args, Player * p) {
     //debug
     cerr << "double down called\n";
-    // setting double_down to be true so that Board::move() knows to decrement turn_number by 1
+
+    if (args.size() != 0) {
+        return "Invalid input for Firewall: invalid number of args";
+    }
+
     b.double_down = true;
     
 
