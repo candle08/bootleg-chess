@@ -26,6 +26,7 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
     for (auto a : p->abilities) {
         if (!a->used) ++abilities_left;
     }
+    
     o << "Abilities: " << abilities_left << endl;
 
     // build array of all symbols this player has

@@ -253,7 +253,6 @@ string Board::move(char link, string dir) {
         
         // Make sure previous spot is now empty cell
         board[old_posn.r][old_posn.c].clear();
-        cerr << "printing out previous, cleared cell after move " << board[link_ptr->coords.r][link_ptr->coords.c] << endl;
     
         // Checking ability usage
         if (double_down) {
