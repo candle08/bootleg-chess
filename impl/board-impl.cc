@@ -189,11 +189,11 @@ string Board::move(char link, string dir) {
         // note that linkboost is set to 0 upon initialization
         
         if (dir == "up") {
-            new_posn.r -= 1 - link_ptr->linkboost;
+            new_posn.r -= 1 + link_ptr->linkboost;
         } else if (dir == "down") {
             new_posn.r += 1 + link_ptr->linkboost;
         } else if (dir == "left") {
-            new_posn.c -= 1 - link_ptr->linkboost;
+            new_posn.c -= 1 + link_ptr->linkboost;
         } else if (dir == "right") {
             new_posn.c += 1 + link_ptr->linkboost;
         }
