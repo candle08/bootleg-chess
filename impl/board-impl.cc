@@ -288,7 +288,7 @@ string Board::useAbility(char ability, Coords coords, char link1, char link2) {
     cerr << "calling player's use ability in board\n";
     string retval = ph.players[turn_number % NUM_PLAYERS]->useAbility(ability, *this, coords, link1, link2);
     if (retval == "") {
-    // Ability use succeeded
+        // Ability use succeeded
         ability_used = true;
         notifyObservers();
     }
@@ -342,4 +342,13 @@ Board::~Board() {
     for (auto o : observers) {
         delete o;
     }
+}
+
+vector<char> Board::getCurrentAbilitySymbols() {
+    Player* p = getCurrentPlayer();
+    vector<char> v;
+    for (size_t i = 0; i < p->abilities.size(); i++) {
+        v.push_back(p->abilities[i]->symbol);
+    }
+    return v;
 }

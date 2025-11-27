@@ -29,6 +29,17 @@ int main(int argc, char* argv[]) {
      * W: SmallSwap
      */
     const vector<char> ABILITY_LETTERS = {'L', 'F', 'D', 'S', 'P', 'B', 'T', 'W'};
+    
+    const map<char, string> ABILITY_DESCRIPTIONS = {
+        {'L', "Link Boost"},
+        {'F', "Firewall"},
+        {'D', "Download"},
+        {'S', "Scan"},
+        {'P', "Polarize"},
+        {'B', "Double Down"},
+        {'T', "TwoSum"},
+        {'W', "Small Swap"},
+    }
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
     string link1 = "V1V2V3V4D1D2D3D4", link2 = "V1V2V3V4D1D2D3D4";
@@ -170,7 +181,8 @@ int main(int argc, char* argv[]) {
                 retval = board.move(link, dir);
             }
         } else if (in == "abilities") {
-            // list out abilities
+            vector<char> v = board.getCurrentAbilitySymbols();
+
         } else if (in == "ability") {
             char id;
             *current_stream >> id;

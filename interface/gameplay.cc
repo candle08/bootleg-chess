@@ -267,6 +267,11 @@ export class Board : public ISubject {
         Player* getCurrentPlayer();
 
         /**
+         * Returns a string of all the current player's abilities
+         */
+        string getCurrentAbilitySymbols();
+
+        /**
          * Adds an observer o
          */
         void subscribe(IObserver* o) override;
