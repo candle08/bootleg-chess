@@ -165,11 +165,7 @@ int main(int argc, char* argv[]) {
     istream* current_stream = &cin;
     string in;
     while (*current_stream >> in) {
-        // check win condition
-        if (board.winner != -1) {
-            cout << "Player " << (board.winner + 1) << " has won!" << endl;
-            return 0;
-        }
+        cerr << endl << endl << "PROCESSING COMMAND " << in << endl << endl;
 
         // this string will store the resulting error message, if applicable
         string retval = "";
@@ -237,6 +233,12 @@ int main(int argc, char* argv[]) {
 
         if (retval != "") {
             cerr << retval << endl;
+        }
+
+        // check win condition
+        if (board.winner != -1) {
+            cout << "Player " << (board.winner + 1) << " has won!" << endl;
+            return 0;
         }
 
         if (current_stream == &file_stream && file_stream.eof()) {

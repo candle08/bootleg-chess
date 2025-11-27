@@ -159,7 +159,7 @@ export class Board : public ISubject {
         static inline const int NUM_DATA_DOWNLOADED_TO_WIN = 4;
         static inline const int NUM_VIRUS_DOWNLOADED_TO_LOSE = 4;
         static inline const int NUM_ABILITIES = 5;
-        static inline const int MAX_NUM_OF_EACH_ABILITY = 2;
+        static inline const int MAX_NUM_OF_EACH_ABILITY = 4; // TODO CHANGE THIS BACKKKKKKKK
         static inline const int NUM_LINKS = 8;
 
         // Symbols for the Cell.item field; compare value with constant directly
@@ -167,7 +167,7 @@ export class Board : public ISubject {
         static inline const char VIRUS = 'V';
         static inline const char EMPTY = '.';
         static inline const char SERVER = 'S';
-        static inline const vector<char> FIREWALLS = {'M', 'W'};
+        static inline const vector<char> FIREWALLS = {'m', 'w'};
 
         /**
          * A matrix of characters storing the symbol for each

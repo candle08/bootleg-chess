@@ -120,6 +120,7 @@ void Player::download(Link* link, Board& b) {
     link->coords = {-1, -1};
     if (link->type == Board::DATA) {
         num_data_downloaded++;
+        cerr << "Data downloaded! we now have " << num_data_downloaded << endl;
         if (num_data_downloaded >= b.NUM_DATA_DOWNLOADED_TO_WIN) {
             b.win(id);
         }

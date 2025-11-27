@@ -140,7 +140,7 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
 }
 
 bool Board::isValidPos(const Coords coords) const {
-    return coords.r >= 0 && coords.r <= NUM_ROWS && coords.c >= 0 && coords.c <= NUM_COLS;
+    return coords.r >= 0 && coords.r < NUM_ROWS && coords.c >= 0 && coords.c < NUM_COLS;
 }
 
 string Board::move(char link, string dir) {
@@ -197,60 +197,70 @@ string Board::move(char link, string dir) {
             }
         }
         
-        // this is the new cell that you move to after your move
-        Cell& new_cell = board[new_posn.r][new_posn.c];
-
-        // hitting here before segfault for a battle
-        cerr << "new_posn.r " << new_posn.r << ", new_posn.c " << new_posn.c << endl;
-        cerr << "player_id " << player_id << endl;
-        
-        if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
-            // Opponent's edge
-            ph.players[player_id]->download(link_ptr, *this);
-    
-        } else if (!isValidPos(new_posn)) {
-            // Out of bounds
-            throw logic_error("Invalid Input: You cannot move to this cell (1)");
-    
-        } else if ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) 
-            && new_cell.player == player_id) {
-            // Player's own links/servers
-            throw logic_error("Invalid Input: You cannot move to this cell (2)");
-    
-        } else if (new_cell.item == SERVER && new_cell.player != player_id) {
-            // Opponent's server port
-            ph.players[new_cell.player]->download(link_ptr, *this);
-    
-        } else if ((new_cell.item == DATA || new_cell.item == VIRUS) 
-            && new_cell.player != player_id) {
-            // Moving onto opponent's link --> initiates a battle
-            cerr << "battle hit\n";
-            if (link_ptr->level >= new_cell.level) {
-                //if (!ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol)) {
-                //    cerr << "ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol) is null\n";
-                //}
-                ph.players[player_id]->download(ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol), *this);
-                cerr << "hitting here before segfault\n";
-                
-                link_ptr->coords = Coords{new_posn.r, new_posn.c};
-                board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, board[new_posn.r][new_posn.c].firewall};
-            } else {
-                ph.players[new_cell.player]->download(link_ptr, *this);
-            }
-        } else if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
-            cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
-            link_ptr->revealed = true;
-            if (link_ptr->type == Board::VIRUS) {
+        if (!isValidPos(new_posn)) {
+            if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
+                // Opponent's edge
                 ph.players[player_id]->download(link_ptr, *this);
             } else {
-                board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
+                throw logic_error("Invalid Input: You cannot move to this cell (1)");
             }
         } else {
-            // Update new cell
-            board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
+            Cell& new_cell = board[new_posn.r][new_posn.c];
+            // this is the new cell that you move to after your move
+            cerr << "new_posn.r " << new_posn.r << ", new_posn.c " << new_posn.c << endl;
+            cerr << "player_id " << player_id << endl;
             
-            // Update link coords
-            link_ptr->move(Coords{new_posn.r, new_posn.c});
+            if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
+                // Opponent's edge
+                ph.players[player_id]->download(link_ptr, *this);
+        
+            } else if (!isValidPos(new_posn)) {
+                // Out of bounds
+                throw logic_error("Invalid Input: You cannot move to this cell (1)");
+        
+            } else if ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) 
+                && new_cell.player == player_id) {
+                // Player's own links/servers
+                throw logic_error("Invalid Input: You cannot move to this cell (2)");
+        
+            } else if (new_cell.item == SERVER && new_cell.player != player_id) {
+                // Opponent's server port
+                ph.players[new_cell.player]->download(link_ptr, *this);
+        
+            } else if ((new_cell.item == DATA || new_cell.item == VIRUS) 
+                && new_cell.player != player_id) {
+                // Moving onto opponent's link --> initiates a battle
+                cerr << "battle hit\n";
+                if (link_ptr->level >= new_cell.level) {
+                    //if (!ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol)) {
+                    //    cerr << "ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol) is null\n";
+                    //}
+                    ph.players[player_id]->download(ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol), *this);
+                    cerr << "hitting here before segfault\n";
+                    
+                    link_ptr->coords = Coords{new_posn.r, new_posn.c};
+                    board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, board[new_posn.r][new_posn.c].firewall};
+                } else {
+                    ph.players[new_cell.player]->download(link_ptr, *this);
+                }
+            } else if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
+                cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
+                link_ptr->revealed = true;
+                if (link_ptr->type == Board::VIRUS) {
+                    cerr << "Updating new cell: firewall" << endl;
+                    ph.players[player_id]->download(link_ptr, *this);
+                } else {
+                    board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
+                    link_ptr->move(Coords{new_posn.r, new_posn.c});
+                }
+            } else {
+                cerr << "Updating new cell" << endl;
+                // Update new cell
+                board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
+                
+                // Update link coords
+                link_ptr->move(Coords{new_posn.r, new_posn.c});
+            }
         }
         
         // Make sure previous spot is now empty cell
