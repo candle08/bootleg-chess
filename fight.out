@@ -1,0 +1,147 @@
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+abcSSfgh
+...de...
+........
+........
+........
+........
+...DE...
+ABCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+a..de...
+........
+........
+........
+........
+...DE...
+ABCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+a..de...
+........
+........
+........
+........
+A..DE...
+.BCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+...de...
+a.......
+........
+........
+........
+A..DE...
+.BCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+...de...
+a.......
+........
+........
+A.......
+...DE...
+.BCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+...de...
+........
+a.......
+........
+A.......
+...DE...
+.BCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 
+Player 0:
+Downloaded: 0D, 0V
+Abilities: 5
+a: V1 b: V2 c: V3 d: V4 
+e: D1 f: D2 g: D3 h: D4 
+========
+.bcSSfgh
+...de...
+........
+a.......
+A.......
+........
+...DE...
+.BCSSFGH
+
+========
+Player 1:
+Downloaded: 0D, 0V
+Abilities: 5
+A: V1 B: V2 C: V3 D: V4 
+E: D1 F: D2 G: D3 H: D4 

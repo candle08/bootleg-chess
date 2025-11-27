@@ -109,6 +109,9 @@ Player::~Player() {
 
 void Player::download(Link* link, Board& b) {
     link->download_status = true;
+    if (!link) {
+        cerr << "link is null\n";
+    }
 
     // Remove the link from the board
     link->coords = {-1, -1};

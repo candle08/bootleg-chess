@@ -99,7 +99,7 @@ void Graphic::drawString(int x, int y, string msg) {
 
 void Graphic::notify(const ISubject & b) {
     // debug
-    cerr << "notify called";
+    cerr << "notify called of graphic notify";
     Board& boardRef = (Board&)b;    
     printOutput(cout, boardRef);
 }

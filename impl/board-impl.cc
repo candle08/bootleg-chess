@@ -151,6 +151,7 @@ string Board::move(char link, string dir) {
         // debug
         cerr << "player_id " << player_id << endl;
         cerr << "turn number: " << turn_number << endl;
+        // getting to line 153 before segfault
         if (link_ptr == nullptr) {
             throw logic_error("Invalid input: No link associated with symbol " + to_string(link));
         }
@@ -196,8 +197,10 @@ string Board::move(char link, string dir) {
             }
         }
         
-    
-        Cell& new_place = board[new_posn.r][new_posn.c];
+        // this is the new cell that you move to after your move
+        Cell& new_cell = board[new_posn.r][new_posn.c];
+
+        // hitting here before segfault for a battle
         cerr << "new_posn.r " << new_posn.r << ", new_posn.c " << new_posn.c << endl;
         cerr << "player_id " << player_id << endl;
         
@@ -209,29 +212,35 @@ string Board::move(char link, string dir) {
             // Out of bounds
             throw logic_error("Invalid Input: You cannot move to this cell");
     
-        } else if ((new_place.item == SERVER || new_place.item == DATA || new_place.item == VIRUS) 
-            && new_place.player == player_id) {
+        } else if ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) 
+            && new_cell.player == player_id) {
             // Player's own links/servers
             throw logic_error("Invalid Input: You cannot move to this cell");
     
-        } else if (new_place.item == SERVER && new_place.player != player_id) {
+        } else if (new_cell.item == SERVER && new_cell.player != player_id) {
             // Opponent's server port
-            ph.players[new_place.player]->download(link_ptr, *this);
+            ph.players[new_cell.player]->download(link_ptr, *this);
     
-        } else if ((new_place.item == DATA || new_place.item == VIRUS) 
-            && new_place.player != player_id) {
+        } else if ((new_cell.item == DATA || new_cell.item == VIRUS) 
+            && new_cell.player != player_id) {
             // Moving onto opponent's link --> initiates a battle
-            if (link_ptr->level >= new_place.level) {
-                ph.players[player_id]->download(ph.players[new_place.player]->getLinkPointerFromChar(new_place.item), *this);
+            cerr << "battle hit\n";
+            if (link_ptr->level >= new_cell.level) {
+                //if (!ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol)) {
+                //    cerr << "ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol) is null\n";
+                //}
+                ph.players[player_id]->download(ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol), *this);
+                cerr << "hitting here before segfault\n";
+                
                 link_ptr->coords = Coords{new_posn.r, new_posn.c};
                 board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, false};
             } else {
-                ph.players[new_place.player]->download(link_ptr, *this);
+                ph.players[new_cell.player]->download(link_ptr, *this);
             }
         } else {
             // Invalid: out of bounds, own server port, or own link
             if (!isValidPos(new_posn)|| 
-            ((new_place.item == SERVER || new_place.item == DATA || new_place.item == VIRUS) && new_place.player == player_id)) {
+            ((new_cell.item == SERVER || new_cell.item == DATA || new_cell.item == VIRUS) && new_cell.player == player_id)) {
                 throw logic_error("Invalid Input: You cannot move to this cell");
             }
             

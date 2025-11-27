@@ -1,0 +1,149 @@
+board ctor called:
+link ordering 0: V1V2V3V4D1D2D3D4
+link ordering 1: V1V2V3V4D1D2D3D4
+ability_selections 0: LFDSP
+ability_selections 1: LFDSP
+turn num 0 ability used 0 winner -1 double down 0
+creating the player header
+player 0 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections LFDSP, symbols abcdefgh
+
+PLAYER CTOR 
+initializing virus: level: 1, coords: ()0, 0), symbol: a
+initializing virus: level: 2, coords: ()0, 1), symbol: b
+initializing virus: level: 3, coords: ()0, 2), symbol: c
+initializing virus: level: 4, coords: ()1, 3), symbol: d
+initializing data: level: 1, coords: (1, 4), symbol: e
+initializing data: level: 2, coords: (0, 5), symbol: f
+initializing data: level: 3, coords: (0, 6), symbol: g
+initializing data: level: 4, coords: (0, 7), symbol: h
+ability: L
+ability: F
+ability: D
+ability: S
+ability: P
+
+END OF PLAYER CTOR 
+this player's all_data: 
+e1f2g3h4
+this player's all_virus: 
+a1b2c3d4
+player 1 made with: link ordering V1V2V3V4D1D2D3D4, ability_selections LFDSP, symbols ABCDEFGH
+
+PLAYER CTOR 
+initializing virus: level: 1, coords: ()7, 0), symbol: A
+initializing virus: level: 2, coords: ()7, 1), symbol: B
+initializing virus: level: 3, coords: ()7, 2), symbol: C
+initializing virus: level: 4, coords: ()6, 3), symbol: D
+initializing data: level: 1, coords: (6, 4), symbol: E
+initializing data: level: 2, coords: (7, 5), symbol: F
+initializing data: level: 3, coords: (7, 6), symbol: G
+initializing data: level: 4, coords: (7, 7), symbol: H
+ability: L
+ability: F
+ability: D
+ability: S
+ability: P
+
+END OF PLAYER CTOR 
+this player's all_data: 
+E1F2G3H4
+this player's all_virus: 
+A1B2C3D4
+building the empty board matrix
+board is 8 rows by 8 cols
+placing the player pieces
+PLAYER 0
+placing virus level 1 at (r, c): 0, 0
+placing virus level 2 at (r, c): 0, 1
+placing virus level 3 at (r, c): 0, 2
+placing virus level 4 at (r, c): 1, 3
+placing data level 1 at (r, c): 1, 4
+placing data level 2 at (r, c): 0, 5
+placing data level 3 at (r, c): 0, 6
+placing data level 4 at (r, c): 0, 7
+placing server port at 0, 3
+placing server port at 0, 4
+PLAYER 1
+placing virus level 1 at (r, c): 7, 0
+placing virus level 2 at (r, c): 7, 1
+placing virus level 3 at (r, c): 7, 2
+placing virus level 4 at (r, c): 6, 3
+placing data level 1 at (r, c): 6, 4
+placing data level 2 at (r, c): 7, 5
+placing data level 3 at (r, c): 7, 6
+placing data level 4 at (r, c): 7, 7
+placing server port at 7, 3
+placing server port at 7, 4
+notify calledplayer_id 0
+turn number: 0
+new_posn: r 0, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 1, new_posn.c 0
+player_id 0
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 0, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 001
+notify calledplayer_id 1
+turn number: 1
+new_posn: r 7, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 6, new_posn.c 0
+player_id 1
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 1, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 002
+notify calledplayer_id 0
+turn number: 2
+new_posn: r 1, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 2, new_posn.c 0
+player_id 0
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 0, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 003
+notify calledplayer_id 1
+turn number: 3
+new_posn: r 6, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 5, new_posn.c 0
+player_id 1
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 1, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 004
+notify calledplayer_id 0
+turn number: 4
+new_posn: r 2, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 3, new_posn.c 0
+player_id 0
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 0, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 005
+notify calledplayer_id 1
+turn number: 5
+new_posn: r 5, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 4, new_posn.c 0
+player_id 1
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 1, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 006
+notify calledplayer_id 0
+turn number: 6
+new_posn: r 3, c 0
+link_ptr->level 1
+passed frozen check
+new_posn.r 4, new_posn.c 0
+player_id 0
+battle hit
+hitting here before segfault
+clearing cell
+printing out previous, cleared cell after move Cell{ player: 0, item: V, level: 1, firewall: 0 }
+printing out double_down, ability_used, turn_number (in this order) 007
+notify calledfree(): invalid pointer
