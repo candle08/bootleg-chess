@@ -190,6 +190,8 @@ int main(int argc, char* argv[]) {
             int id;
             *current_stream >> id;
 
+            id--;
+
             int req_args = board.getNumArgumentsForAbility(id);
             
             if (req_args == -1) {
