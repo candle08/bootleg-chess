@@ -351,6 +351,7 @@ void Board::notifyObservers() {
 }
 
 Board::~Board() {
+    cerr << "board dtor" << endl;
     
     for (auto o : observers) {
         cerr << "deleting observer pointer\n";

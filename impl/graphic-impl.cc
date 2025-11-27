@@ -76,6 +76,7 @@ Graphic::Graphic(const ISubject & b) {
 // Destructor: Cleans up X11
 // ==========================================
 Graphic::~Graphic() {
+    cerr << "graphic dtor" << endl;
     XFreeGC(d, gc);
     XCloseDisplay(d);
 }

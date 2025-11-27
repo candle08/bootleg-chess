@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 
     string ability1 = "LFDSP", ability2 = "LFDSP";
     string link1 = "V1V2V3V4D1D2D3D4", link2 = "V1V2V3V4D1D2D3D4";
-    // bool graphics_enabled = false;
+    bool graphics_enabled = false;
 
     for (int i = 1; i < argc; i++) {
         string cur_arg = argv[i];
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
         ) {
             prev_arg = cur_arg;
         } else if (cur_arg == "-graphics") {
-            // graphics_enabled = true;
+            graphics_enabled = true;
         } else {
             cerr << "Argument " << cur_arg << " not recognized" << endl;
             return 1;
@@ -151,11 +151,14 @@ int main(int argc, char* argv[]) {
 
     // populate board's observers array
     
-    Terminal* terminal = new Terminal{board};   
+    Terminal* terminal = new Terminal{board};
  
-    Graphic* graphic = new Graphic{board};
     board.subscribe(terminal);
-    board.subscribe(graphic);    
+
+    if (graphics_enabled) {
+        Graphic* graphic = new Graphic{board};
+        board.subscribe(graphic);    
+    }
     
     // ----- INPUT READER -----
     ifstream file_stream;
