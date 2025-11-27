@@ -16,7 +16,7 @@ using namespace std;
 // ==========================================
 // Constructor: Sets up X11 Window
 // ==========================================
-Graphic::Graphic() {
+Graphic::Graphic(const ISubject & b) {
     int width = 500;
     int height = 600; // Increased to 600 to fit the board logic (offset + rows)
 
@@ -68,6 +68,8 @@ Graphic::Graphic() {
     XSynchronize(d,True);
 
     usleep(1000);
+
+    notify(b);
 }
 
 // ==========================================

@@ -8,6 +8,7 @@ using namespace std;
 
 export class Terminal : public GUI {
     public:
+        Terminal(const ISubject & b);
         void notify(const ISubject & b) override;
         void printOutput(ostream& o, Board &b);
         ~Terminal() = default;

@@ -26,7 +26,7 @@ export class Graphic : public GUI {
         // Color Enum (formerly in Xwindow)
         enum {White=0, Black, Red, Green, Blue, Cyan, Yellow, Magenta, Orange, Brown};
 
-        Graphic();
+        Graphic(const ISubject & b);
         ~Graphic();
 
         void printOutput(ostream& o, Board &b);

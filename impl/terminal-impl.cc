@@ -1,6 +1,7 @@
 module Terminal;
 import Gameplay;
 import Link;
+import Observer;
 import <iostream>;
 import <vector>;
 import <string>;
@@ -8,6 +9,9 @@ import <algorithm>;
 
 using namespace std;
 
+Terminal::Terminal(const ISubject & b) {
+    notify(b);
+}
 void Terminal::notify(const ISubject & b) {
     Board& board = (Board&)b;
     printOutput(cout, board);

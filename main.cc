@@ -140,9 +140,9 @@ int main(int argc, char* argv[]) {
 
     // populate board's observers array
     
-    Terminal* terminal = new Terminal{};   
+    Terminal* terminal = new Terminal{board};   
  
-    Graphic* graphic = new Graphic{};
+    Graphic* graphic = new Graphic{board};
     board.subscribe(terminal);
     board.subscribe(graphic);    
     
