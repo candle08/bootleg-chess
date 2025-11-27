@@ -1,1 +1,5 @@
-ability W a
+ability 1 a H
+board
+move a up
+board
+quit
