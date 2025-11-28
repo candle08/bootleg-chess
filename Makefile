@@ -3,7 +3,7 @@ CXXFLAGS = -Wall -Werror -g
 
 HEADERFLAGS = -c -x c++-system-header 
 
-EXEC = exec
+EXEC = RAIInet
 
 INTERFACE_OBJS = gameplay.o data.o graphic.o gui.o observer.o link.o terminal.o virus.o coords.o
 
