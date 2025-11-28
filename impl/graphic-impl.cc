@@ -25,7 +25,7 @@ Graphic::Graphic(const ISubject & b) {
 
     d = XOpenDisplay(NULL);
     if (d == NULL) {
-        cerr << "Cannot open display" << endl;
+        if (Board::DEBUG) cerr << "Cannot open display" << endl;
         exit(1);
     }
     s = DefaultScreen(d);

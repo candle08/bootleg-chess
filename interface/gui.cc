@@ -4,8 +4,8 @@ import Gameplay;
 
 using namespace std;
 
+// Abstract class that all displays inherit
 export class GUI : public IObserver {
     public:
-        virtual ~GUI() = default;
         void virtual notify(const ISubject& b) override = 0;
 };

@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
             if (prev_arg == "-ability1" || prev_arg == "-ability2") {
                 // validate length
                 if (cur_arg.length() != Board::NUM_ABILITIES) {
-                    cerr << "Parameter for " << prev_arg << " is not length " << Board::NUM_ABILITIES << endl;
+                    if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " is not length " << Board::NUM_ABILITIES << endl;
                     return 1;
                 }
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
                     }
 
                     if (index_of_letter == -1) {
-                        cerr << "Parameter for " << prev_arg << " was given unrecognized letter" << endl;
+                        if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " was given unrecognized letter" << endl;
                         return 1;
                     }
 
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
                     }
                     ability_counts[cur_arg[j]]++;
                     if (ability_counts[cur_arg[j]] > Board::MAX_NUM_OF_EACH_ABILITY) {
-                        cerr << "Parameter for " << prev_arg << " had more than two copies of an ability" << endl;
+                        if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " had more than two copies of an ability" << endl;
                         return 1;
                     }
                 }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
             } else if (prev_arg == "-link1" || prev_arg == "-link2") {
                 // validate length
                 if (cur_arg.length() != Board::NUM_LINKS * 2) {
-                    cerr << "Parameter for " << prev_arg << " is not length 16" << endl;
+                    if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " is not length 16" << endl;
                     return 1;
                 }
                 
@@ -103,13 +103,13 @@ int main(int argc, char* argv[]) {
                     if (link.length() != 2 ||
                             !(link[0] == 'd' || link[0] == 'D' || link[0] == 'v' || link[0] == 'V') ||
                             !(link[1] >= '1' && link[1] <= '4')) {
-                        cerr << "Parameter for " << prev_arg << " is invalid" << endl;
+                        if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " is invalid" << endl;
                         return 1;
                     }
                     
                     // validate uniqueness of links
                     if (link_counts.count(link)) {
-                        cerr << "Parameter for " << prev_arg << " has two or more copies of link " << link << endl;
+                        if (Board::DEBUG) cerr << "Parameter for " << prev_arg << " has two or more copies of link " << link << endl;
                         return 1;
                     }
                     link_counts.insert({link, true});
@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
                 }
             } else {
                 // this code should never run but it's here just in case
-                cerr << "Unrecognized argument " << prev_arg << endl;
+                if (Board::DEBUG) cerr << "Unrecognized argument " << prev_arg << endl;
                 return 1;
             }
             prev_arg = "";
@@ -137,13 +137,13 @@ int main(int argc, char* argv[]) {
         } else if (cur_arg == "-graphics") {
             graphics_enabled = true;
         } else {
-            cerr << "Argument " << cur_arg << " not recognized" << endl;
+            if (Board::DEBUG) cerr << "Argument " << cur_arg << " not recognized" << endl;
             return 1;
         }
     }
 
     if (prev_arg != "") {
-        cerr << "Missing parameter for " << prev_arg << endl;
+        if (Board::DEBUG) cerr << "Missing parameter for " << prev_arg << endl;
         return 1;
     }
 
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
     istream* current_stream = &cin;
     string in;
     while (*current_stream >> in) {
-        cerr << endl << endl << "PROCESSING COMMAND " << in << endl << endl;
+        if (Board::DEBUG) cerr << endl << endl << "PROCESSING COMMAND " << in << endl << endl;
 
         // this string will store the resulting error message, if applicable
         string retval = "";
@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
             *current_stream >> link >> dir;
 
             if (dir != "up" && dir != "down" && dir != "left" && dir != "right") {
-                cerr << "Invalid input for move: direction is invalid" << endl;
+                if (Board::DEBUG) cerr << "Invalid input for move: direction is invalid" << endl;
             } else {
                 retval = board.move(link, dir);
             }
@@ -198,9 +198,9 @@ int main(int argc, char* argv[]) {
                 retval = "Ability index out of bounds";
             } else {
                 id--;
-                cerr << "calculating required args" << endl;
+                if (Board::DEBUG) cerr << "calculating required args" << endl;
                 int req_args = board.getNumArgumentsForAbility(id);
-                cerr << "req args: " << to_string(req_args) << endl;
+                if (Board::DEBUG) cerr << "req args: " << to_string(req_args) << endl;
                 
                 if (req_args == -1) {
                     retval = "Ability's symbol not recognized (somehow)";
@@ -223,7 +223,7 @@ int main(int argc, char* argv[]) {
             file_stream.close();
             file_stream.open(file_name);
             if (!file_stream) {
-                cerr << "Invalid input for sequence: could not open file" << endl;
+                if (Board::DEBUG) cerr << "Invalid input for sequence: could not open file" << endl;
             } else {
                 current_stream = &file_stream;
             }
@@ -236,7 +236,7 @@ int main(int argc, char* argv[]) {
         }
 
         if (retval != "") {
-            cerr << retval << endl;
+            if (Board::DEBUG) cerr << retval << endl;
         }
 
         // check win condition

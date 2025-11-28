@@ -16,7 +16,7 @@ Polarize::Polarize(): Ability{'P'} {}
 
 string Polarize::usePower(Board &b, vector<char> args, Player * p) {
     // debug
-    cerr << "polarize called\n";
+    if (Board::DEBUG) cerr << "polarize called\n";
     if (args.size() != 1) {
         return "Invalid input for polarize: invalid number of abilities";
     }
@@ -32,7 +32,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
 
             
             // Find and remove the Data object from data vector
-            cerr << "in polarize, removing the data object from data vector\n";
+            if (Board::DEBUG) cerr << "in polarize, removing the data object from data vector\n";
             auto data_it = find(owner->all_data.begin(), owner->all_data.end(), static_cast<Data*>(link_ptr));
             if (data_it != owner->all_data.end()) {
                 owner->all_data.erase(data_it);
@@ -40,7 +40,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
             }
             
             // Add as Virus to all_virus
-            cerr << "in polarize, adding a virus to the list\n";
+            if (Board::DEBUG) cerr << "in polarize, adding a virus to the list\n";
 
             Virus* virus = static_cast<Virus*>(link_ptr);
             owner->all_virus.push_back(virus);
@@ -55,7 +55,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
         } else {
             link_ptr->type = Board::DATA;
             
-            cerr << "in polarize, removing the virus from the list\n";
+            if (Board::DEBUG) cerr << "in polarize, removing the virus from the list\n";
             // Find and remove the Virus object from all_virus
             auto virus_it = find(owner->all_virus.begin(), owner->all_virus.end(), static_cast<Virus*>(link_ptr));
             if (virus_it != owner->all_virus.end()) {
@@ -63,7 +63,7 @@ string Polarize::usePower(Board &b, vector<char> args, Player * p) {
                 // debug
             }
             
-            cerr << "in polarize, adding a data to the list\n";
+            if (Board::DEBUG) cerr << "in polarize, adding a data to the list\n";
             // Add as Data to all_data
             Data* data = static_cast<Data*>(link_ptr);
             owner->all_data.push_back(data);

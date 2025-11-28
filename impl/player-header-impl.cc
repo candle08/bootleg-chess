@@ -3,14 +3,10 @@ module Gameplay;
 import <iostream>;
 import <vector>;
 using namespace std;
-void PlayerHeader::addPlayer(Player *p) {
-    players.push_back(p);
-    num_players++;
-}
-
 PlayerHeader::~PlayerHeader() {
-    cerr << "player header dtor" << endl;
-    for (int i = 0; i < num_players; i++) {
+    if (Board::DEBUG) cerr << "player header dtor" << endl;
+    for (int i = 0; i < Board::NUM_PLAYERS; i++) {
+        if (Board::DEBUG) cerr << "deleting player " << i << endl;
         delete players[i];
     }
 }

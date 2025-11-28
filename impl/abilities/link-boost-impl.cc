@@ -13,8 +13,8 @@ LinkBoost::LinkBoost(): Ability{'L'} {}
 
 string LinkBoost::usePower(Board &b, vector<char> args, Player * p) {
     // debug
-    cerr << "linkboost called\n";
-    cerr << "in Linkboost, checking if the link has already used the linkboost\n";
+    if (Board::DEBUG) cerr << "linkboost called\n";
+    if (Board::DEBUG) cerr << "in Linkboost, checking if the link has already used the linkboost\n";
 
     if (args.size() != 1) {
         return "Invalid input in LinkBoost: invalid number of args";

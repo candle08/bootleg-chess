@@ -14,10 +14,29 @@ export struct Ability;
 export class Board;
 
 export struct Player {
+    /**
+     * A vector for storing all the viruses of the player
+     */
     vector<Virus *> all_virus;
+
+    /**
+     * The vector for storing all the data of the player
+     */
     vector<Data *> all_data;
+
+    /**
+     * The vector for storing all the abilities of the player
+     */
     vector<Ability *> abilities;
+
+    /**
+     * Whether or not the player is alive (set to false when downloading 4 viruses)
+     */
     bool alive;
+
+    /**
+     * The numerical id of the player, 0-indexed
+     */
     int id;
 
     /**
@@ -47,41 +66,48 @@ export struct Player {
      * Use and remove the ability represented by the char
      * Returns the empty string on success, or an error message on failure
      * It is assumed that ability is valid (a capitalized letter representing the ability)
-     * @param id
-     * @param args
-     * @param b
+     * @param id The numerical id of the ability
+     * @param args The passed arguments, validated within each ability's usePower
+     * @param b A reference to the board
      */
     string useAbility(int id, vector<char> args, Board& b);
 
     /**
      * Downloads the link from the given Link*
      * Also updates the relevant fields of the link
+     * @param link A pointer fo the link to download
+     * @param b A reference to the board
      */
     void download(Link* link, Board& b);
 
     ~Player();
 };
 
+// A struct to store information about players in the game
 export struct PlayerHeader {
+    /**
+     * All the players in the game
+     */
     vector<Player*> players;
-    int num_players;
-    void addPlayer(Player* p);
     ~PlayerHeader();
 };
 
 
 export struct Ability {
+    // The unique symbol that represents this ability
     char symbol;
+
+    // Whether or not the ability was used in this game
     bool used;
     
+    // Basic Ability ctor
     Ability(char symbol);
+
     /**
      * Use the corresponding ability's power
      * Returns either the empty string on success, or an error message on failure
      * @param board A reference to the playing board
-     * @param coords A reference to the coordinates of the ability, or {-1, -1} if not applicable
-     * @param link1 A pointer to the first link targeted in the ability, or nullptr if not applicable
-     * @param link2 A pointer to the second link targeted in the ability, or nullptr if not applciable
+     * @param args All passed args, validated when overridden
      * @param p A pointer to the player using the ability
      */
     virtual string usePower(Board &b, vector<char> args, Player * p) = 0;
@@ -122,6 +148,7 @@ export struct Cell {
 };
 
 export class Board : public ISubject {
+    // Vector of all observers to notify whenever board changes
     vector<IObserver*> observers;
 
     /** 
@@ -141,12 +168,9 @@ export class Board : public ISubject {
         {{0, 3}, {0, 4}},
         {{7, 3}, {7, 4}}
     };
-
-    
     
     /**
-     * Variable that indicates whether or not an ability
-     * has been used.
+     * Variable that indicates whether or not an ability has been used this turn
      */
     bool ability_used;
 
@@ -159,7 +183,7 @@ export class Board : public ISubject {
         static inline const int NUM_DATA_DOWNLOADED_TO_WIN = 4;
         static inline const int NUM_VIRUS_DOWNLOADED_TO_LOSE = 4;
         static inline const int NUM_ABILITIES = 5;
-        static inline const int MAX_NUM_OF_EACH_ABILITY = 4; // TODO CHANGE THIS BACKKKKKKKK
+        static inline const int MAX_NUM_OF_EACH_ABILITY = 2;
         static inline const int NUM_LINKS = 8;
 
         // Symbols for the Cell.item field; compare value with constant directly
@@ -168,6 +192,9 @@ export class Board : public ISubject {
         static inline const char EMPTY = '.';
         static inline const char SERVER = 'S';
         static inline const vector<char> FIREWALLS = {'m', 'w'};
+
+        // Determines whether or not to print debug statements
+        static inline const bool DEBUG = false;
 
         /**
          * A matrix of characters storing the symbol for each
@@ -187,7 +214,7 @@ export class Board : public ISubject {
 
         /**
          * A PlayerHeader containing all players.
-         * See "PlayerHeader" module for more information
+         * See "PlayerHeader" struct for more information
          */
         PlayerHeader ph;
 

@@ -17,7 +17,7 @@ void Terminal::notify(const ISubject & b) {
     printOutput(cout, board);
 }
 
-void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bool owner) { // owner is the player whose turn it is    
+void Terminal::print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bool owner) { // owner is the player whose turn it is    
     Player* p = ph.players[player];
     o << "Player " << player + 1 << ":" << endl;
     o << "Downloaded: " << p->num_data_downloaded << "D, " << p->num_virus_downloaded << "V" << endl;
@@ -47,7 +47,7 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
             Link* link_ptr = p->getLinkPointerFromChar(reference);
 
             if (link_ptr == nullptr) {
-                cerr << "somehow, link_ptr in terminal is null" << endl;
+                if (Board::DEBUG) cerr << "somehow, link_ptr in terminal is null" << endl;
             } else {
                 o << reference << ": " << link_ptr->type << to_string(link_ptr->level) << " ";
             }
@@ -62,7 +62,7 @@ void print_player_info(ostream & o, Board & b, PlayerHeader & ph, int player, bo
             Link* link_ptr = p->getLinkPointerFromChar(reference);
 
             if (link_ptr == nullptr) {
-                cerr << "somehow, link_ptr in terminal is null" << endl;
+                if (Board::DEBUG) cerr << "somehow, link_ptr in terminal is null" << endl;
             } else if (link_ptr->revealed) {
                 o << reference << ": " << link_ptr->type << to_string(link_ptr->level) << "  ";
             } else {

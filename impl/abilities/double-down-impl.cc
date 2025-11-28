@@ -11,7 +11,7 @@ DoubleDown::DoubleDown(): Ability{'B'} {}
 
 string DoubleDown::usePower(Board &b, vector<char> args, Player * p) {
     //debug
-    cerr << "double down called\n";
+    if (Board::DEBUG) cerr << "double down called\n";
 
     if (args.size() != 0) {
         return "Invalid input for Firewall: invalid number of args";

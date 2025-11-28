@@ -13,7 +13,7 @@ Scan::Scan(): Ability{'S'} {}
 
 string Scan::usePower(Board &b, vector<char> args, Player * p) {
     //debug
-    cerr << "Scan called\n";
+    if (Board::DEBUG) cerr << "Scan called\n";
 
     if (args.size() != 1) {
         return "Invalid input for Scan: invalid number of arguments";

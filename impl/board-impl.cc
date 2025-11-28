@@ -21,7 +21,7 @@ Cell::Cell(int player, char item, int level, char symbol, int firewall): player{
 
 void Cell::clear() {
     // debug
-    cerr << "clearing cell\n";
+    if (Board::DEBUG) cerr << "clearing cell\n";
     item = Board::EMPTY;
     level = -1;
     if (firewall != -1) {
@@ -48,12 +48,12 @@ Cell& Cell::operator=(const Cell& other) {
 
 Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // debug 
-    cerr << "board ctor called:" << endl;
+    if (Board::DEBUG) cerr << "board ctor called:" << endl;
     for (size_t i = 0; i < link_orderings.size(); i++) {
-        cerr << "link ordering " << i << ": " << link_orderings[i] << endl;
+        if (Board::DEBUG) cerr << "link ordering " << i << ": " << link_orderings[i] << endl;
     }
     for (size_t i = 0; i < ability_selections.size(); i++) {
-        cerr << "ability_selections " << i << ": " << ability_selections[i] << endl;
+        if (Board::DEBUG) cerr << "ability_selections " << i << ": " << ability_selections[i] << endl;
     }
     
     turn_number = 0;
@@ -62,35 +62,34 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     double_down = false;
 
         // debug
-    cerr << "turn num " << turn_number << " ability used " << ability_used
+    if (Board::DEBUG) cerr << "turn num " << turn_number << " ability used " << ability_used
     << " winner " << winner << " double down " << double_down << "\n";
 
     // Create the players
     //debug
-    cerr << "creating the player header\n";
-    ph = PlayerHeader{};
+    if (Board::DEBUG) cerr << "creating the player header\n";
+
     for (int i = 0; i < NUM_PLAYERS; i++) {
         // debug
-        cerr << "player " << i << " made with: link ordering " << link_orderings[i] << ", ability_selections " << ability_selections[i] <<
-        ", symbols ";
+        if (Board::DEBUG) cerr << "player " << i << " made with: link ordering " << link_orderings[i] << ", ability_selections " << ability_selections[i] << ", symbols ";
         for (int j = 0; j < 8; j++) {
-            cerr << symbols[i][j];
+            if (Board::DEBUG) cerr << symbols[i][j];
         }
-        cerr << endl;
+        if (Board::DEBUG) cerr << endl;
         Player* p = new Player{link_orderings[i], ability_selections[i], link_starting_coords[i], symbols[i], i};
         
         // debug
-        cerr << "this player's all_data: " << endl;
+        if (Board::DEBUG) cerr << "this player's all_data: " << endl;
         for (size_t i = 0; i < p->all_data.size(); i++) {
-            cerr << p->all_data[i]->symbol << p->all_data[i]->level;
+            if (Board::DEBUG) cerr << p->all_data[i]->symbol << p->all_data[i]->level;
         }
-        cerr << endl;
+        if (Board::DEBUG) cerr << endl;
 
-        cerr << "this player's all_virus: " << endl;
+        if (Board::DEBUG) cerr << "this player's all_virus: " << endl;
         for (size_t i = 0; i < p->all_virus.size(); i++) {
-            cerr << p->all_virus[i]->symbol << p->all_virus[i]->level;
+            if (Board::DEBUG) cerr << p->all_virus[i]->symbol << p->all_virus[i]->level;
         }
-        cerr << endl;
+        if (Board::DEBUG) cerr << endl;
 
         ph.players.push_back(p);
     }
@@ -98,31 +97,31 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
     // Build the board matrix
     // Build empty matrix
     // debug
-    cerr << "building the empty board matrix\n";
+    if (Board::DEBUG) cerr << "building the empty board matrix\n";
     for (int r = 0; r < NUM_ROWS; r++) {
         vector<Cell> v(NUM_COLS);
         board.push_back(v);
     }
 
     // debug
-    cerr << "board is " << NUM_ROWS << " rows by " << NUM_COLS << " cols" << endl;
+    if (Board::DEBUG) cerr << "board is " << NUM_ROWS << " rows by " << NUM_COLS << " cols" << endl;
 
     // Place player pieces
 
     //debug
-    cerr << "placing the player pieces\n";
+    if (Board::DEBUG) cerr << "placing the player pieces\n";
     for (int i = 0; i < NUM_PLAYERS; i++) {
         Player* p = ph.players[i];
 
         // debug
-        cerr << "PLAYER " << i << endl;
+        if (Board::DEBUG) cerr << "PLAYER " << i << endl;
 
         // Find viruses of player
         for (size_t j = 0; j < p->all_virus.size(); j++) {
             Virus* virus = p->all_virus[j];
             board[virus->coords.r][virus->coords.c] = Cell{i, VIRUS, virus->level, virus->symbol, -1};
             // debug
-            cerr << "placing virus level " << virus->level << " at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
+            if (Board::DEBUG) cerr << "placing virus level " << virus->level << " at (r, c): " << virus->coords.r << ", " << virus->coords.c << endl;
         }
 
         // Find data of player
@@ -130,14 +129,14 @@ Board::Board(vector<string> link_orderings, vector<string> ability_selections) {
             Data* data = p->all_data[j];
             board[data->coords.r][data->coords.c] = Cell{i, DATA, data->level, data->symbol, -1};
             // debug
-            cerr << "placing data level " << data->level << " at (r, c): " << data->coords.r << ", " << data->coords.c << endl;
+            if (Board::DEBUG) cerr << "placing data level " << data->level << " at (r, c): " << data->coords.r << ", " << data->coords.c << endl;
         }
 
         // Place server ports
         for (int j = 0; j < NUM_SERVER_PORTS_PER_PLAYER; j++) {
             board[server_port_coords[i][j].r][server_port_coords[i][j].c] = Cell{j, SERVER, -1, Board::SERVER, -1};
             // debug
-            cerr << "placing server port at " << server_port_coords[i][j].r << ", " << server_port_coords[i][j].c << endl;
+            if (Board::DEBUG) cerr << "placing server port at " << server_port_coords[i][j].r << ", " << server_port_coords[i][j].c << endl;
         }
     }
 
@@ -149,7 +148,7 @@ bool Board::isValidPos(const Coords coords) const {
 }
 
 string Board::move(char link, string dir) {
-     cerr << "\n\n START OF NEW MOVE \n turn number: " << turn_number << endl;
+     if (Board::DEBUG) cerr << "\n\n START OF NEW MOVE \n turn number: " << turn_number << endl;
 
 
     int player_id = getCurrentPlayerID();
@@ -157,7 +156,7 @@ string Board::move(char link, string dir) {
     string retval = "";
     try {
         // debug
-        cerr << "player_id " << player_id << endl;
+        if (Board::DEBUG) cerr << "player_id " << player_id << endl;
         // getting to line 153 before segfault
         if (link_ptr == nullptr) {
             throw logic_error("Invalid input: No link associated with symbol " + to_string(link));
@@ -169,17 +168,17 @@ string Board::move(char link, string dir) {
         Coords old_posn = link_ptr->coords;
         Coords new_posn = link_ptr->coords;
         // debug
-        cerr << "new_posn: r " << new_posn.r << ", c " << new_posn.c << endl;
-        cerr << "link_ptr->level " << link_ptr->level << endl;
-        cerr << "link frozen at turn " << link_ptr->frozen_on_turn << endl;
-        cerr << "turn_number: " << turn_number << endl;
+        if (Board::DEBUG) cerr << "new_posn: r " << new_posn.r << ", c " << new_posn.c << endl;
+        if (Board::DEBUG) cerr << "link_ptr->level " << link_ptr->level << endl;
+        if (Board::DEBUG) cerr << "link frozen at turn " << link_ptr->frozen_on_turn << endl;
+        if (Board::DEBUG) cerr << "turn_number: " << turn_number << endl;
         // Checking if user is not frozen from twosum
         if (link_ptr->frozen_on_turn != -1 && turn_number / NUM_PLAYERS < (link_ptr->frozen_on_turn / NUM_PLAYERS) + link_ptr->level) {
             // debug
             
             throw logic_error("Invalid input: link is frozen for " + to_string((link_ptr->frozen_on_turn / NUM_PLAYERS) + link_ptr->level - turn_number / NUM_PLAYERS) + " more turns");
         } else {
-            cerr << "passed frozen check" << endl;
+            if (Board::DEBUG) cerr << "passed frozen check" << endl;
 
         }
         
@@ -209,8 +208,8 @@ string Board::move(char link, string dir) {
         } else {
             Cell& new_cell = board[new_posn.r][new_posn.c];
             // this is the new cell that you move to after your move
-            cerr << "new_posn.r " << new_posn.r << ", new_posn.c " << new_posn.c << endl;
-            cerr << "player_id " << player_id << endl;
+            if (Board::DEBUG) cerr << "new_posn.r " << new_posn.r << ", new_posn.c " << new_posn.c << endl;
+            if (Board::DEBUG) cerr << "player_id " << player_id << endl;
             
             if ((player_id == 1 && new_posn.r < 0) || (player_id == 0 && new_posn.r >= NUM_ROWS)) {
                 // Opponent's edge
@@ -232,13 +231,13 @@ string Board::move(char link, string dir) {
             } else if ((new_cell.item == DATA || new_cell.item == VIRUS) 
                 && new_cell.player != player_id) {
                 // Moving onto opponent's link --> initiates a battle
-                cerr << "battle hit\n";
+                if (Board::DEBUG) cerr << "battle hit\n";
                 if (link_ptr->level >= new_cell.level) {
                     //if (!ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol)) {
-                    //    cerr << "ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol) is null\n";
+                    //    if (Board::DEBUG) cerr << "ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol) is null\n";
                     //}
                     ph.players[player_id]->download(ph.players[new_cell.player]->getLinkPointerFromChar(new_cell.symbol), *this);
-                    cerr << "hitting here before segfault\n";
+                    if (Board::DEBUG) cerr << "hitting here before segfault\n";
                     
                     link_ptr->coords = Coords{new_posn.r, new_posn.c};
                     board[new_posn.r][new_posn.c] = Cell{player_id, link_ptr->type, link_ptr->level, link_ptr->symbol, board[new_posn.r][new_posn.c].firewall};
@@ -247,17 +246,17 @@ string Board::move(char link, string dir) {
                 }
             }
             if (board[new_posn.r][new_posn.c].firewall != -1 && board[new_posn.r][new_posn.c].firewall != player_id) { // firewall ability activated
-                cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
+                if (Board::DEBUG) cerr << "board[new_posn.r][new_posn.c].firewall && board[new_posn.r][new_posn.c].player != player_id  returned true " << endl;
                 link_ptr->revealed = true;
                 if (link_ptr->type == Board::VIRUS) {
-                    cerr << "Updating new cell: firewall" << endl;
+                    if (Board::DEBUG) cerr << "Updating new cell: firewall" << endl;
                     ph.players[player_id]->download(link_ptr, *this);
                 } else {
                     board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
                     link_ptr->move(Coords{new_posn.r, new_posn.c});
                 }
             } else {
-                cerr << "Updating new cell" << endl;
+                if (Board::DEBUG) cerr << "Updating new cell" << endl;
                 // Update new cell
                 board[new_posn.r][new_posn.c] = board[old_posn.r][old_posn.c];
                 
@@ -278,7 +277,7 @@ string Board::move(char link, string dir) {
             ability_used = false;
         }
     
-        cerr << "printing out double_down, ability_used, turn_number (in this order) " << double_down << ability_used << turn_number << endl;
+        if (Board::DEBUG) cerr << "printing out double_down, ability_used, turn_number (in this order) " << double_down << ability_used << turn_number << endl;
     
     
         // Notify the observers
@@ -292,13 +291,13 @@ string Board::move(char link, string dir) {
 
 string Board::useAbility(int id, vector<char> args) {
     //debug
-    cerr << "board's useAbility called for id " << id << endl;
+    if (Board::DEBUG) cerr << "board's useAbility called for id " << id << endl;
     // Check if ability has already been used
     if (ability_used) {
         return "Invalid input: ability has already been used this turn";
     }
 
-    cerr << "calling player's use ability in board\n";
+    if (Board::DEBUG) cerr << "calling player's use ability in board\n";
     if (id < 0 || id >= NUM_ABILITIES) {
         return "Invalid input: ability index is out of bounds";
     }
@@ -356,10 +355,10 @@ void Board::notifyObservers() {
 }
 
 Board::~Board() {
-    cerr << "board dtor" << endl;
+    if (Board::DEBUG) cerr << "board dtor" << endl;
     
     for (auto o : observers) {
-        cerr << "deleting observer pointer\n";
+        if (Board::DEBUG) cerr << "deleting observer pointer\n";
          delete o;
     }
 

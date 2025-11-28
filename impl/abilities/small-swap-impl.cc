@@ -13,7 +13,7 @@ SmallSwap::SmallSwap(): Ability{'W'} {}
 
 string SmallSwap::usePower(Board &b, vector<char> args, Player * p) {
     //debug
-    cerr << "small swap called\n";
+    if (Board::DEBUG) cerr << "small swap called\n";
 
     if (args.size() != 2) {
         return "Invalid input for SmallSwap: invalid number of arguments";

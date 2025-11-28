@@ -12,7 +12,7 @@ using namespace std;
 
 Player::Player(string link_ordering, string abilities_selected, vector<Coords> positions, vector<char> symbols, int id): id{id} {
     // debug
-    cerr << endl << "PLAYER CTOR " << endl;
+    if (Board::DEBUG) cerr << endl << "PLAYER CTOR " << endl;
     
     alive = true;
     
@@ -21,11 +21,11 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
         int level = link_ordering[i + 1] - '0';
         if (link_ordering[i] == 'D' || link_ordering[i] == 'd') {
             // debug
-            cerr << "initializing data: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
+            if (Board::DEBUG) cerr << "initializing data: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
             all_data.push_back(new Data{level, positions[i / 2], symbols[i / 2]});
         } else {
             // debug
-            cerr << "initializing virus: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
+            if (Board::DEBUG) cerr << "initializing virus: level: " << level << ", coords: (" << positions[i / 2].r << ", " << positions[i / 2].c << "), symbol: " << symbols[i / 2] << endl; 
             all_virus.push_back(new Virus{level, positions[i / 2], symbols[i / 2]});
         }
     }
@@ -33,7 +33,7 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
     // initialize abilities
     for (size_t i = 0; i < abilities_selected.length(); i++) {
         // debug
-        cerr << "ability: " << abilities_selected[i] << endl;
+        if (Board::DEBUG) cerr << "ability: " << abilities_selected[i] << endl;
         if (abilities_selected[i] == 'L') {
             abilities.push_back(new LinkBoost{});
         } else if (abilities_selected[i] == 'D') {
@@ -53,38 +53,38 @@ Player::Player(string link_ordering, string abilities_selected, vector<Coords> p
         }
     }
     // debug
-    cerr << endl << "END OF PLAYER CTOR " << endl;
+    if (Board::DEBUG) cerr << endl << "END OF PLAYER CTOR " << endl;
 }
 
 Link* Player::getLinkPointerFromChar(char link) {
     // If link is a Data
-    // cerr << endl << "CHECKING GET LINK PTR FROM CHAR" << endl;
+    // if (Board::DEBUG) cerr << endl << "CHECKING GET LINK PTR FROM CHAR" << endl;
     
     for (size_t i = 0; i < all_data.size(); i++) {
-        // cerr << "all data[i] symbol is " << all_data[i]->symbol << endl;
+        // if (Board::DEBUG) cerr << "all data[i] symbol is " << all_data[i]->symbol << endl;
         if (all_data[i]->symbol == link) {
-            // cerr << "found data!!";
+            // if (Board::DEBUG) cerr << "found data!!";
             return all_data[i];
         }
     }
     
     // If link is a Virus
     for (size_t i = 0; i < all_virus.size(); i++) {
-        // cerr << "all virus[i] symbol is " << all_data[i]->symbol << endl;
+        // if (Board::DEBUG) cerr << "all virus[i] symbol is " << all_data[i]->symbol << endl;
         if (all_virus[i]->symbol == link) {
-            // cerr << "found virus!!";
+            // if (Board::DEBUG) cerr << "found virus!!";
             return all_virus[i];
         }
     }
 
-    // cerr << "found nothing" << endl;
+    // if (Board::DEBUG) cerr << "found nothing" << endl;
 
     return nullptr;
 }
 
 string Player::useAbility(int id, vector<char> args, Board& b) {
     // debug
-    cerr << "in player's use ability now \n";
+    if (Board::DEBUG) cerr << "in player's use ability now \n";
     if (!abilities[id]->used) {
         string retval = abilities[id]->usePower(b, args, this);
         if (retval == "") {
@@ -97,7 +97,7 @@ string Player::useAbility(int id, vector<char> args, Board& b) {
 }
 
 Player::~Player() {
-    cerr << "player dtor" << endl;
+    if (Board::DEBUG) cerr << "player dtor" << endl;
 
     for (size_t i = 0; i < all_virus.size(); i++) {
         delete all_virus[i];
@@ -113,7 +113,7 @@ Player::~Player() {
 void Player::download(Link* link, Board& b) {
     link->download_status = true;
     if (!link) {
-        cerr << "link is null\n";
+        if (Board::DEBUG) cerr << "link is null\n";
     }
 
     // update board
@@ -124,7 +124,7 @@ void Player::download(Link* link, Board& b) {
 
     if (link->type == Board::DATA) {
         num_data_downloaded++;
-        cerr << "Data downloaded! we now have " << num_data_downloaded << endl;
+        if (Board::DEBUG) cerr << "Data downloaded! we now have " << num_data_downloaded << endl;
         if (num_data_downloaded >= b.NUM_DATA_DOWNLOADED_TO_WIN) {
             b.win(id);
         }

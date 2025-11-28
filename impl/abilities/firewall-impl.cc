@@ -13,7 +13,7 @@ Firewall::Firewall(): Ability{'F'} {}
 
 string Firewall::usePower(Board &b, vector<char> args, Player * p) {
     //debug
-    cerr << "firewall called\n";
+    if (Board::DEBUG) cerr << "firewall called\n";
     // Check if cell is empty
     
     if (args.size() != 2) {
@@ -22,12 +22,12 @@ string Firewall::usePower(Board &b, vector<char> args, Player * p) {
 
     int r = args[0] - '0', c = args[1] - '0';
 
-    cerr << "in firewall, checking if cell is empty\n";
+    if (Board::DEBUG) cerr << "in firewall, checking if cell is empty\n";
     if (b.board[r][c].item != b.EMPTY || b.board[r][c].firewall != -1) {
         return "Selected cell is not empty, or is already a firewall";
         //debut
     }
-    cerr << "setting up a firewall on the coordinate";
+    if (Board::DEBUG) cerr << "setting up a firewall on the coordinate";
 
     // Setting firewall on given coordinate
     b.board[r][c].firewall = p->id;

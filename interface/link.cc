@@ -11,7 +11,7 @@ export struct Link {
     char symbol; // its symbol on the board
     bool revealed; // whether or not a link has been revealed
     int linkboost; // whether or not a link has been boosted (0, 1, 2) since linkboost is stackable
-    int frozen_on_turn; // number of frozen turns
+    int frozen_on_turn; // turn the link was frozen on
 
     Link(int level, Coords coords, char type, char symbol);
 

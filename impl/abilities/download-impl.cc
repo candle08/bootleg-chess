@@ -13,7 +13,7 @@ Download::Download(): Ability{'D'} {}
 
 string Download::usePower(Board &b, vector<char> args, Player * p) {
     // debug
-    cerr << "download called\n";
+    if (Board::DEBUG) cerr << "download called\n";
     if (args.size() != 1) {
         return "Invalid input for Download: invalid number of args";
     }
